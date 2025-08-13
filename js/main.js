@@ -1,5 +1,34 @@
-// Mobile menu toggle functionality
+// Load header and footer components
 document.addEventListener('DOMContentLoaded', function() {
+    loadComponent('header-placeholder', './components/header.html');
+    loadComponent('footer-placeholder', './components/footer.html');
+    
+    // Initialize other functionality
+    initializeFAQ();
+    initializeContactForm();
+});
+
+// Function to load HTML components
+async function loadComponent(elementId, filePath) {
+    try {
+        const response = await fetch(filePath);
+        const html = await response.text();
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.innerHTML = html;
+            // Initialize navigation after header is loaded
+            if (elementId === 'header-placeholder') {
+                initializeNavigation();
+                setActiveNavigation();
+            }
+        }
+    } catch (error) {
+        console.error('Error loading component:', error);
+    }
+}
+
+// Initialize navigation functionality after header is loaded
+function initializeNavigation() {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     
@@ -22,24 +51,95 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
+}
 
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+// Set active navigation based on current page
+function setActiveNavigation() {
+    const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+    
+    // Update desktop navigation
+    const desktopNavLinks = document.querySelectorAll('#desktop-nav .nav-link');
+    desktopNavLinks.forEach(link => {
+        const linkPage = link.getAttribute('data-page');
+        if (linkPage === currentPage) {
+            link.classList.add('text-primary-green', 'font-medium');
+            link.classList.remove('text-gray-600', 'hover:text-primary-green');
+        } else {
+            link.classList.add('text-gray-600', 'hover:text-primary-green');
+            link.classList.remove('text-primary-green', 'font-medium');
+        }
+    });
+    
+    // Update mobile navigation
+    const mobileNavLinks = document.querySelectorAll('#mobile-nav .nav-link-mobile');
+    mobileNavLinks.forEach(link => {
+        const linkPage = link.getAttribute('data-page');
+        if (linkPage === currentPage) {
+            link.classList.add('text-primary-green');
+            link.classList.remove('text-gray-600', 'hover:text-primary-green');
+        } else {
+            link.classList.add('text-gray-600', 'hover:text-primary-green');
+            link.classList.remove('text-primary-green');
+        }
+    });
+}
+
+// FAQ Accordion functionality
+function initializeFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const button = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.faq-icon');
+        
+        if (button && answer) {
+            button.addEventListener('click', function() {
+                const isOpen = !answer.classList.contains('hidden');
+                
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        const otherIcon = otherItem.querySelector('.faq-icon');
+                        if (otherAnswer && otherIcon) {
+                            otherAnswer.classList.add('hidden');
+                            otherIcon.style.transform = 'rotate(0deg)';
+                        }
+                    }
+                });
+                
+                // Toggle current item
+                if (isOpen) {
+                    answer.classList.add('hidden');
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+                } else {
+                    answer.classList.remove('hidden');
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+                }
             });
         }
+    });
+}
+
+// Smooth scrolling for anchor links
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
     });
 });
 
 // Contact form handling (basic validation)
-document.addEventListener('DOMContentLoaded', function() {
+function initializeContactForm() {
     const contactForm = document.getElementById('contact-form');
     
     if (contactForm) {
@@ -61,21 +161,21 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Validate name
-            if (!name.value.trim()) {
-                name.classList.add('border-red-500');
+            if (!name || !name.value.trim()) {
+                if (name) name.classList.add('border-red-500');
                 isValid = false;
             }
             
             // Validate email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!email.value.trim() || !emailRegex.test(email.value)) {
-                email.classList.add('border-red-500');
+            if (!email || !email.value.trim() || !emailRegex.test(email.value)) {
+                if (email) email.classList.add('border-red-500');
                 isValid = false;
             }
             
             // Validate message
-            if (!message.value.trim()) {
-                message.classList.add('border-red-500');
+            if (!message || !message.value.trim()) {
+                if (message) message.classList.add('border-red-500');
                 isValid = false;
             }
             
@@ -96,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
+}
 
 // Add scroll effect to navbar
 window.addEventListener('scroll', function() {

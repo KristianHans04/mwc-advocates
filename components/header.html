@@ -1,0 +1,45 @@
+<!-- Navigation Component -->
+<nav class="bg-white shadow-sm fixed w-full top-0 z-50 transition-shadow duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                <a href="index.html" class="flex items-center">
+                    <img src="./img/MWC_BLACK.svg" alt="MWC Advocates Logo" class="h-10 w-auto">
+                    <span class="ml-3 text-xl font-bold text-primary-green hidden sm:block">MWC Advocates</span>
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4" id="desktop-nav">
+                    <a href="index.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition duration-300" data-page="index">Home</a>
+                    <a href="about.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition duration-300" data-page="about">About Us</a>
+                    <a href="services.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition duration-300" data-page="services">Services</a>
+                    <a href="contact.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition duration-300" data-page="contact">Contact Us</a>
+                    <a href="privacy.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium transition duration-300" data-page="privacy">Privacy Policy</a>
+                </div>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" type="button" class="text-gray-600 hover:text-primary-green focus:outline-none focus:text-primary-green">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3" id="mobile-nav">
+            <a href="index.html" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium" data-page="index">Home</a>
+            <a href="about.html" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium" data-page="about">About Us</a>
+            <a href="services.html" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium" data-page="services">Services</a>
+            <a href="contact.html" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium" data-page="contact">Contact Us</a>
+            <a href="privacy.html" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium" data-page="privacy">Privacy Policy</a>
+        </div>
+    </div>
+</nav>

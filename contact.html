@@ -41,51 +41,8 @@
     </script>
 </head>
 <body class="bg-white text-gray-900">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm fixed w-full top-0 z-50 transition-shadow duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex-shrink-0">
-                    <a href="index.html" class="flex items-center">
-                        <img src="./img/MWC_BLACK.svg" alt="MWC Advocates Logo" class="h-10 w-auto">
-                        <span class="ml-3 text-xl font-bold text-primary-green hidden sm:block">MWC Advocates</span>
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="index.html" class="text-gray-600 hover:text-primary-green px-3 py-2 rounded-md text-sm font-medium transition duration-300">Home</a>
-                        <a href="about.html" class="text-gray-600 hover:text-primary-green px-3 py-2 rounded-md text-sm font-medium transition duration-300">About Us</a>
-                        <a href="services.html" class="text-gray-600 hover:text-primary-green px-3 py-2 rounded-md text-sm font-medium transition duration-300">Services</a>
-                        <a href="contact.html" class="text-primary-green font-medium px-3 py-2 rounded-md text-sm">Contact Us</a>
-                        <a href="privacy.html" class="text-gray-600 hover:text-primary-green px-3 py-2 rounded-md text-sm font-medium transition duration-300">Privacy Policy</a>
-                    </div>
-                </div>
-                
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" type="button" class="text-gray-600 hover:text-primary-green focus:outline-none focus:text-primary-green">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile Navigation Menu -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-200">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-600 hover:text-primary-green block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="about.html" class="text-gray-600 hover:text-primary-green block px-3 py-2 rounded-md text-base font-medium">About Us</a>
-                <a href="services.html" class="text-gray-600 hover:text-primary-green block px-3 py-2 rounded-md text-base font-medium">Services</a>
-                <a href="contact.html" class="text-primary-green block px-3 py-2 rounded-md text-base font-medium">Contact Us</a>
-                <a href="privacy.html" class="text-gray-600 hover:text-primary-green block px-3 py-2 rounded-md text-base font-medium">Privacy Policy</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Navigation Placeholder -->
+    <div id="header-placeholder"></div>
 
     <!-- Hero Section -->
     <section class="bg-primary-green text-white pt-20">
@@ -103,85 +60,47 @@
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Contact Form -->
+                <!-- Map and Directions -->
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Find Our Office</h2>
                     <p class="text-lg text-gray-600 mb-8">
-                        Fill out the form below and we'll get back to you as soon as possible to discuss your legal needs.
+                        We're conveniently located in Upperhill, one of Nairobi's premier business districts, easily accessible by both private and public transport.
                     </p>
                     
-                    <form id="contact-form" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
-                                <input type="text" id="name" name="name" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-primary-green transition duration-300"
-                                    placeholder="Your full name">
+                    <!-- Google Maps Embed -->
+                    <div class="bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-8">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.796976670383!2d36.81591487482824!3d-1.2964515356370057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10e7167b504d%3A0xbc3617f79a4c9522!2sLower%20Hill%20Rd%2C%20Nairobi!5e0!3m2!1sen!2ske!4v1755111409756!5m2!1sen!2ske" 
+                                width="100%" 
+                                height="300" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="MWC Advocates Office Location - Lower Hill Road, Upperhill, Nairobi">
+                        </iframe>
+                    </div>
+                    
+                    <!-- Quick Directions -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="w-8 h-8 bg-primary-green rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
                             </div>
-                            
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                                <input type="email" id="email" name="email" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-primary-green transition duration-300"
-                                    placeholder="your.email@example.com">
-                            </div>
+                            <h4 class="font-semibold text-sm text-gray-900 mb-1">By Car</h4>
+                            <p class="text-xs text-gray-600">Parking available on-site</p>
                         </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                <input type="tel" id="phone" name="phone"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-primary-green transition duration-300"
-                                    placeholder="+254 XXX XXX XXX">
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="w-8 h-8 bg-primary-green rounded-lg mx-auto mb-2 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
                             </div>
-                            
-                            <div>
-                                <label for="service" class="block text-sm font-medium text-gray-700 mb-2">Service Needed</label>
-                                <select id="service" name="service"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-primary-green transition duration-300">
-                                    <option value="">Select a service</option>
-                                    <option value="corporate-law">Corporate Law</option>
-                                    <option value="litigation">Litigation & Dispute Resolution</option>
-                                    <option value="property-law">Property Law</option>
-                                    <option value="family-law">Family Law</option>
-                                    <option value="employment-law">Employment Law</option>
-                                    <option value="legal-consultancy">Legal Consultancy</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
+                            <h4 class="font-semibold text-sm text-gray-900 mb-1">Public Transport</h4>
+                            <p class="text-xs text-gray-600">Near Upperhill roundabout</p>
                         </div>
-                        
-                        <div>
-                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                            <input type="text" id="subject" name="subject"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-primary-green transition duration-300"
-                                placeholder="Brief subject of your inquiry">
-                        </div>
-                        
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
-                            <textarea id="message" name="message" rows="6" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-green focus:border-primary-green transition duration-300"
-                                placeholder="Please describe your legal matter or question in detail..."></textarea>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                                <input id="privacy-agreement" name="privacy-agreement" type="checkbox" required
-                                    class="h-4 w-4 text-primary-green focus:ring-primary-green border-gray-300 rounded">
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="privacy-agreement" class="text-gray-600">
-                                    I agree to the <a href="privacy.html" class="text-primary-green hover:underline">Privacy Policy</a> and understand that my information will be used to respond to my inquiry. *
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <button type="submit"
-                            class="w-full bg-primary-green text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-green">
-                            Send Message
-                        </button>
-                    </form>
+                    </div>
                 </div>
                 
                 <!-- Contact Information -->
@@ -268,77 +187,6 @@
         </div>
     </section>
 
-    <!-- Map Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Find Our Office</h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    We're conveniently located in Upperhill, one of Nairobi's premier business districts, easily accessible by both private and public transport.
-                </p>
-            </div>
-            
-            <!-- Map Placeholder -->
-            <div class="bg-gray-200 h-96 rounded-lg flex items-center justify-center">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-primary-green rounded-full mx-auto mb-4 flex items-center justify-center">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Interactive Map</h3>
-                    <p class="text-gray-600 mb-4">
-                        SUITE 58 Duplex Suites<br>
-                        Lower Hill Road, Upperhill, Nairobi
-                    </p>
-                    <p class="text-sm text-gray-500">
-                        Google Maps integration can be added here for live directions
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Directions -->
-            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-12 h-12 bg-primary-green rounded-lg mx-auto mb-4 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">By Car</h3>
-                    <p class="text-gray-600 text-sm">
-                        Ample parking available at Duplex Suites. Take Uhuru Highway to Upperhill Road.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="w-12 h-12 bg-primary-green rounded-lg mx-auto mb-4 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Public Transport</h3>
-                    <p class="text-gray-600 text-sm">
-                        Multiple matatu routes serve Upperhill area. Nearest stage: Upperhill Shopping Centre.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="w-12 h-12 bg-primary-green rounded-lg mx-auto mb-4 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Walking</h3>
-                    <p class="text-gray-600 text-sm">
-                        5-minute walk from Upperhill Shopping Centre. Easy access from Ralph Bunche Road.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FAQ Section -->
     <section class="py-20 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -349,93 +197,97 @@
                 </p>
             </div>
             
-            <div class="space-y-6">
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">How much do you charge for consultations?</h3>
-                    <p class="text-gray-600">
-                        Our consultation fees vary depending on the complexity of your legal matter. We offer an initial consultation to discuss your case and provide a fee estimate. Contact us for specific pricing information.
-                    </p>
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-6 hover:bg-gray-100 transition duration-300 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">How much do you charge for consultations?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            Our consultation fees vary depending on the complexity of your legal matter. We offer an initial consultation to discuss your case and provide a fee estimate. Contact us for specific pricing information.
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">What documents should I bring to my first meeting?</h3>
-                    <p class="text-gray-600">
-                        Please bring any relevant documents related to your legal matter, including contracts, correspondence, court papers, identification documents, and any other materials that may help us understand your situation.
-                    </p>
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-6 hover:bg-gray-100 transition duration-300 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">What documents should I bring to my first meeting?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            Please bring any relevant documents related to your legal matter, including contracts, correspondence, court papers, identification documents, and any other materials that may help us understand your situation.
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Do you handle cases outside of Nairobi?</h3>
-                    <p class="text-gray-600">
-                        Yes, we handle cases throughout Kenya. While our main office is in Nairobi, we represent clients across the country and can travel for important meetings and court appearances.
-                    </p>
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-6 hover:bg-gray-100 transition duration-300 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Do you handle cases outside of Nairobi?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            Yes, we handle cases throughout Kenya. While our main office is in Nairobi, we represent clients across the country and can travel for important meetings and court appearances.
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">How long does it take to resolve a legal matter?</h3>
-                    <p class="text-gray-600">
-                        The timeline varies greatly depending on the type and complexity of your case. During your consultation, we'll provide a realistic estimate of the time frame based on our experience with similar matters.
-                    </p>
+                <!-- FAQ Item 4 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-6 hover:bg-gray-100 transition duration-300 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">How long does it take to resolve a legal matter?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            The timeline varies greatly depending on the type and complexity of your case. During your consultation, we'll provide a realistic estimate of the time frame based on our experience with similar matters.
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Can I schedule weekend or evening appointments?</h3>
-                    <p class="text-gray-600">
-                        While our regular hours are Monday through Friday, we understand that legal matters can be urgent. We offer flexible scheduling, including weekend and evening appointments when necessary.
-                    </p>
+                <!-- FAQ Item 5 -->
+                <div class="faq-item bg-gray-50 rounded-lg overflow-hidden">
+                    <button class="faq-question w-full text-left p-6 hover:bg-gray-100 transition duration-300 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Can I schedule weekend or evening appointments?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            While our regular hours are Monday through Friday, we understand that legal matters can be urgent. We offer flexible scheduling, including weekend and evening appointments when necessary.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center mb-4">
-                        <img src="./img/MWC_WHITE.svg" alt="MWC Advocates Logo" class="h-10 w-auto">
-                        <span class="ml-3 text-xl font-bold">MWC Advocates</span>
-                    </div>
-                    <p class="text-gray-300 mb-4">
-                        MASINDE WANYONYI & COMPANY ADVOCATES<br>
-                        Premier law firm providing expert legal services in Nairobi, Kenya.
-                    </p>
-                    <p class="text-gray-400 text-sm">
-                        P.O. Box 46723-00100, Nairobi, Kenya
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-white transition duration-300">Home</a></li>
-                        <li><a href="about.html" class="text-gray-300 hover:text-white transition duration-300">About Us</a></li>
-                        <li><a href="services.html" class="text-gray-300 hover:text-white transition duration-300">Services</a></li>
-                        <li><a href="contact.html" class="text-gray-300 hover:text-white transition duration-300">Contact Us</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>Tel: +254702073800</li>
-                        <li>Tel: +254708792078</li>
-                        <li>Email: Masindewanyonyi.co@gmail.com</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm">
-                    © 2025 Masinde Wanyonyi & Company Advocates. All rights reserved.
-                </p>
-                <div class="mt-4 md:mt-0">
-                    <a href="privacy.html" class="text-gray-400 hover:text-white text-sm transition duration-300">Privacy Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
 
     <!-- JavaScript -->
     <script src="./js/main.js"></script>
