@@ -45,34 +45,98 @@
     <div id="header-placeholder"></div>
 
     <!-- Hero Section -->
-    <section class="bg-primary-green text-white pt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <section class="relative min-h-96 bg-gradient-to-br from-primary-green via-green-800 to-green-900 text-white pt-16 overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 hero-pattern"></div>
+        <div class="absolute inset-0" style="background-image: url('./img/randoms/gavel.png'); background-size: 300px; background-repeat: no-repeat; background-position: 85% center; opacity: 0.15;"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary-green via-transparent to-primary-green"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6">About Our Firm</h1>
-                <p class="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto">
+                <div class="mb-6">
+                    <span class="inline-block px-4 py-2 bg-yellow-400 bg-opacity-20 text-yellow-300 text-sm font-medium rounded-full mb-6">
+                        About MWC Advocates
+                    </span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">About Our <span class="text-yellow-300">Firm</span></h1>
+                <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
                     Dedicated to providing exceptional legal services with integrity, professionalism, and unwavering commitment to our clients.
                 </p>
+                
+                <!-- Trust Indicators -->
+                <div class="flex justify-center items-center space-x-8 mt-8 text-sm">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                        <span class="text-gray-300">Established Law Firm</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span class="text-gray-300">Nairobi Based</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="text-gray-300">Client Focused</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Our Story Section -->
-    <section class="py-20 bg-white">
+    <section class="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
+                <div class="fade-in-up">
+                    <span class="inline-block px-4 py-2 bg-primary-green bg-opacity-10 text-primary-green text-sm font-medium rounded-full mb-6">
+                        Our Journey
+                    </span>
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
                     <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                        Masinde Wanyonyi & Company Advocates was established with a vision to provide comprehensive, client-focused legal services in Kenya. Our firm has grown to become a trusted name in the Kenyan legal landscape, serving individuals, businesses, and organizations with distinction.
+                        <strong>Masinde Wanyonyi & Company Advocates</strong> was established with a vision to provide comprehensive, client-focused legal services in Kenya. Our firm has grown to become a trusted name in the Kenyan legal landscape, serving individuals, businesses, and organizations with distinction.
                     </p>
                     <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                        Located in the heart of Nairobi's Upperhill district, we are strategically positioned to serve clients across Kenya and beyond. Our commitment to excellence, combined with deep local knowledge and international standards, sets us apart in the legal profession.
+                        Located in the heart of Nairobi's <em>Upperhill district</em>, we are strategically positioned to serve clients across Kenya and beyond. Our commitment to excellence, combined with deep local knowledge and international standards, sets us apart in the legal profession.
                     </p>
-                    <p class="text-lg text-gray-600 leading-relaxed">
+                    <p class="text-lg text-gray-600 leading-relaxed mb-8">
                         We believe in building long-term relationships with our clients, understanding their unique needs, and providing tailored legal solutions that drive positive outcomes.
                     </p>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="text-center p-4 bg-white rounded-lg shadow-sm">
+                            <div class="text-2xl font-bold text-primary-green mb-1">15+</div>
+                            <div class="text-sm text-gray-600">Years Experience</div>
+                        </div>
+                        <div class="text-center p-4 bg-white rounded-lg shadow-sm">
+                            <div class="text-2xl font-bold text-primary-green mb-1">500+</div>
+                            <div class="text-sm text-gray-600">Cases Handled</div>
+                        </div>
+                        <div class="text-center p-4 bg-white rounded-lg shadow-sm">
+                            <div class="text-2xl font-bold text-primary-green mb-1">98%</div>
+                            <div class="text-sm text-gray-600">Success Rate</div>
+                        </div>
+                    </div>
                 </div>
-                <div>
+                <div class="fade-in-up">
+                    <div class="relative">
+                        <div class="bg-primary-green bg-opacity-5 rounded-2xl p-8">
+                            <img src="./img/randoms/law_books.png" alt="Legal Books and Justice" class="w-full rounded-lg shadow-lg">
+                        </div>
+                        <!-- Floating Elements -->
+                        <div class="absolute -top-6 -right-6 w-16 h-16 bg-yellow-400 rounded-full opacity-20 float-animation"></div>
+                        <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-primary-green rounded-full opacity-10 float-animation" style="animation-delay: 1s;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
                     <img src="./img/MWC_BLACK.svg" alt="MWC Advocates - Our Story" class="w-full max-w-md mx-auto">
                 </div>
             </div>
