@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="About Masinde Wanyonyi & Company Advocates - Learn about our experienced legal team, our history, and our commitment to providing exceptional legal services in Nairobi, Kenya.">
-    <meta name="keywords" content="about MWC advocates, law firm history, legal team Nairobi, experienced lawyers Kenya, Masinde Wanyonyi biography">
+    <meta name="description"
+        content="About Masinde Wanyonyi & Company Advocates - Learn about our experienced legal team, our history, and our commitment to providing exceptional legal services in Nairobi, Kenya.">
+    <meta name="keywords"
+        content="about MWC advocates, law firm history, legal team Nairobi, experienced lawyers Kenya, Masinde Wanyonyi biography">
     <meta name="author" content="Masinde Wanyonyi & Company Advocates">
     <meta name="robots" content="index, follow">
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="About Us - Masinde Wanyonyi & Company Advocates">
-    <meta property="og:description" content="Learn about our experienced legal team and our commitment to excellence in legal services across Kenya.">
+    <meta property="og:description"
+        content="Learn about our experienced legal team and our commitment to excellence in legal services across Kenya.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourwebsite.github.io/about.html">
     <meta property="og:image" content="./img/MWC_BLACK.png">
-    
+
     <title>About Us - Masinde Wanyonyi & Company Advocates</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="./img/MWC_BLACK.svg">
     <link rel="alternate icon" href="./img/MWC_BLACK.png">
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/custom.css">
-    
+
     <!-- Tailwind Config -->
     <script>
         tailwind.config = {
@@ -45,45 +48,50 @@
     <div id="header-placeholder"></div>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center text-white overflow-hidden" style="background-color: #0c3110;">
+    <section class="relative min-h-screen flex items-center justify-center text-white overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="./img/heroBg.jpg" alt="Legal Background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-80"></div>
+        </div>
+
         <!-- Content -->
         <div class="relative z-10 text-center w-full max-w-4xl mx-auto px-4">
             <!-- Main Heading -->
-            <h1 class="text-5xl md:text-6xl font-bold mb-8 tracking-wide">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 tracking-wide">
                 About Our Firm
             </h1>
 
             <!-- Subtitle -->
-            <p class="text-xl md:text-2xl mb-12 text-gray-200 max-w-3xl mx-auto leading-relaxed">
-                Dedicated to providing exceptional legal services with integrity, professionalism, and unwavering commitment to our clients.
+            <p class="text-lg md:text-xl mb-12 text-gray-200 max-w-3xl mx-auto leading-relaxed">
+                Dedicated to providing exceptional legal services with integrity, professionalism, and unwavering
+                commitment to our clients.
             </p>
         </div>
     </section>
-
-    <!-- About Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
 
     <!-- Our Story Section -->
     <section class="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="fade-in-up">
-                    <span class="inline-block px-4 py-2 bg-primary-green bg-opacity-10 text-primary-green text-sm font-medium rounded-full mb-6">
-                        Our Journey
-                    </span>
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
                     <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                        <strong>Masinde Wanyonyi & Company Advocates</strong> was established with a vision to provide comprehensive, client-focused legal services in Kenya. Our firm has grown to become a trusted name in the Kenyan legal landscape, serving individuals, businesses, and organizations with distinction.
+                        <strong>Masinde Wanyonyi & Company Advocates</strong> was established with a vision to provide
+                        comprehensive, client-focused legal services in Kenya. Our firm has grown to become a trusted
+                        name in the Kenyan legal landscape, serving individuals, businesses, and organizations with
+                        distinction.
                     </p>
                     <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                        Located in the heart of Nairobi's <em>Upperhill district</em>, we are strategically positioned to serve clients across Kenya and beyond. Our commitment to excellence, combined with deep local knowledge and international standards, sets us apart in the legal profession.
+                        Located in the heart of Nairobi's <em>Upperhill district</em>, we are strategically positioned
+                        to serve clients across Kenya and beyond. Our commitment to excellence, combined with deep local
+                        knowledge and international standards, sets us apart in the legal profession.
                     </p>
                     <p class="text-lg text-gray-600 leading-relaxed mb-8">
-                        We believe in building long-term relationships with our clients, understanding their unique needs, and providing tailored legal solutions that drive positive outcomes.
+                        We believe in building long-term relationships with our clients, understanding their unique
+                        needs, and providing tailored legal solutions that drive positive outcomes.
                     </p>
-                    
+
                     <!-- Stats -->
                     <div class="grid grid-cols-3 gap-4">
                         <div class="text-center p-4 bg-white rounded-lg shadow-sm">
@@ -103,17 +111,20 @@
                 <div class="fade-in-up">
                     <div class="relative">
                         <div class="bg-primary-green bg-opacity-5 rounded-2xl p-8">
-                            <img src="./img/randoms/law_books.png" alt="Legal Books and Justice" class="w-full rounded-lg shadow-lg">
+                            <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 4 / 3;">
+                                <img src="./img/randoms/justice.png" alt="Legal Books and Justice"
+                                     class="absolute inset-0 w-full h-full object-cover">
+                                <img src="./img/PictureFrame.svg" alt="Picture Frame"
+                                    class="absolute inset-0 w-full h-full object-cover transform scale-110 pointer-events-none">
+                            </div>
                         </div>
                         <!-- Floating Elements -->
-                        <div class="absolute -top-6 -right-6 w-16 h-16 bg-yellow-400 rounded-full opacity-20 float-animation"></div>
-                        <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-primary-green rounded-full opacity-10 float-animation" style="animation-delay: 1s;"></div>
+                        <div
+                            class="absolute -top-6 -right-6 w-16 h-16 bg-yellow-400 rounded-full opacity-20 float-animation">
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 w-20 h-20 bg-primary-green rounded-full opacity-10 float-animation"
+                            style="animation-delay: 1s;"></div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-                    <img src="./img/MWC_BLACK.svg" alt="MWC Advocates - Our Story" class="w-full max-w-md mx-auto">
                 </div>
             </div>
         </div>
@@ -128,77 +139,93 @@
                     These fundamental principles guide everything we do and shape our approach to legal practice.
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-lg shadow-lg hover-lift">
                     <div class="w-16 h-16 bg-primary-green rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                            </path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-900">Integrity</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        We maintain the highest ethical standards in all our professional dealings, ensuring transparency and honesty with our clients.
+                        We maintain the highest ethical standards in all our professional dealings, ensuring
+                        transparency and honesty with our clients.
                     </p>
                 </div>
-                
+
                 <div class="bg-white p-8 rounded-lg shadow-lg hover-lift">
                     <div class="w-16 h-16 bg-primary-green rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-900">Excellence</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        We strive for excellence in every case, continuously improving our skills and staying current with legal developments.
+                        We strive for excellence in every case, continuously improving our skills and staying current
+                        with legal developments.
                     </p>
                 </div>
-                
+
                 <div class="bg-white p-8 rounded-lg shadow-lg hover-lift">
                     <div class="w-16 h-16 bg-primary-green rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-900">Client Focus</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        Our clients' success is our priority. We listen carefully, understand deeply, and deliver personalized solutions.
+                        Our clients' success is our priority. We listen carefully, understand deeply, and deliver
+                        personalized solutions.
                     </p>
                 </div>
-                
+
                 <div class="bg-white p-8 rounded-lg shadow-lg hover-lift">
                     <div class="w-16 h-16 bg-primary-green rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-900">Professionalism</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        We conduct ourselves with the utmost professionalism, respecting all parties and maintaining confidentiality.
+                        We conduct ourselves with the utmost professionalism, respecting all parties and maintaining
+                        confidentiality.
                     </p>
                 </div>
-                
+
                 <div class="bg-white p-8 rounded-lg shadow-lg hover-lift">
                     <div class="w-16 h-16 bg-primary-green rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-900">Timeliness</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        We understand that time is critical in legal matters and ensure prompt response and efficient service delivery.
+                        We understand that time is critical in legal matters and ensure prompt response and efficient
+                        service delivery.
                     </p>
                 </div>
-                
+
                 <div class="bg-white p-8 rounded-lg shadow-lg hover-lift">
                     <div class="w-16 h-16 bg-primary-green rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6">
+                            </path>
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-900">Innovation</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        We embrace new technologies and methodologies to improve our service delivery and client experience.
+                        We embrace new technologies and methodologies to improve our service delivery and client
+                        experience.
                     </p>
                 </div>
             </div>
@@ -214,44 +241,50 @@
                     Meet the experienced legal professionals who lead our firm with expertise and dedication.
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-gray-50 p-8 rounded-lg hover-lift text-center">
                     <div class="w-32 h-32 bg-primary-green rounded-full mx-auto mb-6 flex items-center justify-center">
                         <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path
+                                d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2 text-gray-900">Masinde Wanyonyi</h3>
+                    <h3 class="text-2xl font-bold mb-2 text-gray-900">Wanyonyi</h3>
                     <p class="text-primary-green font-semibold mb-4">Managing Partner</p>
                     <p class="text-gray-600 leading-relaxed">
-                        Leading the firm with extensive experience in corporate law and litigation. Committed to delivering exceptional legal services to all clients.
+                        Leading the firm with extensive experience in corporate law and litigation. Committed to
+                        delivering exceptional legal services to all clients.
                     </p>
                 </div>
-                
+
                 <div class="bg-gray-50 p-8 rounded-lg hover-lift text-center">
                     <div class="w-32 h-32 bg-primary-green rounded-full mx-auto mb-6 flex items-center justify-center">
                         <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path
+                                d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2 text-gray-900">Senior Associate</h3>
+                    <h3 class="text-2xl font-bold mb-2 text-gray-900">Dennis Masinde</h3>
                     <p class="text-primary-green font-semibold mb-4">Property Law Specialist</p>
                     <p class="text-gray-600 leading-relaxed">
-                        Specializing in real estate transactions and property disputes with a track record of successful case resolutions.
+                        Specializing in real estate transactions and property disputes with a track record of successful
+                        case resolutions.
                     </p>
                 </div>
-                
+
                 <div class="bg-gray-50 p-8 rounded-lg hover-lift text-center">
                     <div class="w-32 h-32 bg-primary-green rounded-full mx-auto mb-6 flex items-center justify-center">
                         <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path
+                                d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </div>
                     <h3 class="text-2xl font-bold mb-2 text-gray-900">Legal Counsel</h3>
                     <p class="text-primary-green font-semibold mb-4">Corporate Affairs</p>
                     <p class="text-gray-600 leading-relaxed">
-                        Expert in corporate governance, compliance, and business law with extensive experience serving corporate clients.
+                        Expert in corporate governance, compliance, and business law with extensive experience serving
+                        corporate clients.
                     </p>
                 </div>
             </div>
@@ -267,59 +300,76 @@
                     Our commitment to excellence and client satisfaction sets us apart in the Kenyan legal landscape.
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
                     <h3 class="text-2xl font-bold mb-6">Our Advantages</h3>
                     <ul class="space-y-4">
                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
                             </svg>
                             <span>Extensive experience across multiple practice areas</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
                             </svg>
                             <span>Strategic location in Nairobi's business district</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
                             </svg>
                             <span>Personalized attention to every client's needs</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
                             </svg>
                             <span>Competitive and transparent fee structures</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
                             </svg>
                             <span>Strong track record of successful case outcomes</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            <svg class="w-6 h-6 text-green-300 mr-3 mt-1 flex-shrink-0" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
                             </svg>
                             <span>Commitment to continuous professional development</span>
                         </li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h3 class="text-2xl font-bold mb-6">Our Promise</h3>
                     <p class="text-green-100 leading-relaxed mb-6">
-                        At Masinde Wanyonyi & Company Advocates, we promise to provide you with the highest quality legal representation. We understand that legal challenges can be overwhelming, and we're here to guide you through every step of the process.
+                        At Masinde Wanyonyi & Company Advocates, we promise to provide you with the highest quality
+                        legal representation. We understand that legal challenges can be overwhelming, and we're here to
+                        guide you through every step of the process.
                     </p>
                     <p class="text-green-100 leading-relaxed mb-8">
-                        Our team is dedicated to understanding your unique situation and providing tailored solutions that meet your specific needs. We believe in building lasting relationships based on trust, transparency, and results.
+                        Our team is dedicated to understanding your unique situation and providing tailored solutions
+                        that meet your specific needs. We believe in building lasting relationships based on trust,
+                        transparency, and results.
                     </p>
-                    <a href="contact.html" class="bg-white text-primary-green px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition duration-300 inline-block">
+                    <a href="contact.html"
+                        class="bg-white text-primary-green px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition duration-300 inline-block">
                         Schedule a Consultation
                     </a>
                 </div>
@@ -327,8 +377,8 @@
         </div>
     </section>
 
-    <!-- Footer Placeholder -->
-    <div id="footer-placeholder"></div>
+    <!-- Footer Placeholder
+    <div id="footer-placeholder"></div> -->
 
     <!-- JavaScript -->
     <script src="./js/main.js"></script>
