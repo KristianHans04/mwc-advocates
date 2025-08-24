@@ -13,7 +13,7 @@ datasource db {
 // Service categories for the law firm
 model Service {
   id          String   @id @default(cuid())
-  title       String
+  title       String   @unique
   description String
   icon        String
   features    String[]
@@ -26,7 +26,7 @@ model Service {
 // Client testimonials
 model Testimonial {
   id        String   @id @default(cuid())
-  name      String
+  name      String   @unique
   position  String
   company   String?
   content   String
@@ -85,7 +85,7 @@ model BlogPost {
 // FAQ items
 model FAQ {
   id        String   @id @default(cuid())
-  question  String
+  question  String   @unique
   answer    String
   category  String
   order     Int      @default(0)
