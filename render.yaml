@@ -1,0 +1,32 @@
+# Render Blueprint for MWC Advocates PERN Stack
+# This file defines the infrastructure for both frontend and backend
+
+services:
+  # Backend API Service
+  - type: web
+    name: mwc-advocates-api
+    runtime: node
+    plan: free
+    buildCommand: cd server && npm install && npm run build && npx prisma generate
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: DATABASE_URL
+        sync: false # Will be set manually in Render dashboard
+      - key: CORS_ORIGIN
+        value: https://mwc-advocates.onrender.com
+    healthCheckPath: /api/health
+
+  # Frontend Static Site
+  - type: web
+    name: mwc-advocates-frontend
+    runtime: static
+    plan: free
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://mwc-advocates-api.onrender.com
