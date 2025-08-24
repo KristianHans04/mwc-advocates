@@ -1,0 +1,582 @@
+/**
+ * SparkPost Email Service for MWC Advocates
+ * Handles sending branded emails for contact form submissions
+ */
+
+import axios from 'axios';
+
+interface EmailRecipient {
+  email: string;
+  name?: string;
+}
+
+interface EmailContent {
+  subject: string;
+  htmlContent: string;
+  textContent: string;
+}
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  phone?: string;
+  subject?: string;
+  message: string;
+}
+
+interface EmailSendResult {
+  adminSent: boolean;
+  clientSent: boolean;
+  adminError: string | null;
+  clientError: string | null;
+}
+
+class SparkPostService {
+  private apiKey: string;
+  private domain: string;
+  private baseURL = 'https://api.sparkpost.com/api/v1';
+
+  constructor() {
+    this.apiKey = process.env.SPARKPOST_API_KEY || '';
+    this.domain = process.env.SPARKPOST_DOMAIN || 'kristianhans.com';
+    
+    if (!this.apiKey) {
+      console.error('SPARKPOST_API_KEY is not configured');
+    }
+  }
+
+  /**
+   * Send email using SparkPost API
+   */
+  private async sendEmail(
+    recipients: EmailRecipient[],
+    content: EmailContent,
+    fromEmail: string = process.env.EMAIL_FROM || `noreply@${this.domain}`
+  ): Promise<boolean> {
+    try {
+      const payload = {
+        options: {
+          sandbox: process.env.NODE_ENV !== 'production'
+        },
+        content: {
+          from: fromEmail,
+          subject: content.subject,
+          html: content.htmlContent,
+          text: content.textContent
+        },
+        recipients: recipients.map(recipient => ({
+          address: {
+            email: recipient.email,
+            name: recipient.name || recipient.email
+          }
+        }))
+      };
+
+      const response = await axios.post(
+        `${this.baseURL}/transmissions`,
+        payload,
+        {
+          headers: {
+            'Authorization': this.apiKey,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      console.log('✅ Email sent successfully:', response.data);
+      return true;
+    } catch (error: any) {
+      console.error('❌ Failed to send email:', error.response?.data || error.message);
+      return false;
+    }
+  }
+
+  /**
+   * Generate admin notification email HTML
+   */
+  private generateAdminEmailHTML(data: ContactFormData): string {
+    return `
+  /**
+   * Generate admin notification email HTML
+   */
+  private generateAdminEmailHTML(data: ContactFormData): string {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Contact Form Submission - MWC Advocates</title>
+    <style>
+        body { 
+            font-family: 'Georgia', serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f8f9fa; 
+            color: #333333;
+            line-height: 1.6;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); 
+            color: white; 
+            padding: 30px; 
+            text-align: center; 
+        }
+        .logo { 
+            font-size: 32px; 
+            font-weight: bold; 
+            margin-bottom: 10px; 
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .tagline {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .content { 
+            padding: 40px 30px; 
+        }
+        .title {
+            color: #1a365d;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #2c5282;
+            padding-bottom: 10px;
+        }
+        .submission-details { 
+            background-color: #f7fafc; 
+            border-left: 4px solid #2c5282; 
+            padding: 25px; 
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .detail-row { 
+            margin: 15px 0; 
+            padding: 12px 0; 
+            border-bottom: 1px solid #e2e8f0; 
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .label { 
+            font-weight: bold; 
+            color: #1a365d; 
+            display: inline-block; 
+            width: 120px; 
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        .value { 
+            color: #4a5568; 
+            font-size: 16px;
+        }
+        .message-content { 
+            background-color: #ffffff; 
+            border: 2px solid #e2e8f0; 
+            padding: 25px; 
+            border-radius: 8px; 
+            margin: 20px 0;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        .message-title {
+            color: #1a365d;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .footer { 
+            background-color: #1a365d; 
+            color: white; 
+            text-align: center; 
+            padding: 25px; 
+            font-size: 14px; 
+        }
+        .footer-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .metadata {
+            background-color: #edf2f7;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #718096;
+        }
+        .priority-notice {
+            background-color: #fed7d7;
+            color: #c53030;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #feb2b2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">MWC Advocates</div>
+            <div class="tagline">Professional Legal Services</div>
+        </div>
+        
+        <div class="content">
+            <h1 class="title">New Contact Form Submission</h1>
+            
+            <div class="submission-details">
+                <div class="detail-row">
+                    <span class="label">Full Name:</span>
+                    <span class="value">\${data.name}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Email Address:</span>
+                    <span class="value">\${data.email}</span>
+                </div>
+                \${data.phone ? `
+                <div class="detail-row">
+                    <span class="label">Phone Number:</span>
+                    <span class="value">\${data.phone}</span>
+                </div>
+                ` : ''}
+                <div class="detail-row">
+                    <span class="label">Subject:</span>
+                    <span class="value">\${data.subject || 'General Inquiry'}</span>
+                </div>
+            </div>
+            
+            <div class="message-title">Client Message:</div>
+            <div class="message-content">
+                \${data.message.replace(/
+/g, '<br>')}
+            </div>
+            
+            <div class="priority-notice">
+                Please respond within 24 hours during business days
+            </div>
+            
+            <div class="metadata">
+                <strong>Submission Details:</strong><br>
+                Date & Time: \${new Date().toLocaleString()}<br>
+                Source: Website Contact Form<br>
+                Website: \${process.env.WEBSITE_URL || 'https://kristianhans.com'}
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-title">MASINDE WANYONYI & COMPANY ADVOCATES</div>
+            <p>This notification was automatically generated from your website contact form.</p>
+            <p>Trusted Legal Partners Since 2020</p>
+        </div>
+    </div>
+</body>
+</html>`;
+  }`;
+  }
+
+  /**
+   * Generate client thank you email HTML
+   */
+  private generateClientEmailHTML(data: ContactFormData): string {
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - MWC Advocates</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .greeting {
+            font-size: 24px;
+            font-weight: 600;
+            color: #059669;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #374151;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 1px solid #059669;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .response-time {
+            font-weight: 600;
+            color: #059669;
+            font-size: 18px;
+        }
+        .services-list {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .services-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .service-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+        .service-icon {
+            color: #059669;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .contact-info {
+            background-color: #1f2937;
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .contact-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #d1fae5;
+        }
+        .contact-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .contact-icon {
+            margin-right: 10px;
+            color: #10b981;
+        }
+        .footer {
+            background-color: #f9fafb;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .social-links {
+            margin-top: 15px;
+        }
+        .social-link {
+            display: inline-block;
+            margin: 0 10px;
+            color: #059669;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">⚖️ MWC ADVOCATES</div>
+            <p>Premier Legal Services in Nairobi, Kenya</p>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">Dear ${data.name},</div>
+            
+            <div class="message">
+                Thank you for reaching out to MWC Advocates. We have received your inquiry and appreciate you considering our legal services for your needs.
+            </div>
+            
+            <div class="highlight-box">
+                <div class="response-time">⏱️ Expected Response Time: 24-48 hours</div>
+                <p style="margin: 10px 0 0 0; color: #374151;">Our team will review your message and get back to you promptly during business hours.</p>
+            </div>
+            
+            <div class="message">
+                Your inquiry is important to us, and we're committed to providing you with the highest quality legal representation and advice. Our experienced team specializes in various areas of law to serve you better.
+            </div>
+            
+            <div class="services-list">
+                <div class="services-title">🏛️ Our Legal Services Include:</div>
+                <div class="service-item">
+                    <span class="service-icon">⚖️</span>
+                    Corporate Law & Business Formation
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">🏠</span>
+                    Real Estate & Property Law
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">👥</span>
+                    Employment & Labor Law
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">📋</span>
+                    Contract Drafting & Review
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">🛡️</span>
+                    Litigation & Dispute Resolution
+                </div>
+                <div class="service-item">
+                    <span class="service-icon">💼</span>
+                    Intellectual Property
+                </div>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-title">📞 Get In Touch</div>
+                <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <a href="mailto:info@kristianhans.com" style="color: #10b981; text-decoration: none;">
+                        info@kristianhans.com
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📱</span>
+                    <a href="tel:+254700000000" style="color: #10b981; text-decoration: none;">
+                        +254 700 000 000
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    Nairobi, Kenya
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🕒</span>
+                    Mon-Fri: 9:00 AM - 6:00 PM (EAT)
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>MWC Advocates</strong> - Trusted Legal Partners Since 2020</p>
+            <p>This email was sent in response to your inquiry on our website.</p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">LinkedIn</a>
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">Website</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+  }
+
+  /**
+   * Send admin notification email
+   */
+  private async sendAdminNotification(data: ContactFormData): Promise<boolean> {
+    const adminEmail = process.env.ADMIN_EMAIL || 'info@kristianhans.com';
+    
+    return await this.sendEmail(
+      [{ email: adminEmail, name: 'MWC Advocates Team' }],
+      {
+        subject: `New Contact Form Submission - ${data.subject || 'General Inquiry'}`,
+        htmlContent: this.generateAdminEmailHTML(data),
+        textContent: `New contact form submission from ${data.name} (${data.email}): ${data.message}`
+      }
+    );
+  }
+
+  /**
+   * Send client thank you email
+   */
+  private async sendClientThankYou(data: ContactFormData): Promise<boolean> {
+    return await this.sendEmail(
+      [{ email: data.email, name: data.name }],
+      {
+        subject: 'Thank you for contacting MWC Advocates',
+        htmlContent: this.generateClientEmailHTML(data),
+        textContent: `Dear ${data.name}, thank you for contacting MWC Advocates. We have received your message and will get back to you soon.`
+      }
+    );
+  }
+
+  /**
+   * Send contact form emails (admin notification + client thank you)
+   */
+  async sendContactFormEmails(contactData: ContactFormData): Promise<EmailSendResult> {
+    console.log('🔧 Starting email sending process...');
+    console.log('📧 Contact data:', { 
+      name: contactData.name, 
+      email: contactData.email, 
+      subject: contactData.subject || 'General Inquiry' 
+    });
+
+    const results = {
+      adminSent: false,
+      clientSent: false,
+      adminError: null as string | null,
+      clientError: null as string | null
+    };
+
+    // Send admin notification email
+    try {
+      console.log('📨 Sending admin notification email...');
+      await this.sendAdminNotification(contactData);
+      results.adminSent = true;
+      console.log('✅ Admin notification sent successfully');
+    } catch (error) {
+      console.error('❌ Failed to send admin notification:', error);
+      results.adminError = error instanceof Error ? error.message : 'Unknown error';
+    }
+
+    // Send client thank you email
+    try {
+      console.log('📨 Sending client thank you email...');
+      await this.sendClientThankYou(contactData);
+      results.clientSent = true;
+      console.log('✅ Client thank you email sent successfully');
+    } catch (error) {
+      console.error('❌ Failed to send client thank you email:', error);
+      results.clientError = error instanceof Error ? error.message : 'Unknown error';
+    }
+
+    console.log('📊 Final email results:', results);
+    return results;
+  }
+}
+
+export default new SparkPostService();
