@@ -1,0 +1,50 @@
+{
+  "name": "mwc-advocates-pern",
+  "version": "1.0.0",
+  "description": "PERN Stack application for MWC Advocates law firm",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm run dev",
+    "server:build": "cd server && npm run build",
+    "client:build": "cd client && npm run build",
+    "build": "npm run server:build && npm run client:build",
+    "server:start": "cd server && npm start",
+    "client:preview": "cd client && npm run preview",
+    "db:generate": "cd server && npm run db:generate",
+    "db:migrate": "cd server && npm run db:migrate",
+    "db:seed": "cd server && npm run db:seed",
+    "db:studio": "cd server && npm run db:studio",
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "clean": "rm -rf server/dist client/dist server/node_modules client/node_modules node_modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KristianHans04/mwc-advocates.git"
+  },
+  "keywords": [
+    "law-firm",
+    "legal-services",
+    "pern-stack",
+    "react",
+    "typescript",
+    "postgresql",
+    "express",
+    "nairobi",
+    "kenya"
+  ],
+  "author": "MWC Advocates Development Team",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/KristianHans04/mwc-advocates/issues"
+  },
+  "homepage": "https://github.com/KristianHans04/mwc-advocates#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
