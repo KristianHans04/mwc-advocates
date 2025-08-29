@@ -5,8 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_validator_1 = require("express-validator");
-const nodemailer_1 = __importDefault(require("nodemailer"));
 const database_service_1 = __importDefault(require("../services/database.service"));
+const email_service_1 = __importDefault(require("../services/email.service"));
+const email_dev_service_1 = __importDefault(require("../services/email.dev.service"));
 const router = express_1.default.Router();
 const db = database_service_1.default.getInstance();
 router.post('/', [
@@ -34,13 +35,24 @@ router.post('/', [
                 message,
             },
         });
-        if (process.env.SMTP_HOST && process.env.CONTACT_EMAIL) {
-            try {
-                await sendContactNotification({ name, email, phone, subject, message });
+        try {
+            const isProduction = process.env.NODE_ENV === 'production';
+            const currentEmailService = isProduction ? email_service_1.default : email_dev_service_1.default;
+            console.log(`📧 Using ${isProduction ? 'SparkPost (production)' : 'MailHog (development)'} email service`);
+            const emailResult = await currentEmailService.sendContactFormEmails({
+                name,
+                email,
+                phone,
+                subject,
+                message
+            });
+            console.log('📧 Email sending results:', emailResult);
+            if (!emailResult.adminSent && !emailResult.clientSent) {
+                console.warn('⚠️ Both emails failed to send, but form submission was saved');
             }
-            catch (emailError) {
-                console.error('Failed to send email notification:', emailError);
-            }
+        }
+        catch (emailError) {
+            console.error('❌ Failed to send email notifications:', emailError);
         }
         res.status(201).json({
             success: true,
@@ -74,31 +86,5 @@ router.get('/submissions', async (req, res) => {
         });
     }
 });
-async function sendContactNotification(data) {
-    const transporter = nodemailer_1.default.createTransport({
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT || '587'),
-        secure: process.env.SMTP_SECURE === 'true',
-        auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-        },
-    });
-    const mailOptions = {
-        from: process.env.SMTP_FROM || process.env.SMTP_USER,
-        to: process.env.CONTACT_EMAIL,
-        subject: `New Contact Form Submission - ${data.subject || 'General Inquiry'}`,
-        html: `
-      <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${data.name}</p>
-      <p><strong>Email:</strong> ${data.email}</p>
-      ${data.phone ? `<p><strong>Phone:</strong> ${data.phone}</p>` : ''}
-      ${data.subject ? `<p><strong>Subject:</strong> ${data.subject}</p>` : ''}
-      <p><strong>Message:</strong></p>
-      <p>${data.message.replace(/\n/g, '<br>')}</p>
-    `,
-    };
-    await transporter.sendMail(mailOptions);
-}
 exports.default = router;
 //# sourceMappingURL=contact.routes.js.map

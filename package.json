@@ -4,7 +4,11 @@
   "description": "PERN Stack application for MWC Advocates law firm",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "dev": "./scripts/dev-with-email.sh",
+    "dev:simple": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "mailhog:start": "sudo docker run -d --name mwc-mailhog -p 1025:1025 -p 8025:8025 mailhog/mailhog:latest 2>/dev/null || echo 'MailHog already running'",
+    "mailhog:stop": "sudo docker stop mwc-mailhog && sudo docker rm mwc-mailhog 2>/dev/null || echo 'MailHog not running'",
+    "mailhog:ui": "echo '🔍 MailHog UI: http://localhost:8025' && open http://localhost:8025 2>/dev/null || xdg-open http://localhost:8025 2>/dev/null || echo 'Open http://localhost:8025 in your browser'",
     "server:dev": "cd server && npm run dev",
     "client:dev": "cd client && npm run dev",
     "server:build": "cd server && npm run build",

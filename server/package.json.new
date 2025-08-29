@@ -5,14 +5,9 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "dev:email": "docker compose -f ../docker-compose.dev.yml up -d mailhog && npm run dev",
-    "mailhog:start": "docker compose -f ../docker-compose.dev.yml up -d mailhog",
-    "mailhog:stop": "docker compose -f ../docker-compose.dev.yml down",
-    "mailhog:logs": "docker compose -f ../docker-compose.dev.yml logs -f mailhog",
     "build": "tsc",
     "start": "node dist/server.js",
     "start:prod": "npx prisma db push && npx prisma db seed && node dist/server.js",
-    "start:minimal": "node dist/server.js",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -27,14 +22,6 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.14.0",
-    "@types/bcryptjs": "^3.0.0",
-    "@types/compression": "^1.8.1",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^4.17.23",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/morgan": "^1.9.10",
-    "@types/node": "^24.3.0",
-    "axios": "^1.11.0",
     "bcryptjs": "^3.0.2",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
@@ -45,14 +32,21 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
+    "nodemailer": "^7.0.5",
+    "@types/node": "^24.3.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.23",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/nodemailer": "^7.0.1",
+    "nodemon": "^3.1.10",
     "prisma": "^6.14.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
-  },
-  "devDependencies": {
-    "@types/nodemailer": "^7.0.1",
-    "nodemailer": "^7.0.5",
-    "nodemon": "^3.1.10"
   },
   "prisma": {
     "seed": "ts-node src/utils/seed.ts"
