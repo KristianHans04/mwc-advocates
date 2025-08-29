@@ -49,33 +49,43 @@ const Contact: React.FC = () => {
     setStatus({ type: null, message: '' });
 
     try {
-      // For now, simulate API call since backend has issues
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // In production, this would be:
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData)
-      // });
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
 
-      setStatus({
-        type: 'success',
-        message: 'Thank you for your message! We will get back to you within 24 hours.'
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
+      const result = await response.json();
+
+      if (response.ok) {
+        setStatus({
+          type: 'success',
+          message: 'Thank you for your message! We will get back to you within 24 hours.'
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        // Handle validation errors
+        if (result.errors && Array.isArray(result.errors)) {
+          const errorMessages = result.errors.map((err: any) => err.msg).join(', ');
+          throw new Error(errorMessages);
+        } else {
+          throw new Error(result.message || 'Failed to send message');
+        }
+      }
     } catch (error) {
+      console.error('Contact form error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to send message. Please try again or contact us directly.';
       setStatus({
         type: 'error',
-        message: 'Failed to send message. Please try again or contact us directly.'
+        message: errorMessage
       });
     } finally {
       setLoading(false);

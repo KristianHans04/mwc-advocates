@@ -4,34 +4,9 @@
  */
 
 import nodemailer from 'nodemailer';
+import { EmailRecipient, EmailContent, ContactFormData, EmailSendResult, EmailService } from '../types/email.types';
 
-interface EmailRecipient {
-  email: string;
-  name?: string;
-}
-
-interface EmailContent {
-  subject: string;
-  htmlContent: string;
-  textContent: string;
-}
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone?: string;
-  subject?: string;
-  message: string;
-}
-
-interface EmailSendResult {
-  adminSent: boolean;
-  clientSent: boolean;
-  adminError: string | null;
-  clientError: string | null;
-}
-
-class DevEmailService {
+class DevEmailService implements EmailService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
@@ -68,12 +43,12 @@ class DevEmailService {
         };
 
         const result = await this.transporter.sendMail(mailOptions);
-        console.log(`✅ Email sent to ${recipient.email} via MailHog:`, result.messageId);
+        console.log(`Email sent to ${recipient.email} via MailHog:`, result.messageId);
       }
       
       return true;
     } catch (error: any) {
-      console.error('❌ Failed to send email via MailHog:', error.message);
+      console.error('Failed to send email via MailHog:', error.message);
       return false;
     }
   }
@@ -294,8 +269,8 @@ class DevEmailService {
     const results = {
       adminSent: false,
       clientSent: false,
-      adminError: null as string | null,
-      clientError: null as string | null
+      adminError: undefined as string | undefined,
+      clientError: undefined as string | undefined
     };
 
     // Send admin notification email

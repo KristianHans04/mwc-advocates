@@ -8,7 +8,7 @@ services:
     runtime: node
     plan: free
     buildCommand: cd server && npm install && npm run build && npx prisma generate
-    startCommand: cd server && npm run start:prod
+    startCommand: cd server && npm run start:minimal
     envVars:
       - key: NODE_ENV
         value: production

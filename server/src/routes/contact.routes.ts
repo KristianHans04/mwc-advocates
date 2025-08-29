@@ -5,8 +5,8 @@
 
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
-import nodemailer from 'nodemailer';
 import DatabaseService from '../services/database.service';
+import devEmailService from '../services/email.dev.service';
 
 const router = express.Router();
 const db = DatabaseService.getInstance();
@@ -18,9 +18,9 @@ const db = DatabaseService.getInstance();
 router.post('/',
   [
     body('name').isLength({ min: 2 }).withMessage('Name must be at least 2 characters'),
-    body('email').isEmail().withMessage('Please provide a valid email'),
+    body('email').isEmail().withMessage('Please provide a valid email address'),
     body('message').isLength({ min: 10 }).withMessage('Message must be at least 10 characters'),
-    body('phone').optional().isMobilePhone('any').withMessage('Please provide a valid phone number'),
+    body('phone').optional().isLength({ min: 8 }).withMessage('Phone number must be at least 8 digits'),
   ],
   async (req: Request, res: Response): Promise<void> => {
     try {
@@ -46,14 +46,26 @@ router.post('/',
         },
       });
 
-      // Send email notification (if configured)
-      if (process.env.SMTP_HOST && process.env.CONTACT_EMAIL) {
-        try {
-          await sendContactNotification({ name, email, phone, subject, message });
-        } catch (emailError) {
-          console.error('Failed to send email notification:', emailError);
-          // Don't fail the request if email fails
+      // Send email notifications (using MailHog for development)
+      try {
+        console.log('Using MailHog development email service');
+        
+        const emailResult = await devEmailService.sendContactFormEmails({
+          name,
+          email,
+          phone,
+          subject,
+          message
+        });
+
+        console.log('Email sending results:', emailResult);
+        
+        if (!emailResult.adminSent && !emailResult.clientSent) {
+          console.warn('Both emails failed to send, but form submission was saved');
         }
+      } catch (emailError) {
+        console.error('Failed to send email notifications:', emailError);
+        // Don't fail the request if email fails
       }
 
       res.status(201).json({
@@ -93,43 +105,5 @@ router.get('/submissions', async (req: Request, res: Response) => {
     });
   }
 });
-
-/**
- * Send email notification for contact form submission
- */
-async function sendContactNotification(data: {
-  name: string;
-  email: string;
-  phone?: string;
-  subject?: string;
-  message: string;
-}) {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: process.env.SMTP_SECURE === 'true',
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.SMTP_FROM || process.env.SMTP_USER,
-    to: process.env.CONTACT_EMAIL,
-    subject: `New Contact Form Submission - ${data.subject || 'General Inquiry'}`,
-    html: `
-      <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${data.name}</p>
-      <p><strong>Email:</strong> ${data.email}</p>
-      ${data.phone ? `<p><strong>Phone:</strong> ${data.phone}</p>` : ''}
-      ${data.subject ? `<p><strong>Subject:</strong> ${data.subject}</p>` : ''}
-      <p><strong>Message:</strong></p>
-      <p>${data.message.replace(/\n/g, '<br>')}</p>
-    `,
-  };
-
-  await transporter.sendMail(mailOptions);
-}
 
 export default router;
