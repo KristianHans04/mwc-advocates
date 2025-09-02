@@ -16,9 +16,12 @@ const db = DatabaseService.getInstance();
  */
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const services = await db.prisma.service.findMany({
-      orderBy: { createdAt: 'asc' },
-    });
+    // Use raw SQL to bypass Prisma's prepared statement issues with PgBouncer
+    const services = await db.prisma.$queryRaw`
+      SELECT id, title, description, icon, features, "createdAt", "updatedAt"
+      FROM services 
+      ORDER BY "createdAt" ASC
+    `;
 
     res.json({
       success: true,

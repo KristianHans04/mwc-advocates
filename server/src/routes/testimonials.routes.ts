@@ -16,10 +16,13 @@ const db = DatabaseService.getInstance();
  */
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const testimonials = await db.prisma.testimonial.findMany({
-      where: { isActive: true },
-      orderBy: { createdAt: 'desc' },
-    });
+    // Use raw SQL to bypass Prisma's prepared statement issues with PgBouncer
+    const testimonials = await db.prisma.$queryRaw`
+      SELECT id, name, position, company, content, rating, initials, "isActive", "createdAt", "updatedAt"
+      FROM testimonials 
+      WHERE "isActive" = true
+      ORDER BY "createdAt" DESC
+    `;
 
     res.json({
       success: true,
