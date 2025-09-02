@@ -45,7 +45,8 @@
   },
   "homepage": "https://github.com/KristianHans04/mwc-advocates#readme",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "supabase": "^2.39.2"
   },
   "engines": {
     "node": ">=18.0.0",

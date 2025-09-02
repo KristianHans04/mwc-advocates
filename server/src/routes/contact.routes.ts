@@ -6,7 +6,7 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import DatabaseService from '../services/database.service';
-import devEmailService from '../services/email.dev.service';
+import zohoEmailService from '../services/email.service.zoho';
 
 const router = express.Router();
 const db = DatabaseService.getInstance();
@@ -35,22 +35,28 @@ router.post('/',
 
       const { name, email, phone, subject, message } = req.body;
 
-      // Save to database
-      const contactSubmission = await db.prisma.contactSubmission.create({
-        data: {
-          name,
-          email,
-          phone,
-          subject,
-          message,
-        },
-      });
+      // Save to database using raw SQL to work with Supabase pooler
+      const contactId = `c${Date.now().toString(36)}${Math.random().toString(36).substr(2, 9)}`;
+      
+      await db.prisma.$executeRaw`
+        INSERT INTO "contact_submissions" (id, name, email, phone, subject, message)
+        VALUES (${contactId}, ${name}, ${email}, ${phone}, ${subject}, ${message})
+      `;
 
-      // Send email notifications (using MailHog for development)
+      // Get the created submission for response
+      const contactSubmission = await db.prisma.$queryRaw`
+        SELECT id, name, email, subject, "createdAt"
+        FROM "contact_submissions" 
+        WHERE id = ${contactId}
+      ` as any[];
+
+      const submission = contactSubmission[0];
+
+      // Send email notifications via Zoho Mail
       try {
-        console.log('Using MailHog development email service');
+        console.log('Using Zoho Mail SMTP service');
         
-        const emailResult = await devEmailService.sendContactFormEmails({
+        const emailResult = await zohoEmailService.sendContactFormEmails({
           name,
           email,
           phone,
@@ -71,7 +77,7 @@ router.post('/',
       res.status(201).json({
         success: true,
         message: 'Thank you for your message. We will get back to you soon.',
-        data: { id: contactSubmission.id },
+        data: { id: submission?.id || contactId },
       });
     } catch (error) {
       console.error('Error submitting contact form:', error);
