@@ -13,7 +13,15 @@ router.post('/', [
     (0, express_validator_1.body)('name').isLength({ min: 2 }).withMessage('Name must be at least 2 characters'),
     (0, express_validator_1.body)('email').isEmail().withMessage('Please provide a valid email address'),
     (0, express_validator_1.body)('message').isLength({ min: 10 }).withMessage('Message must be at least 10 characters'),
-    (0, express_validator_1.body)('phone').optional().isLength({ min: 8 }).withMessage('Phone number must be at least 8 digits'),
+    (0, express_validator_1.body)('phone').optional().custom((value) => {
+        if (!value)
+            return true;
+        const phoneRegex = /^[\+]?[\d\s\-\(\)\.]{7,20}$/;
+        if (!phoneRegex.test(value)) {
+            throw new Error('Please provide a valid phone number');
+        }
+        return true;
+    }),
 ], async (req, res) => {
     try {
         const errors = (0, express_validator_1.validationResult)(req);
@@ -25,17 +33,29 @@ router.post('/', [
             return;
         }
         const { name, email, phone, subject, message } = req.body;
-        const contactId = `c${Date.now().toString(36)}${Math.random().toString(36).substr(2, 9)}`;
-        await db.prisma.$executeRaw `
-        INSERT INTO "contact_submissions" (id, name, email, phone, subject, message)
-        VALUES (${contactId}, ${name}, ${email}, ${phone}, ${subject}, ${message})
-      `;
-        const contactSubmission = await db.prisma.$queryRaw `
-        SELECT id, name, email, subject, "createdAt"
-        FROM "contact_submissions" 
-        WHERE id = ${contactId}
-      `;
-        const submission = contactSubmission[0];
+        const isConnected = await db.isConnected();
+        let contactSubmission;
+        if (isConnected) {
+            contactSubmission = await db.prisma.contactSubmission.create({
+                data: {
+                    name,
+                    email,
+                    phone,
+                    subject,
+                    message
+                }
+            });
+        }
+        else {
+            console.warn('⚠️ Database not available, contact form will still send emails');
+            contactSubmission = {
+                id: `temp_${Date.now()}`,
+                name,
+                email,
+                subject,
+                message
+            };
+        }
         try {
             console.log('Using Zoho Mail SMTP service');
             const emailResult = await email_service_zoho_1.default.sendContactFormEmails({
@@ -56,7 +76,7 @@ router.post('/', [
         res.status(201).json({
             success: true,
             message: 'Thank you for your message. We will get back to you soon.',
-            data: { id: submission?.id || contactId },
+            data: { id: contactSubmission.id },
         });
     }
     catch (error) {
