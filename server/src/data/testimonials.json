@@ -1,0 +1,70 @@
+{
+  "testimonials": [
+    {
+      "id": "sarah-johnson",
+      "name": "Sarah Johnson",
+      "title": "CEO, TechStart Solutions",
+      "company": "TechStart Solutions",
+      "rating": 5,
+      "testimonial": "MWC Advocates provided exceptional guidance during our company's acquisition. Their expertise in corporate law and attention to detail made the entire process smooth and successful.",
+      "image": "/img/testimonials/sarah-johnson.jpg",
+      "date": "2024-08-15",
+      "service": "Corporate Law"
+    },
+    {
+      "id": "michael-chen",
+      "name": "Michael Chen",
+      "title": "Property Developer",
+      "company": "Chen Development Group",
+      "rating": 5,
+      "testimonial": "Outstanding real estate legal services. They handled our complex commercial development project with professionalism and delivered results beyond our expectations.",
+      "image": "/img/testimonials/michael-chen.jpg",
+      "date": "2024-07-22",
+      "service": "Real Estate Law"
+    },
+    {
+      "id": "emily-rodriguez",
+      "name": "Emily Rodriguez",
+      "title": "HR Director",
+      "company": "Global Dynamics Inc.",
+      "rating": 5,
+      "testimonial": "Their employment law expertise helped us navigate complex workforce regulations. Professional, knowledgeable, and always responsive to our needs.",
+      "image": "/img/testimonials/emily-rodriguez.jpg",
+      "date": "2024-06-10",
+      "service": "Employment Law"
+    },
+    {
+      "id": "david-thompson",
+      "name": "David Thompson",
+      "title": "Entrepreneur",
+      "company": "Thompson Innovations",
+      "rating": 5,
+      "testimonial": "Excellent intellectual property services. They secured our patents efficiently and provided strategic advice that protected our competitive advantage.",
+      "image": "/img/testimonials/david-thompson.jpg",
+      "date": "2024-05-18",
+      "service": "Intellectual Property"
+    },
+    {
+      "id": "lisa-martinez",
+      "name": "Lisa Martinez",
+      "title": "Business Owner",
+      "company": "Martinez Family Trust",
+      "rating": 5,
+      "testimonial": "Compassionate and thorough family law services. They guided us through a difficult time with empathy and achieved the best possible outcome for our family.",
+      "image": "/img/testimonials/lisa-martinez.jpg",
+      "date": "2024-04-25",
+      "service": "Family Law"
+    },
+    {
+      "id": "robert-kim",
+      "name": "Robert Kim",
+      "title": "COO",
+      "company": "Pacific Manufacturing",
+      "rating": 5,
+      "testimonial": "Top-notch litigation support. Their strategic approach and courtroom expertise resulted in a favorable settlement that saved our company significant time and resources.",
+      "image": "/img/testimonials/robert-kim.jpg",
+      "date": "2024-03-12",
+      "service": "Civil Litigation"
+    }
+  ]
+}
