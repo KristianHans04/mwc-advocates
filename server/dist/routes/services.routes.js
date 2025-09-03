@@ -10,9 +10,11 @@ const router = express_1.default.Router();
 const db = database_service_1.default.getInstance();
 router.get('/', async (req, res) => {
     try {
-        const services = await db.prisma.service.findMany({
-            orderBy: { createdAt: 'asc' },
-        });
+        const services = await db.prisma.$queryRaw `
+      SELECT id, title, description, icon, features, "createdAt", "updatedAt"
+      FROM services 
+      ORDER BY "createdAt" ASC
+    `;
         res.json({
             success: true,
             data: services,

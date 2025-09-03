@@ -10,10 +10,12 @@ const router = express_1.default.Router();
 const db = database_service_1.default.getInstance();
 router.get('/', async (req, res) => {
     try {
-        const testimonials = await db.prisma.testimonial.findMany({
-            where: { isActive: true },
-            orderBy: { createdAt: 'desc' },
-        });
+        const testimonials = await db.prisma.$queryRaw `
+      SELECT id, name, position, company, content, rating, initials, "isActive", "createdAt", "updatedAt"
+      FROM testimonials 
+      WHERE "isActive" = true
+      ORDER BY "createdAt" DESC
+    `;
         res.json({
             success: true,
             data: testimonials,

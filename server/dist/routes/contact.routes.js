@@ -6,15 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_validator_1 = require("express-validator");
 const database_service_1 = __importDefault(require("../services/database.service"));
-const email_service_1 = __importDefault(require("../services/email.service"));
-const email_dev_service_1 = __importDefault(require("../services/email.dev.service"));
+const email_service_zoho_1 = __importDefault(require("../services/email.service.zoho"));
 const router = express_1.default.Router();
 const db = database_service_1.default.getInstance();
 router.post('/', [
     (0, express_validator_1.body)('name').isLength({ min: 2 }).withMessage('Name must be at least 2 characters'),
-    (0, express_validator_1.body)('email').isEmail().withMessage('Please provide a valid email'),
+    (0, express_validator_1.body)('email').isEmail().withMessage('Please provide a valid email address'),
     (0, express_validator_1.body)('message').isLength({ min: 10 }).withMessage('Message must be at least 10 characters'),
-    (0, express_validator_1.body)('phone').optional().isMobilePhone('any').withMessage('Please provide a valid phone number'),
+    (0, express_validator_1.body)('phone').optional().isLength({ min: 8 }).withMessage('Phone number must be at least 8 digits'),
 ], async (req, res) => {
     try {
         const errors = (0, express_validator_1.validationResult)(req);
@@ -26,38 +25,38 @@ router.post('/', [
             return;
         }
         const { name, email, phone, subject, message } = req.body;
-        const contactSubmission = await db.prisma.contactSubmission.create({
-            data: {
-                name,
-                email,
-                phone,
-                subject,
-                message,
-            },
-        });
+        const contactId = `c${Date.now().toString(36)}${Math.random().toString(36).substr(2, 9)}`;
+        await db.prisma.$executeRaw `
+        INSERT INTO "contact_submissions" (id, name, email, phone, subject, message)
+        VALUES (${contactId}, ${name}, ${email}, ${phone}, ${subject}, ${message})
+      `;
+        const contactSubmission = await db.prisma.$queryRaw `
+        SELECT id, name, email, subject, "createdAt"
+        FROM "contact_submissions" 
+        WHERE id = ${contactId}
+      `;
+        const submission = contactSubmission[0];
         try {
-            const isProduction = process.env.NODE_ENV === 'production';
-            const currentEmailService = isProduction ? email_service_1.default : email_dev_service_1.default;
-            console.log(`📧 Using ${isProduction ? 'SparkPost (production)' : 'MailHog (development)'} email service`);
-            const emailResult = await currentEmailService.sendContactFormEmails({
+            console.log('Using Zoho Mail SMTP service');
+            const emailResult = await email_service_zoho_1.default.sendContactFormEmails({
                 name,
                 email,
                 phone,
                 subject,
                 message
             });
-            console.log('📧 Email sending results:', emailResult);
+            console.log('Email sending results:', emailResult);
             if (!emailResult.adminSent && !emailResult.clientSent) {
-                console.warn('⚠️ Both emails failed to send, but form submission was saved');
+                console.warn('Both emails failed to send, but form submission was saved');
             }
         }
         catch (emailError) {
-            console.error('❌ Failed to send email notifications:', emailError);
+            console.error('Failed to send email notifications:', emailError);
         }
         res.status(201).json({
             success: true,
             message: 'Thank you for your message. We will get back to you soon.',
-            data: { id: contactSubmission.id },
+            data: { id: submission?.id || contactId },
         });
     }
     catch (error) {
