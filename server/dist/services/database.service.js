@@ -51,6 +51,15 @@ class DatabaseService {
             return false;
         }
     }
+    async isConnected() {
+        try {
+            await this.prisma.$queryRaw `SELECT 1`;
+            return true;
+        }
+        catch (error) {
+            return false;
+        }
+    }
 }
 exports.default = DatabaseService;
 //# sourceMappingURL=database.service.js.map

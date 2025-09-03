@@ -13,11 +13,9 @@ const prisma = new PrismaClient();
  * Start the server and connect to database
  */
 async function startServer() {
-  let server: any;
-  
   try {
     // Start server first - don't block on database connection
-    server = app.listen(PORT, '0.0.0.0', () => {
+    const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`🏥 Health check: http://0.0.0.0:${PORT}/health`);
       console.log(`📚 API base URL: http://0.0.0.0:${PORT}/api`);
@@ -38,15 +36,14 @@ async function startServer() {
       process.exit(1);
     });
 
-    // Try database connection with retries - don't block server startup
+    // Try database connection with retries - but don't let it crash the server
     console.log('🔌 Attempting database connection...');
-    await connectToDatabase();
+    connectToDatabase().catch(error => {
+      console.log('🔄 Server running without database connection - API will use fallback data');
+    });
 
   } catch (error) {
     console.error('❌ Failed to start server:', error);
-    if (server) {
-      server.close();
-    }
     process.exit(1);
   }
 }

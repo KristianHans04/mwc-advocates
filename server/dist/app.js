@@ -24,8 +24,22 @@ class App {
     }
     configureMiddleware() {
         this.app.use((0, helmet_1.default)());
+        const allowedOrigins = [
+            process.env.FRONTEND_URL || 'http://localhost:5173',
+            'https://mwc-advocates-frontend.onrender.com',
+            'http://localhost:5173',
+            'http://localhost:3000'
+        ];
         this.app.use((0, cors_1.default)({
-            origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+            origin: (origin, callback) => {
+                if (!origin)
+                    return callback(null, true);
+                if (allowedOrigins.includes(origin)) {
+                    return callback(null, true);
+                }
+                const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+                return callback(new Error(msg), false);
+            },
             credentials: true,
         }));
         const limiter = (0, express_rate_limit_1.default)({
