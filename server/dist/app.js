@@ -10,10 +10,6 @@ const morgan_1 = __importDefault(require("morgan"));
 const compression_1 = __importDefault(require("compression"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const services_routes_1 = __importDefault(require("./routes/services.routes"));
-const testimonials_routes_1 = __importDefault(require("./routes/testimonials.routes"));
-const team_routes_1 = __importDefault(require("./routes/team.routes"));
-const firm_routes_1 = __importDefault(require("./routes/firm.routes"));
 const contact_routes_1 = __importDefault(require("./routes/contact.routes"));
 const faq_routes_1 = __importDefault(require("./routes/faq.routes"));
 dotenv_1.default.config();
@@ -70,10 +66,6 @@ class App {
                 timestamp: new Date().toISOString(),
             });
         });
-        this.app.use('/api/services', services_routes_1.default);
-        this.app.use('/api/testimonials', testimonials_routes_1.default);
-        this.app.use('/api/team', team_routes_1.default);
-        this.app.use('/api/firm', firm_routes_1.default);
         this.app.use('/api/contact', contact_routes_1.default);
         this.app.use('/api/faq', faq_routes_1.default);
         this.app.use('*', (req, res) => {
