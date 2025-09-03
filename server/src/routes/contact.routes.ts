@@ -43,16 +43,32 @@ router.post('/',
 
       const { name, email, phone, subject, message } = req.body;
 
-      // Save to database using Prisma client
-      const contactSubmission = await db.prisma.contactSubmission.create({
-        data: {
+      // Check if database is connected
+      const isConnected = await db.isConnected();
+      let contactSubmission: any;
+
+      if (isConnected) {
+        // Save to database using Prisma client
+        contactSubmission = await db.prisma.contactSubmission.create({
+          data: {
+            name,
+            email,
+            phone,
+            subject,
+            message
+          }
+        });
+      } else {
+        console.warn('⚠️ Database not available, contact form will still send emails');
+        // Create a temporary ID for response
+        contactSubmission = {
+          id: `temp_${Date.now()}`,
           name,
           email,
-          phone,
           subject,
           message
-        }
-      });
+        };
+      }
 
       // Send email notifications via Zoho Mail
       try {

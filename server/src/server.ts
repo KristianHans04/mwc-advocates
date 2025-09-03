@@ -13,19 +13,11 @@ const prisma = new PrismaClient();
  * Start the server and connect to database
  */
 async function startServer() {
+  let server: any;
+  
   try {
-    // Test database connection with timeout
-    console.log('🔌 Connecting to database...');
-    await Promise.race([
-      prisma.$connect(),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Database connection timeout')), 10000)
-      )
-    ]);
-    console.log('✅ Database connected successfully');
-
-    // Start server - bind to 0.0.0.0 for Render deployment
-    const server = app.listen(PORT, '0.0.0.0', () => {
+    // Start server first - don't block on database connection
+    server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`🏥 Health check: http://0.0.0.0:${PORT}/health`);
       console.log(`📚 API base URL: http://0.0.0.0:${PORT}/api`);
@@ -46,10 +38,45 @@ async function startServer() {
       process.exit(1);
     });
 
+    // Try database connection with retries - don't block server startup
+    console.log('🔌 Attempting database connection...');
+    await connectToDatabase();
+
   } catch (error) {
     console.error('❌ Failed to start server:', error);
-    await prisma.$disconnect();
+    if (server) {
+      server.close();
+    }
     process.exit(1);
+  }
+}
+
+/**
+ * Connect to database with retry logic
+ */
+async function connectToDatabase(retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await Promise.race([
+        prisma.$connect(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Database connection timeout')), 15000)
+        )
+      ]);
+      console.log('✅ Database connected successfully');
+      return;
+    } catch (error) {
+      console.warn(`⚠️ Database connection attempt ${i + 1}/${retries} failed:`, error instanceof Error ? error.message : error);
+      
+      if (i === retries - 1) {
+        console.error('❌ All database connection attempts failed');
+        console.log('🔄 Server will continue running without database - some features may be limited');
+        return; // Don't exit - continue without database
+      }
+      
+      // Wait before retry
+      await new Promise(resolve => setTimeout(resolve, 2000 * (i + 1)));
+    }
   }
 }
 
