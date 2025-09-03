@@ -1,0 +1,56 @@
+{
+  "team": [
+    {
+      "id": "john-williams",
+      "name": "John Williams",
+      "title": "Senior Partner",
+      "specialization": "Corporate Law & M&A",
+      "experience": "15+ years",
+      "education": "Harvard Law School, J.D.",
+      "bio": "John specializes in complex corporate transactions and has advised Fortune 500 companies on mergers, acquisitions, and corporate governance matters.",
+      "image": "/img/team/john-williams.jpg",
+      "email": "j.williams@mwcadvocates.com",
+      "phone": "+1 (555) 123-4567",
+      "linkedin": "https://linkedin.com/in/johnwilliams-law"
+    },
+    {
+      "id": "maria-gonzalez",
+      "name": "Maria Gonzalez",
+      "title": "Partner",
+      "specialization": "Real Estate & Development",
+      "experience": "12+ years",
+      "education": "Stanford Law School, J.D.",
+      "bio": "Maria focuses on commercial real estate transactions and has extensive experience in property development, zoning law, and real estate litigation.",
+      "image": "/img/team/maria-gonzalez.jpg",
+      "email": "m.gonzalez@mwcadvocates.com",
+      "phone": "+1 (555) 123-4568",
+      "linkedin": "https://linkedin.com/in/mariagonzalez-law"
+    },
+    {
+      "id": "david-chen",
+      "name": "David Chen",
+      "title": "Associate Partner",
+      "specialization": "Employment & Labor Law",
+      "experience": "8+ years",
+      "education": "Yale Law School, J.D.",
+      "bio": "David represents both employers and employees in workplace disputes and specializes in employment compliance and labor relations.",
+      "image": "/img/team/david-chen.jpg",
+      "email": "d.chen@mwcadvocates.com",
+      "phone": "+1 (555) 123-4569",
+      "linkedin": "https://linkedin.com/in/davidchen-employment"
+    },
+    {
+      "id": "sarah-roberts",
+      "name": "Sarah Roberts",
+      "title": "Senior Associate",
+      "specialization": "Intellectual Property",
+      "experience": "6+ years",
+      "education": "Columbia Law School, J.D.",
+      "bio": "Sarah helps clients protect their intellectual property through patents, trademarks, and licensing agreements, with a focus on technology companies.",
+      "image": "/img/team/sarah-roberts.jpg",
+      "email": "s.roberts@mwcadvocates.com",
+      "phone": "+1 (555) 123-4570",
+      "linkedin": "https://linkedin.com/in/sarahroberts-ip"
+    }
+  ]
+}
