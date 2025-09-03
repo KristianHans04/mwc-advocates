@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
+import apiService from '../services/api';
 
 interface ContactForm {
   name: string;
@@ -49,15 +50,9 @@ const Contact: React.FC = () => {
     setStatus({ type: null, message: '' });
 
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
+      const result = await apiService.submitContactForm(formData);
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (result.success) {
         setStatus({
           type: 'success',
           message: 'Thank you for your message! We will get back to you within 24 hours.'

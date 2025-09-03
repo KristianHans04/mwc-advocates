@@ -20,7 +20,15 @@ router.post('/',
     body('name').isLength({ min: 2 }).withMessage('Name must be at least 2 characters'),
     body('email').isEmail().withMessage('Please provide a valid email address'),
     body('message').isLength({ min: 10 }).withMessage('Message must be at least 10 characters'),
-    body('phone').optional().isLength({ min: 8 }).withMessage('Phone number must be at least 8 digits'),
+    body('phone').optional().custom((value) => {
+      if (!value) return true; // Optional field
+      // Allow various phone formats: digits, spaces, dashes, parentheses, plus signs
+      const phoneRegex = /^[\+]?[\d\s\-\(\)\.]{7,20}$/;
+      if (!phoneRegex.test(value)) {
+        throw new Error('Please provide a valid phone number');
+      }
+      return true;
+    }),
   ],
   async (req: Request, res: Response): Promise<void> => {
     try {
