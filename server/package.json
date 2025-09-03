@@ -13,6 +13,7 @@
     "start": "node dist/server.js",
     "start:prod": "node dist/server.js",
     "start:with-setup": "npx prisma db push && npx prisma db seed && node dist/server.js",
+    "db:setup": "npx prisma db push && npx prisma db seed",
     "start:minimal": "node dist/server.js",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
