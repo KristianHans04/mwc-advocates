@@ -35,22 +35,16 @@ router.post('/',
 
       const { name, email, phone, subject, message } = req.body;
 
-      // Save to database using raw SQL to work with Supabase pooler
-      const contactId = `c${Date.now().toString(36)}${Math.random().toString(36).substr(2, 9)}`;
-      
-      await db.prisma.$executeRaw`
-        INSERT INTO "contact_submissions" (id, name, email, phone, subject, message)
-        VALUES (${contactId}, ${name}, ${email}, ${phone}, ${subject}, ${message})
-      `;
-
-      // Get the created submission for response
-      const contactSubmission = await db.prisma.$queryRaw`
-        SELECT id, name, email, subject, "createdAt"
-        FROM "contact_submissions" 
-        WHERE id = ${contactId}
-      ` as any[];
-
-      const submission = contactSubmission[0];
+      // Save to database using Prisma client
+      const contactSubmission = await db.prisma.contactSubmission.create({
+        data: {
+          name,
+          email,
+          phone,
+          subject,
+          message
+        }
+      });
 
       // Send email notifications via Zoho Mail
       try {
@@ -77,7 +71,7 @@ router.post('/',
       res.status(201).json({
         success: true,
         message: 'Thank you for your message. We will get back to you soon.',
-        data: { id: submission?.id || contactId },
+        data: { id: contactSubmission.id },
       });
     } catch (error) {
       console.error('Error submitting contact form:', error);
