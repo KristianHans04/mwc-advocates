@@ -16,18 +16,62 @@ const db = DatabaseService.getInstance();
  */
 router.get('/', async (req: Request, res: Response) => {
   try {
+    // Check if database is connected first
+    const isConnected = await db.isConnected();
+    if (!isConnected) {
+      console.warn('⚠️ Database not available, returning fallback services data');
+      // Return fallback data when database is not available
+      const fallbackServices = [
+        {
+          id: 'fallback-1',
+          title: 'Corporate Law',
+          description: 'Comprehensive corporate legal services including business formation, governance, mergers and acquisitions, and compliance.',
+          icon: 'building',
+          features: [
+            'Company incorporation and registration',
+            'Corporate governance and compliance',
+            'Mergers and acquisitions',
+            'Commercial contracts and agreements',
+            'Securities law and regulations'
+          ],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'fallback-2',
+          title: 'Real Estate Law',
+          description: 'Professional real estate legal services for property transactions, disputes, and development matters.',
+          icon: 'home',
+          features: [
+            'Property transactions and conveyancing',
+            'Lease agreements and landlord-tenant law',
+            'Land acquisition and development',
+            'Property disputes and litigation',
+            'Zoning and planning applications'
+          ],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ];
+      
+      return res.json({
+        success: true,
+        data: fallbackServices,
+      });
+    }
+
     // Use Prisma client - data is now clean
     const services = await db.prisma.service.findMany({
       orderBy: { createdAt: 'asc' }
     });
 
-    res.json({
+    return res.json({
       success: true,
       data: services,
     });
   } catch (error) {
     console.error('Error fetching services:', error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to fetch services',
     });

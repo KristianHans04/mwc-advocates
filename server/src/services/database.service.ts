@@ -73,6 +73,18 @@ class DatabaseService {
       return false;
     }
   }
+
+  /**
+   * Check if database is connected
+   */
+  public async isConnected(): Promise<boolean> {
+    try {
+      await this.prisma.$queryRaw`SELECT 1`;
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
 
 export default DatabaseService;
