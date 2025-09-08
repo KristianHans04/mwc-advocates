@@ -13,7 +13,9 @@
         "Securities Law Compliance",
         "Joint Ventures & Partnerships"
       ],
-      "featured": true
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": "real-estate-law",
@@ -28,7 +30,9 @@
         "Landlord-Tenant Disputes",
         "Real Estate Litigation"
       ],
-      "featured": true
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": "employment-law",
@@ -43,7 +47,9 @@
         "Workplace Safety Compliance",
         "Executive Compensation"
       ],
-      "featured": false
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": "intellectual-property",
@@ -58,7 +64,9 @@
         "IP Licensing",
         "Infringement Defense"
       ],
-      "featured": false
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": "family-law",
@@ -73,7 +81,9 @@
         "Domestic Violence Protection",
         "Estate Planning"
       ],
-      "featured": false
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
     },
     {
       "id": "litigation",
@@ -88,7 +98,9 @@
         "Appellate Practice",
         "Alternative Dispute Resolution"
       ],
-      "featured": true
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
     }
   ]
 }

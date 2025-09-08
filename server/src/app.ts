@@ -12,6 +12,8 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
 // Import routes
+import servicesRoutes from './routes/services.routes';
+import testimonialsRoutes from './routes/testimonials.routes';
 import contactRoutes from './routes/contact.routes';
 import faqRoutes from './routes/faq.routes';
 
@@ -102,6 +104,8 @@ class App {
     });
 
     // API routes
+    this.app.use('/api/services', servicesRoutes);
+    this.app.use('/api/testimonials', testimonialsRoutes);
     this.app.use('/api/contact', contactRoutes);
     this.app.use('/api/faq', faqRoutes);
 

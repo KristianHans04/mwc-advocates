@@ -6,7 +6,8 @@
 import fs from 'fs';
 import path from 'path';
 
-const DATA_DIR = path.join(__dirname, 'data');
+// Use relative path from src/services to src/data
+const DATA_DIR = path.join(__dirname, '../data');
 
 interface Service {
   id: string;
@@ -15,17 +16,22 @@ interface Service {
   icon: string;
   features: string[];
   featured: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface Testimonial {
   id: string;
   name: string;
-  title: string;
+  position: string;
   company: string;
   rating: number;
-  testimonial: string;
+  content: string;
+  initials: string;
+  isActive: boolean;
   image: string;
-  date: string;
+  createdAt: string;
+  updatedAt: string;
   service: string;
 }
 
@@ -83,18 +89,43 @@ class DataService {
     try {
       // Check cache first
       if (this.cache.has(filename)) {
+        console.log(`📋 Using cached data for ${filename}`);
         return this.cache.get(filename);
       }
 
-      const filePath = path.join(DATA_DIR, filename);
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      const data = JSON.parse(fileContent);
+      // Try multiple possible paths
+      const possiblePaths = [
+        path.join(__dirname, '../data', filename),
+        path.join(__dirname, '../../src/data', filename),
+        path.join(process.cwd(), 'src/data', filename),
+        path.join(process.cwd(), 'server/src/data', filename)
+      ];
+
+      console.log(`📁 Attempting to read ${filename}...`);
       
-      // Cache the result
-      this.cache.set(filename, data);
-      return data;
+      for (const filePath of possiblePaths) {
+        try {
+          console.log(`🔍 Checking: ${filePath}`);
+          if (fs.existsSync(filePath)) {
+            console.log(`✅ Found ${filename} at: ${filePath}`);
+            const fileContent = fs.readFileSync(filePath, 'utf-8');
+            const data = JSON.parse(fileContent);
+            
+            // Cache the result
+            this.cache.set(filename, data);
+            console.log(`💾 Cached data for ${filename}`);
+            return data;
+          }
+        } catch (readError) {
+          console.log(`❌ Failed to read ${filePath}: ${readError}`);
+          continue;
+        }
+      }
+      
+      console.error(`❌ Could not find ${filename} in any expected location`);
+      return null;
     } catch (error) {
-      console.error(`Error reading ${filename}:`, error);
+      console.error(`❌ Error reading ${filename}:`, error);
       return null;
     }
   }
@@ -143,7 +174,7 @@ class DataService {
   getRecentTestimonials(): Testimonial[] {
     const testimonials = this.getTestimonials();
     return testimonials
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       .slice(0, 3);
   }
 
@@ -197,7 +228,7 @@ class DataService {
     const testimonials = this.getTestimonials().filter(testimonial =>
       testimonial.name.toLowerCase().includes(searchTerm) ||
       testimonial.company.toLowerCase().includes(searchTerm) ||
-      testimonial.testimonial.toLowerCase().includes(searchTerm) ||
+      testimonial.content.toLowerCase().includes(searchTerm) ||
       testimonial.service.toLowerCase().includes(searchTerm)
     );
 
