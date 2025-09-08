@@ -10,6 +10,8 @@ const morgan_1 = __importDefault(require("morgan"));
 const compression_1 = __importDefault(require("compression"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const services_routes_1 = __importDefault(require("./routes/services.routes"));
+const testimonials_routes_1 = __importDefault(require("./routes/testimonials.routes"));
 const contact_routes_1 = __importDefault(require("./routes/contact.routes"));
 const faq_routes_1 = __importDefault(require("./routes/faq.routes"));
 dotenv_1.default.config();
@@ -26,7 +28,9 @@ class App {
             process.env.FRONTEND_URL || 'http://localhost:5173',
             'https://mwc-advocates-frontend.onrender.com',
             'http://localhost:5173',
-            'http://localhost:3000'
+            'http://localhost:3000',
+            'https://mwc-advocates.onrender.com',
+            'https://mwc-advocates-frontend-*.onrender.com'
         ];
         this.app.use((0, cors_1.default)({
             origin: (origin, callback) => {
@@ -35,6 +39,11 @@ class App {
                 if (allowedOrigins.includes(origin)) {
                     return callback(null, true);
                 }
+                if (origin.includes('mwc-advocates') && origin.includes('onrender.com')) {
+                    console.log(`✅ Allowing CORS for Render deployment: ${origin}`);
+                    return callback(null, true);
+                }
+                console.log(`❌ CORS blocked origin: ${origin}`);
                 const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
                 return callback(new Error(msg), false);
             },
@@ -66,6 +75,8 @@ class App {
                 timestamp: new Date().toISOString(),
             });
         });
+        this.app.use('/api/services', services_routes_1.default);
+        this.app.use('/api/testimonials', testimonials_routes_1.default);
         this.app.use('/api/contact', contact_routes_1.default);
         this.app.use('/api/faq', faq_routes_1.default);
         this.app.use('*', (req, res) => {

@@ -6,8 +6,37 @@
 import fs from 'fs';
 import path from 'path';
 
-// Use relative path from src/services to src/data
-const DATA_DIR = path.join(__dirname, '../data');
+// Multiple path resolution for different environments
+const getDataDir = (): string => {
+  // For production build (compiled TypeScript)
+  const prodPath = path.join(__dirname, '../data');
+  
+  // For development (source TypeScript)
+  const devPath = path.join(__dirname, '../data');
+  
+  // Alternative production path
+  const altProdPath = path.join(process.cwd(), 'dist/data');
+  
+  console.log('🔍 Checking data directory paths:');
+  console.log(`   Production path: ${prodPath}`);
+  console.log(`   Alternative path: ${altProdPath}`);
+  
+  // Check which path exists
+  if (fs.existsSync(prodPath)) {
+    console.log(`✅ Using data directory: ${prodPath}`);
+    return prodPath;
+  } else if (fs.existsSync(altProdPath)) {
+    console.log(`✅ Using alternative data directory: ${altProdPath}`);
+    return altProdPath;
+  } else {
+    console.log(`❌ Data directory not found at either path`);
+    console.log(`   Trying: ${prodPath}`);
+    console.log(`   Trying: ${altProdPath}`);
+    return prodPath; // Return default and let it fail with better error
+  }
+};
+
+const DATA_DIR = getDataDir();
 
 interface Service {
   id: string;
