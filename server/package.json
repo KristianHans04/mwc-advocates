@@ -9,7 +9,7 @@
     "mailhog:start": "docker compose -f ../docker-compose.dev.yml up -d mailhog",
     "mailhog:stop": "docker compose -f ../docker-compose.dev.yml down",
     "mailhog:logs": "docker compose -f ../docker-compose.dev.yml logs -f mailhog",
-    "build": "tsc && cp -r src/data dist/services/",
+    "build": "tsc && cp -r src/data dist/",
     "start": "node dist/server.js",
     "start:prod": "node dist/server.js",
     "start:with-setup": "npx prisma db push && npx prisma db seed && node dist/server.js",

@@ -42,7 +42,10 @@ class App {
       process.env.FRONTEND_URL || 'http://localhost:5173',
       'https://mwc-advocates-frontend.onrender.com',
       'http://localhost:5173',
-      'http://localhost:3000'
+      'http://localhost:3000',
+      'https://mwc-advocates.onrender.com', // Alternative domain pattern
+      // Add common variations
+      'https://mwc-advocates-frontend-*.onrender.com'
     ];
 
     this.app.use(cors({
@@ -50,10 +53,18 @@ class App {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
         
+        // Check exact matches first
         if (allowedOrigins.includes(origin)) {
           return callback(null, true);
         }
         
+        // For Render deployments, check if origin matches pattern
+        if (origin.includes('mwc-advocates') && origin.includes('onrender.com')) {
+          console.log(`✅ Allowing CORS for Render deployment: ${origin}`);
+          return callback(null, true);
+        }
+        
+        console.log(`❌ CORS blocked origin: ${origin}`);
         const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
         return callback(new Error(msg), false);
       },
