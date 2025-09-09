@@ -23,6 +23,10 @@ class App {
         this.configureErrorHandling();
     }
     configureMiddleware() {
+        this.app.use((req, res, next) => {
+            console.log(`📡 ${req.method} ${req.path} from origin: ${req.headers.origin || 'NO ORIGIN'}`);
+            next();
+        });
         this.app.use((0, helmet_1.default)());
         const allowedOrigins = [
             process.env.FRONTEND_URL || 'http://localhost:5173',
@@ -48,6 +52,10 @@ class App {
                 return callback(new Error(msg), false);
             },
             credentials: true,
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+            allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+            preflightContinue: false,
+            optionsSuccessStatus: 204
         }));
         const limiter = (0, express_rate_limit_1.default)({
             windowMs: 15 * 60 * 1000,

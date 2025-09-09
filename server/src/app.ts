@@ -34,6 +34,12 @@ class App {
    * Configure middleware for security, logging, and request processing
    */
   private configureMiddleware(): void {
+    // Log all incoming requests for debugging
+    this.app.use((req, res, next) => {
+      console.log(`📡 ${req.method} ${req.path} from origin: ${req.headers.origin || 'NO ORIGIN'}`);
+      next();
+    });
+
     // Security middleware
     this.app.use(helmet());
     
@@ -69,6 +75,10 @@ class App {
         return callback(new Error(msg), false);
       },
       credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+      preflightContinue: false,
+      optionsSuccessStatus: 204
     }));
 
     // Rate limiting
