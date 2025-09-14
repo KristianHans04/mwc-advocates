@@ -5,11 +5,11 @@
 
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
-import DatabaseService from '../services/database.service';
+import UnifiedDataService from '../services/unifiedData.service';
 import zohoEmailService from '../services/email.service.zoho';
 
 const router = express.Router();
-const db = DatabaseService.getInstance();
+const dataService = UnifiedDataService.getInstance();
 
 /**
  * POST /api/contact
@@ -31,50 +31,42 @@ router.post('/',
     }),
   ],
   async (req: Request, res: Response): Promise<void> => {
+    console.log('========================================');
+    console.log('📨 NEW CONTACT FORM SUBMISSION');
+    console.log('========================================');
+    console.log('⏰ Timestamp:', new Date().toISOString());
+    console.log('📊 Environment:', process.env.NODE_ENV);
+    
     try {
+      // Step 1: Validate input
+      console.log('\n[STEP 1] Validating form input...');
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
+        console.log('❌ Validation failed:', errors.array());
         res.status(400).json({
           success: false,
           errors: errors.array(),
         });
         return;
       }
+      console.log('✅ Form validation passed');
 
       const { name, email, phone, subject, message } = req.body;
+      console.log('📝 Form data:', { name, email, phone: phone || 'Not provided', subject: subject || 'General Inquiry' });
 
-      // Check if database is connected
-      const isConnected = await db.isConnected();
-      let contactSubmission: any;
-
-      if (isConnected) {
-        // Save to database using Prisma client
-        contactSubmission = await db.prisma.contactSubmission.create({
-          data: {
-            name,
-            email,
-            phone,
-            subject,
-            message
-          }
-        });
-      } else {
-        console.warn('⚠️ Database not available, contact form will still send emails');
-        // Create a temporary ID for response
-        contactSubmission = {
-          id: `temp_${Date.now()}`,
-          name,
-          email,
-          subject,
-          message
-        };
-      }
-
-      // Send email notifications via Zoho Mail
+      // Step 2: Send email notifications FIRST (before database)
+      console.log('\n[STEP 2] Sending email notifications...');
+      let emailResult: any = {
+        adminSent: false,
+        clientSent: false,
+        adminError: undefined,
+        clientError: undefined
+      };
+      
       try {
-        console.log('Using Zoho Mail SMTP service');
+        console.log('🔄 Initializing Zoho Mail service...');
         
-        const emailResult = await zohoEmailService.sendContactFormEmails({
+        emailResult = await zohoEmailService.sendContactFormEmails({
           name,
           email,
           phone,
@@ -82,23 +74,101 @@ router.post('/',
           message
         });
 
-        console.log('Email sending results:', emailResult);
+        console.log('📧 Email Results:', {
+          adminSent: emailResult.adminSent,
+          clientSent: emailResult.clientSent,
+          adminError: emailResult.adminError,
+          clientError: emailResult.clientError
+        });
+        
+        if (emailResult.adminSent) {
+          console.log('✅ Admin notification email sent successfully');
+        } else {
+          console.log('❌ Admin email failed:', emailResult.adminError);
+        }
+        
+        if (emailResult.clientSent) {
+          console.log('✅ Client confirmation email sent successfully');
+        } else {
+          console.log('❌ Client email failed:', emailResult.clientError);
+        }
         
         if (!emailResult.adminSent && !emailResult.clientSent) {
-          console.warn('Both emails failed to send, but form submission was saved');
+          console.warn('⚠️ WARNING: Both emails failed to send');
         }
       } catch (emailError) {
-        console.error('Failed to send email notifications:', emailError);
-        // Don't fail the request if email fails
+        console.error('❌ CRITICAL: Email service error:', {
+          message: emailError instanceof Error ? emailError.message : 'Unknown error',
+          stack: emailError instanceof Error ? emailError.stack : undefined
+        });
       }
 
-      res.status(201).json({
+      // Step 3: Save to database (after email)
+      console.log('\n[STEP 3] Saving to database...');
+      let contactSubmission: any;
+      
+      // Use unified service with automatic fallback
+      const saved = await dataService.saveContactSubmission({
+        name,
+        email,
+        phone,
+        subject,
+        message
+      });
+      
+      const status = await dataService.getDatabaseStatus();
+      
+      if (saved) {
+        contactSubmission = {
+          id: Date.now().toString(),
+          name,
+          email,
+          subject,
+          message
+        };
+        console.log(`✅ Contact submission saved to ${status.currentlyUsing}`);
+      } else {
+        console.warn('⚠️ Failed to save to any database');
+        contactSubmission = {
+          id: `temp_${Date.now()}`,
+          name,
+          email,
+          subject,
+          message
+        };
+        console.log('📝 Created temporary submission ID:', contactSubmission.id);
+      }
+
+      // Step 4: Send response
+      console.log('\n[STEP 4] Sending response to client...');
+      const responseData = {
         success: true,
         message: 'Thank you for your message. We will get back to you soon.',
-        data: { id: contactSubmission.id },
+        data: { 
+          id: contactSubmission.id,
+          emailsSent: {
+            admin: emailResult.adminSent,
+            client: emailResult.clientSent
+          }
+        },
+      };
+      
+      console.log('✅ SUCCESS: Contact form processed');
+      console.log('📊 Summary:', {
+        submissionId: contactSubmission.id,
+        emailsSent: `Admin: ${emailResult.adminSent}, Client: ${emailResult.clientSent}`,
+        databaseSaved: !contactSubmission.id.startsWith('temp_')
       });
+      console.log('========================================\n');
+      
+      res.status(201).json(responseData);
     } catch (error) {
-      console.error('Error submitting contact form:', error);
+      console.error('❌ CRITICAL ERROR in contact form submission:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined
+      });
+      console.log('========================================\n');
+      
       res.status(500).json({
         success: false,
         error: 'Failed to submit contact form',
@@ -113,13 +183,14 @@ router.post('/',
  */
 router.get('/submissions', async (req: Request, res: Response) => {
   try {
-    const submissions = await db.prisma.contactSubmission.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
-
+    // This endpoint might need to be implemented in UnifiedDataService
+    // For now, returning empty array as Google Sheets doesn't have a method for this yet
+    console.warn('Contact submissions endpoint not fully implemented for unified service');
+    
     res.json({
       success: true,
-      data: submissions,
+      data: [],
+      message: 'This endpoint needs implementation for unified data service'
     });
   } catch (error) {
     console.error('Error fetching contact submissions:', error);

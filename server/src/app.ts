@@ -16,6 +16,7 @@ import servicesRoutes from './routes/services.routes';
 import testimonialsRoutes from './routes/testimonials.routes';
 import contactRoutes from './routes/contact.routes';
 import faqRoutes from './routes/faq.routes';
+import healthRoutes from './routes/health.routes';
 
 // Load environment variables
 dotenv.config();
@@ -129,6 +130,7 @@ class App {
     this.app.use('/api/testimonials', testimonialsRoutes);
     this.app.use('/api/contact', contactRoutes);
     this.app.use('/api/faq', faqRoutes);
+    this.app.use('/api/health', healthRoutes);
 
     // 404 handler
     this.app.use('*', (req: Request, res: Response) => {
