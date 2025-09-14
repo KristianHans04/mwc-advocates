@@ -3,49 +3,191 @@
  * Landing page with hero section, services preview, and testimonials
  */
 
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle, Users, Scale, MapPin, ArrowRight } from 'lucide-react';
+import { CheckCircle, Users, Scale, MapPin, ArrowRight, Building, Briefcase, Shield, Home as HomeIcon } from 'lucide-react';
 import Button from '../components/ui/Button';
-import apiService from '../services/api';
 import useSEO from '../hooks/useSEO';
-import type { Service, Testimonial } from '../types';
 
 // Import assets
 import logoWhite from '../assets/MWC_WHITE.png';
 import heroBg from '../assets/heroBg.jpg';
 
 const Home: React.FC = () => {
-  const [services, setServices] = useState<Service[]>([]);
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
 
   // SEO optimization
   useSEO({
-    title: 'Home - Premier Legal Services in Nairobi',
-    description: 'MASINDE WANYONYI & COMPANY ADVOCATES - Leading law firm in Nairobi, Kenya providing comprehensive legal services for individuals, businesses, and corporations. Expert legal representation with proven track record.',
-    keywords: 'law firm Nairobi, legal services Kenya, corporate law, commercial litigation, employment law, real estate law, intellectual property, MWC Advocates, Masinde Wanyonyi'
+    title: 'Home - Masinde Wanyonyi & Company Advocates',
+    description: 'MASINDE WANYONYI & COMPANY ADVOCATES, Commissioners for Oaths and Notary Public - Providing excellence in legal solutions. Leading law firm in Nairobi, Kenya.',
+    keywords: 'law firm Nairobi, legal services Kenya, corporate law, commercial litigation, employment law, real estate law, intellectual property, MWC Advocates, Masinde Wanyonyi, Commissioners for Oaths, Notary Public'
   });
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const [servicesData, testimonialsData] = await Promise.all([
-          apiService.getServices(),
-          apiService.getTestimonials(),
-        ]);
-        setServices(servicesData.slice(0, 4)); // Show first 4 services
-        setTestimonials(testimonialsData.slice(0, 3)); // Show first 3 testimonials
-      } catch (error) {
-        console.error('Failed to load home page data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Hardcoded services data
+  const services = [
+    {
+      id: '1',
+      icon: Building,
+      title: 'Corporate Law',
+      description: 'Comprehensive legal services for businesses, from formation to complex corporate transactions.'
+    },
+    {
+      id: '2',
+      icon: Briefcase,
+      title: 'Commercial Litigation',
+      description: 'Expert representation in commercial disputes and litigation matters with proven success.'
+    },
+    {
+      id: '3',
+      icon: Shield,
+      title: 'Intellectual Property',
+      description: 'Protection and enforcement of trademarks, copyrights, patents and trade secrets.'
+    },
+    {
+      id: '4',
+      icon: HomeIcon,
+      title: 'Real Estate Law',
+      description: 'Complete legal services for property transactions, developments and disputes.'
+    }
+  ];
 
-    loadData();
-  }, []);
+  // Hardcoded testimonials with 15 entries for infinite scroll
+  const testimonials = [
+    {
+      id: '1',
+      name: 'James Mwangi',
+      position: 'CEO',
+      company: 'Tech Solutions Ltd',
+      content: 'Outstanding legal representation in our corporate restructuring. Their expertise saved us significant time and resources.',
+      initials: 'JM',
+      rating: 5
+    },
+    {
+      id: '2',
+      name: 'Sarah Njeri',
+      position: 'Managing Director',
+      company: 'Njeri Enterprises',
+      content: 'Professional, efficient, and highly knowledgeable. They handled our complex litigation with exceptional skill.',
+      initials: 'SN',
+      rating: 4
+    },
+    {
+      id: '3',
+      name: 'David Ochieng',
+      position: 'Property Developer',
+      company: '',
+      content: 'The best real estate lawyers in Nairobi. Their attention to detail in our transactions is unmatched.',
+      initials: 'DO',
+      rating: 5
+    },
+    {
+      id: '4',
+      name: 'Grace Wambui',
+      position: 'HR Director',
+      company: 'Manufacturing Kenya Ltd',
+      content: 'Excellent employment law advice. They helped us navigate complex labor disputes successfully.',
+      initials: 'GW',
+      rating: 4
+    },
+    {
+      id: '5',
+      name: 'Peter Kamau',
+      position: 'Founder',
+      company: 'Kamau Holdings',
+      content: 'Trusted advisors for over 5 years. Their commercial law expertise has been invaluable to our growth.',
+      initials: 'PK',
+      rating: 5
+    },
+    {
+      id: '6',
+      name: 'Mary Atieno',
+      position: 'CFO',
+      company: 'Finance Corp',
+      content: 'Exceptional service in our merger and acquisition deal. Highly recommend their corporate law team.',
+      initials: 'MA',
+      rating: 5
+    },
+    {
+      id: '7',
+      name: 'John Mutua',
+      position: 'Director',
+      company: 'Mutua & Associates',
+      content: 'Professional and responsive. They resolved our intellectual property dispute efficiently.',
+      initials: 'JM',
+      rating: 4
+    },
+    {
+      id: '8',
+      name: 'Elizabeth Nyambura',
+      position: 'CEO',
+      company: 'Retail Chain Kenya',
+      content: 'Outstanding legal counsel for our business expansion. Their strategic advice was invaluable.',
+      initials: 'EN',
+      rating: 5
+    },
+    {
+      id: '9',
+      name: 'Robert Kipchoge',
+      position: 'Managing Partner',
+      company: 'Investment Group',
+      content: 'Expert handling of our complex commercial contracts. Attention to detail is exceptional.',
+      initials: 'RK',
+      rating: 4
+    },
+    {
+      id: '10',
+      name: 'Alice Wanjiru',
+      position: 'Operations Director',
+      company: 'Logistics Kenya',
+      content: 'They successfully defended us in a major commercial dispute. Excellent litigation skills.',
+      initials: 'AW',
+      rating: 5
+    },
+    {
+      id: '11',
+      name: 'Samuel Otieno',
+      position: 'Chairman',
+      company: 'Otieno Group',
+      content: 'Comprehensive legal support for our family business. Trust them completely with our legal matters.',
+      initials: 'SO',
+      rating: 5
+    },
+    {
+      id: '12',
+      name: 'Catherine Muthoni',
+      position: 'Partner',
+      company: 'Consulting Firm',
+      content: 'Excellent data protection and compliance advice. They keep us ahead of regulatory changes.',
+      initials: 'CM',
+      rating: 4
+    },
+    {
+      id: '13',
+      name: 'Joseph Ngugi',
+      position: 'Executive Director',
+      company: 'NGO Kenya',
+      content: 'Professional handling of our non-profit legal requirements. Very knowledgeable team.',
+      initials: 'JN',
+      rating: 4
+    },
+    {
+      id: '14',
+      name: 'Ruth Chebet',
+      position: 'CEO',
+      company: 'Tech Startup',
+      content: 'Helped us navigate complex IP issues during our product launch. Highly recommended.',
+      initials: 'RC',
+      rating: 5
+    },
+    {
+      id: '15',
+      name: 'Michael Omondi',
+      position: 'Director',
+      company: 'Construction Ltd',
+      content: 'Expert advice on construction contracts and disputes. They protect our interests effectively.',
+      initials: 'MO',
+      rating: 4
+    }
+  ];
 
   const highlights = [
     {
@@ -70,18 +212,11 @@ const Home: React.FC = () => {
     },
   ];
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[var(--color-primary-green)]"></div>
-      </div>
-    );
-  }
 
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center text-white overflow-hidden">
+      <section className="relative min-h-screen pt-20 flex items-center justify-center text-white overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
@@ -103,25 +238,47 @@ const Home: React.FC = () => {
             className="mb-8"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.2,
+              scale: {
+                type: "spring",
+                damping: 10,
+                stiffness: 100
+              }
+            }}
+            whileHover={{ scale: 1.05 }}
           >
-            <img 
+            <motion.img 
               src={logoWhite} 
-              alt="Masinde Wanyonyi & Company Advocates - Premier Legal Services in Nairobi Kenya"
+              alt="Masinde Wanyonyi & Company Advocates, Commissioners for Oaths and Notary Public"
               className="mx-auto w-64 md:w-96 lg:w-[32rem] object-contain"
+              animate={{ 
+                scale: [1, 1.02, 1],
+              }}
+              transition={{ 
+                duration: 4,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }}
             />
           </motion.div>
 
-          {/* Subtitle */}
-          <motion.p 
-            className="text-lg md:text-xl mb-12 text-gray-200 max-w-3xl mx-auto leading-relaxed"
+          {/* Subtitle with firm designation */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
+            className="mb-8"
           >
-            Premier law firm in Nairobi, Kenya providing comprehensive legal solutions for individuals, businesses,
-            and corporations across all practice areas.
-          </motion.p>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+              Commissioners for Oaths & Notary Public
+            </h2>
+            <p className="text-lg md:text-xl mb-12 text-gray-200 max-w-3xl mx-auto leading-relaxed">
+              Providing excellence in legal solutions
+            </p>
+          </motion.div>
 
           {/* CTA Buttons */}
           <motion.div 
@@ -161,16 +318,19 @@ const Home: React.FC = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                 Welcome to Masinde Wanyonyi & Company Advocates
               </h2>
+              <p className="text-lg font-semibold text-green-800 mb-4">
+                Commissioners for Oaths and Notary Public
+              </p>
               <div className="w-16 h-1 bg-green-500 mb-6"></div>
 
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                An established law firm offering comprehensive legal services to individuals and businesses
+                An established law firm providing excellence in legal solutions to individuals and businesses
                 throughout Kenya. Founded on principles of integrity, excellence, and client-centered service,
                 we combine legal expertise with a deep understanding of the Kenyan legal landscape.
               </p>
 
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                Our team of dedicated advocates is committed to delivering practical solutions tailored to your
+                Our team of dedicated advocates is committed to providing excellence in legal solutions tailored to your
                 specific needs, ensuring you receive the highest quality legal representation.
               </p>
 
@@ -187,21 +347,54 @@ const Home: React.FC = () => {
               {highlights.map((highlight, index) => {
                 const IconComponent = highlight.icon;
                 return (
-                  <div
+                  <motion.div
                     key={index}
-                    className="bg-black text-white p-6 rounded-lg group flex items-center justify-center text-center min-h-[160px] relative overflow-hidden hover-lift"
+                    className="bg-black text-white p-6 rounded-lg group flex items-center justify-center text-center min-h-[160px] relative overflow-hidden hover-lift preserve-3d"
+                    initial={{ opacity: 0, rotateY: -15 }}
+                    whileInView={{ opacity: 1, rotateY: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: index * 0.1,
+                      rotateY: { duration: 0.8 }
+                    }}
+                    whileHover={{ 
+                      rotateY: 5,
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                    animate={{
+                      rotateY: [0, 3, 0],
+                    }}
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
-                    <div className="transform transition-all duration-300 ease-out flex flex-col items-center justify-center space-y-3 z-10 group-hover:opacity-0 group-hover:-translate-y-3">
-                      <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                    {/* Front side - always visible but animates */}
+                    <motion.div 
+                      className="transform transition-all duration-500 ease-out flex flex-col items-center justify-center space-y-3 z-10"
+                      animate={{
+                        rotateY: [0, -5, 0],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatDelay: 2,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                         <IconComponent className="w-6 h-6 text-slate-800" />
                       </div>
-                      <h3 className="text-lg font-semibold">{highlight.title}</h3>
-                    </div>
+                      <h3 className="text-lg font-semibold group-hover:opacity-0 transition-opacity duration-300">{highlight.title}</h3>
+                    </motion.div>
 
-                    <p className="absolute inset-0 flex items-center justify-center px-4 text-sm text-gray-300 opacity-0 transform translate-y-4 transition-all duration-300 ease-out pointer-events-none group-hover:opacity-100 group-hover:translate-y-0">
-                      {highlight.description}
-                    </p>
-                  </div>
+                    {/* Back side - shows on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:rotateY-0" 
+                         style={{ transform: 'rotateY(180deg)' }}>
+                      <p className="text-sm text-gray-300 transform group-hover:rotate-y-0">
+                        {highlight.description}
+                      </p>
+                    </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -239,36 +432,39 @@ const Home: React.FC = () => {
               }
             }}
           >
-            {services.map((service) => (
-              <motion.div
-                key={service.id}
-                className="group bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                whileHover={{ 
-                  y: -8,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <motion.div 
-                  className="mb-4"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
+            {services.map((service) => {
+              const IconComponent = service.icon;
+              return (
+                <motion.div
+                  key={service.id}
+                  className="group bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                  whileHover={{ 
+                    y: -8,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-700 to-green-900 rounded-lg flex items-center justify-center">
-                    <Scale className="w-6 h-6 text-white" />
-                  </div>
+                  <motion.div 
+                    className="mb-4"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-700 to-green-900 rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-6 h-6 text-white" />
+                    </div>
+                  </motion.div>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-900 group-hover:text-green-800 transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {service.description}
+                  </p>
                 </motion.div>
-                <h3 className="text-lg font-semibold mb-3 text-gray-900 group-hover:text-green-800 transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {service.description}
-                </p>
-              </motion.div>
-            ))}
+              );
+            })}
           </motion.div>
 
           <motion.div 
@@ -288,8 +484,8 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      {/* Testimonials Section with Infinite Scroll */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
@@ -297,33 +493,70 @@ const Home: React.FC = () => {
               Trusted by individuals and businesses across Kenya for our expertise and commitment to excellence.
             </p>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Infinite Horizontal Scroll Container */}
+        <div className="relative">
+          <div className="flex animate-scroll">
+            {/* First set of testimonials */}
             {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="bg-white p-8 rounded-2xl shadow-lg relative">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-[var(--color-primary-green)] rounded-full flex items-center justify-center text-white font-bold mr-4">
-                    {testimonial.initials}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                    <p className="text-gray-500 text-sm">
-                      {testimonial.position}
-                      {testimonial.company && `, ${testimonial.company}`}
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="mb-6">
-                  <div className="flex text-yellow-600 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                      </svg>
-                    ))}
+              <div key={`${testimonial.id}-1`} className="flex-shrink-0 w-96 mx-4">
+                <div className="bg-white p-8 rounded-2xl shadow-lg h-full">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-[var(--color-primary-green)] rounded-full flex items-center justify-center text-white font-bold mr-4">
+                      {testimonial.initials}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                      <p className="text-gray-500 text-sm">
+                        {testimonial.position}
+                        {testimonial.company && `, ${testimonial.company}`}
+                      </p>
+                    </div>
                   </div>
                   
-                  <p className="text-gray-600 italic">"{testimonial.content}"</p>
+                  <div className="mb-6">
+                    <div className="flex text-yellow-600 mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                      ))}
+                    </div>
+                    
+                    <p className="text-gray-600 italic">"{testimonial.content}"</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* Duplicate set for seamless scrolling */}
+            {testimonials.map((testimonial) => (
+              <div key={`${testimonial.id}-2`} className="flex-shrink-0 w-96 mx-4">
+                <div className="bg-white p-8 rounded-2xl shadow-lg h-full">
+                  <div className="flex items-center mb-6">
+                    <div className="w-12 h-12 bg-[var(--color-primary-green)] rounded-full flex items-center justify-center text-white font-bold mr-4">
+                      {testimonial.initials}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                      <p className="text-gray-500 text-sm">
+                        {testimonial.position}
+                        {testimonial.company && `, ${testimonial.company}`}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="mb-6">
+                    <div className="flex text-yellow-600 mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                      ))}
+                    </div>
+                    
+                    <p className="text-gray-600 italic">"{testimonial.content}"</p>
+                  </div>
                 </div>
               </div>
             ))}

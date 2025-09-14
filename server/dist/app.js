@@ -15,6 +15,7 @@ const testimonials_routes_1 = __importDefault(require("./routes/testimonials.rou
 const contact_routes_1 = __importDefault(require("./routes/contact.routes"));
 const faq_routes_1 = __importDefault(require("./routes/faq.routes"));
 const health_routes_1 = __importDefault(require("./routes/health.routes"));
+const wake_routes_1 = __importDefault(require("./routes/wake.routes"));
 dotenv_1.default.config();
 class App {
     constructor() {
@@ -37,18 +38,25 @@ class App {
             'https://mwc-advocates.onrender.com',
             'https://mwc-advocates-frontend-*.onrender.com'
         ];
+        console.log('🔒 CORS Configuration initialized');
+        console.log('   Allowed origins:', allowedOrigins);
         this.app.use((0, cors_1.default)({
             origin: (origin, callback) => {
-                if (!origin)
+                console.log(`📡 CORS request from origin: ${origin || 'NO ORIGIN'}`);
+                if (!origin) {
+                    console.log('✅ Allowing request with no origin');
                     return callback(null, true);
+                }
                 if (allowedOrigins.includes(origin)) {
+                    console.log(`✅ CORS allowed (exact match): ${origin}`);
                     return callback(null, true);
                 }
                 if (origin.includes('mwc-advocates') && origin.includes('onrender.com')) {
-                    console.log(`✅ Allowing CORS for Render deployment: ${origin}`);
+                    console.log(`✅ CORS allowed (Render pattern): ${origin}`);
                     return callback(null, true);
                 }
-                console.log(`❌ CORS blocked origin: ${origin}`);
+                console.log(`❌ CORS BLOCKED: ${origin}`);
+                console.log('   Not in allowed origins:', allowedOrigins);
                 const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
                 return callback(new Error(msg), false);
             },
@@ -84,6 +92,7 @@ class App {
                 timestamp: new Date().toISOString(),
             });
         });
+        this.app.use('/api/wake', wake_routes_1.default);
         this.app.use('/api/services', services_routes_1.default);
         this.app.use('/api/testimonials', testimonials_routes_1.default);
         this.app.use('/api/contact', contact_routes_1.default);

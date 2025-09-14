@@ -6,7 +6,11 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import UnifiedDataService from '../services/unifiedData.service';
-import zohoEmailService from '../services/email.service.zoho';
+
+// Use MailHog in development, Zoho in production
+const emailService = process.env.NODE_ENV === 'development' 
+  ? require('../services/email.service.mailhog').default
+  : require('../services/email.service.zoho').default;
 
 const router = express.Router();
 const dataService = UnifiedDataService.getInstance();
@@ -66,7 +70,7 @@ router.post('/',
       try {
         console.log('🔄 Initializing Zoho Mail service...');
         
-        emailResult = await zohoEmailService.sendContactFormEmails({
+        emailResult = await emailService.sendContactFormEmails({
           name,
           email,
           phone,
