@@ -7,8 +7,19 @@ class ZohoEmailService implements EmailService {
   private adminEmail: string;
 
   constructor() {
+    console.log('🔧 Initializing Zoho Email Service...');
+    console.log('📊 Environment:', process.env.NODE_ENV);
+    
     this.fromEmail = process.env.EMAIL_FROM || 'MWC Advocates <hello@kristianhans.com>';
     this.adminEmail = process.env.ADMIN_EMAIL || 'hello@kristianhans.com';
+
+    console.log('📧 Email Configuration:');
+    console.log('   From Email:', this.fromEmail);
+    console.log('   Admin Email:', this.adminEmail);
+    console.log('   SMTP Host:', process.env.ZOHO_SMTP_HOST || 'smtp.zoho.com');
+    console.log('   SMTP Port:', process.env.ZOHO_SMTP_PORT || '587');
+    console.log('   SMTP User exists:', !!process.env.ZOHO_SMTP_USER);
+    console.log('   SMTP Pass exists:', !!process.env.ZOHO_SMTP_PASS);
 
     // Create Zoho SMTP transporter
     this.transporter = nodemailer.createTransport({
@@ -21,7 +32,9 @@ class ZohoEmailService implements EmailService {
       },
       tls: {
         rejectUnauthorized: false
-      }
+      },
+      debug: process.env.NODE_ENV === 'production', // Enable debug in production
+      logger: process.env.NODE_ENV === 'production' // Enable logger in production
     });
 
     this.verifyConnection();
@@ -29,11 +42,22 @@ class ZohoEmailService implements EmailService {
 
   private async verifyConnection(): Promise<void> {
     try {
+      console.log('🔍 Verifying Zoho SMTP connection...');
       await this.transporter.verify();
       console.log('✅ Zoho SMTP connection verified successfully');
     } catch (error) {
-      console.error('❌ Zoho SMTP connection failed:', error);
-      console.warn('Please check your Zoho SMTP credentials in .env file');
+      console.error('❌ Zoho SMTP connection failed:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        code: (error as any)?.code,
+        command: (error as any)?.command,
+        response: (error as any)?.response,
+        responseCode: (error as any)?.responseCode
+      });
+      console.warn('⚠️ Please check your Zoho SMTP credentials in .env file');
+      console.warn('⚠️ Common issues:');
+      console.warn('   - Wrong SMTP credentials');
+      console.warn('   - Port blocked by firewall');
+      console.warn('   - Two-factor authentication enabled (use app-specific password)');
     }
   }
 

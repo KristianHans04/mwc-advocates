@@ -1,17 +1,34 @@
 /**
  * Database service for MWC Advocates
  * Centralizes Prisma client configuration and connection
+ * Falls back to Google Sheets if Prisma connection fails
  */
 
 import { PrismaClient } from '@prisma/client';
+import googleSheetsService from './googleSheets.service';
 
 class DatabaseService {
   private static instance: DatabaseService;
   public prisma: PrismaClient;
+  private useGoogleSheets: boolean = false;
 
   private constructor() {
+    console.log('🔧 Initializing DatabaseService...');
+    console.log('📊 Environment:', process.env.NODE_ENV);
+    console.log('🔗 DATABASE_URL exists:', !!process.env.DATABASE_URL);
+    
+    if (process.env.DATABASE_URL) {
+      const dbUrl = process.env.DATABASE_URL;
+      console.log('🔗 Database URL pattern:', dbUrl.substring(0, 20) + '...');
+      
+      // Check if it's a Supabase URL
+      if (dbUrl.includes('supabase')) {
+        console.log('📦 Detected Supabase database');
+      }
+    }
+
     this.prisma = new PrismaClient({
-      log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
+      log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error', 'warn', 'info'],
       datasources: {
         db: {
           url: process.env.DATABASE_URL
@@ -20,9 +37,27 @@ class DatabaseService {
     });
     
     // Handle connection gracefully
-    this.prisma.$connect().catch((error) => {
-      console.error('❌ Prisma connection failed:', error);
-    });
+    this.prisma.$connect()
+      .then(() => {
+        console.log('✅ Prisma connected successfully to database');
+      })
+      .catch(async (error) => {
+        console.error('❌ Prisma connection failed with error:', {
+          message: error.message,
+          code: error.code,
+          meta: error.meta
+        });
+        console.log('🔄 Attempting to use Google Sheets as fallback...');
+        
+        // Try Google Sheets as fallback
+        const sheetsInitialized = await googleSheetsService.initialize();
+        if (sheetsInitialized) {
+          this.useGoogleSheets = true;
+          console.log('✅ Using Google Sheets as database');
+        } else {
+          console.log('⚠️ Both database connections failed - using local data only');
+        }
+      });
   }
 
   /**
@@ -82,8 +117,27 @@ class DatabaseService {
       await this.prisma.$queryRaw`SELECT 1`;
       return true;
     } catch (error) {
+      // Check if Google Sheets is available as fallback
+      if (googleSheetsService.isAvailable()) {
+        this.useGoogleSheets = true;
+        return true;
+      }
       return false;
     }
+  }
+
+  /**
+   * Check if using Google Sheets
+   */
+  public isUsingGoogleSheets(): boolean {
+    return this.useGoogleSheets;
+  }
+
+  /**
+   * Get Google Sheets service
+   */
+  public getGoogleSheetsService() {
+    return googleSheetsService;
   }
 }
 
