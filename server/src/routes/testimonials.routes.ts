@@ -100,13 +100,13 @@ router.get('/:id', async (req: Request, res: Response) => {
       }
     }
 
-    res.status(404).json({
+    return res.status(404).json({
       success: false,
       error: 'Testimonial not found',
     });
   } catch (error) {
     console.error('Error fetching testimonial:', error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to fetch testimonial',
     });

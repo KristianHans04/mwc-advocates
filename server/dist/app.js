@@ -14,6 +14,7 @@ const services_routes_1 = __importDefault(require("./routes/services.routes"));
 const testimonials_routes_1 = __importDefault(require("./routes/testimonials.routes"));
 const contact_routes_1 = __importDefault(require("./routes/contact.routes"));
 const faq_routes_1 = __importDefault(require("./routes/faq.routes"));
+const health_routes_1 = __importDefault(require("./routes/health.routes"));
 dotenv_1.default.config();
 class App {
     constructor() {
@@ -87,6 +88,7 @@ class App {
         this.app.use('/api/testimonials', testimonials_routes_1.default);
         this.app.use('/api/contact', contact_routes_1.default);
         this.app.use('/api/faq', faq_routes_1.default);
+        this.app.use('/api/health', health_routes_1.default);
         this.app.use('*', (req, res) => {
             res.status(404).json({
                 error: 'Route not found',
