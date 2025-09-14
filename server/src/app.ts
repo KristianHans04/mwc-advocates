@@ -55,23 +55,35 @@ class App {
       'https://mwc-advocates-frontend-*.onrender.com'
     ];
 
+    // Log CORS configuration on startup
+    console.log('🔒 CORS Configuration initialized');
+    console.log('   Allowed origins:', allowedOrigins);
+    
     this.app.use(cors({
       origin: (origin, callback) => {
+        // Log every CORS request
+        console.log(`📡 CORS request from origin: ${origin || 'NO ORIGIN'}`);
+        
         // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
+        if (!origin) {
+          console.log('✅ Allowing request with no origin');
+          return callback(null, true);
+        }
         
         // Check exact matches first
         if (allowedOrigins.includes(origin)) {
+          console.log(`✅ CORS allowed (exact match): ${origin}`);
           return callback(null, true);
         }
         
         // For Render deployments, check if origin matches pattern
         if (origin.includes('mwc-advocates') && origin.includes('onrender.com')) {
-          console.log(`✅ Allowing CORS for Render deployment: ${origin}`);
+          console.log(`✅ CORS allowed (Render pattern): ${origin}`);
           return callback(null, true);
         }
         
-        console.log(`❌ CORS blocked origin: ${origin}`);
+        console.log(`❌ CORS BLOCKED: ${origin}`);
+        console.log('   Not in allowed origins:', allowedOrigins);
         const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
         return callback(new Error(msg), false);
       },
