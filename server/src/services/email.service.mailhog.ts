@@ -1,40 +1,37 @@
+/**
+ * MailHog Email Service for Development
+ * Uses local MailHog SMTP server for testing emails
+ */
+
 import nodemailer from 'nodemailer';
 import { EmailRecipient, EmailContent, ContactFormData, EmailSendResult, EmailService } from '../types/email.types';
 
-class ZohoEmailService implements EmailService {
+class MailHogEmailService implements EmailService {
   private transporter: nodemailer.Transporter;
   private fromEmail: string;
   private adminEmail: string;
 
   constructor() {
-    console.log('🔧 Initializing Zoho Email Service...');
-    console.log('📊 Environment:', process.env.NODE_ENV);
-    
-    this.fromEmail = process.env.EMAIL_FROM || 'MWC Advocates <hello@kristianhans.com>';
-    this.adminEmail = process.env.ADMIN_EMAIL || 'hello@kristianhans.com';
+    this.fromEmail = process.env.EMAIL_FROM || 'MWC Advocates <noreply@mwc-advocates.local>';
+    this.adminEmail = process.env.ADMIN_EMAIL || 'admin@mwc-advocates.local';
 
-    console.log('📧 Email Configuration:');
+    console.log('🔧 Initializing MailHog Email Service (Development)...');
+    console.log('📧 MailHog Configuration:');
+    console.log('   SMTP Host: localhost');
+    console.log('   SMTP Port: 1025');
+    console.log('   Web UI: http://localhost:8025');
     console.log('   From Email:', this.fromEmail);
     console.log('   Admin Email:', this.adminEmail);
-    console.log('   SMTP Host:', process.env.ZOHO_SMTP_HOST || 'smtp.zoho.com');
-    console.log('   SMTP Port:', process.env.ZOHO_SMTP_PORT || '587');
-    console.log('   SMTP User exists:', !!process.env.ZOHO_SMTP_USER);
-    console.log('   SMTP Pass exists:', !!process.env.ZOHO_SMTP_PASS);
 
-    // Create Zoho SMTP transporter
+    // Create MailHog SMTP transporter (no auth required)
     this.transporter = nodemailer.createTransport({
-      host: process.env.ZOHO_SMTP_HOST || 'smtp.zoho.com',
-      port: parseInt(process.env.ZOHO_SMTP_PORT || '587'),
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: process.env.ZOHO_SMTP_USER,
-        pass: process.env.ZOHO_SMTP_PASS,
-      },
+      host: 'localhost',
+      port: 1025,
+      secure: false,
+      // No authentication required for MailHog
       tls: {
         rejectUnauthorized: false
-      },
-      debug: process.env.NODE_ENV === 'production', // Enable debug in production
-      logger: process.env.NODE_ENV === 'production' // Enable logger in production
+      }
     });
 
     this.verifyConnection();
@@ -42,27 +39,17 @@ class ZohoEmailService implements EmailService {
 
   private async verifyConnection(): Promise<void> {
     try {
-      console.log('🔍 Verifying Zoho SMTP connection...');
       await this.transporter.verify();
-      console.log('✅ Zoho SMTP connection verified successfully');
+      console.log('✅ MailHog connection verified successfully');
+      console.log('📧 View emails at: http://localhost:8025');
     } catch (error) {
-      console.error('❌ Zoho SMTP connection failed:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        code: (error as any)?.code,
-        command: (error as any)?.command,
-        response: (error as any)?.response,
-        responseCode: (error as any)?.responseCode
-      });
-      console.warn('⚠️ Please check your Zoho SMTP credentials in .env file');
-      console.warn('⚠️ Common issues:');
-      console.warn('   - Wrong SMTP credentials');
-      console.warn('   - Port blocked by firewall');
-      console.warn('   - Two-factor authentication enabled (use app-specific password)');
+      console.error('❌ MailHog connection failed:', error);
+      console.warn('🔧 Make sure MailHog is running: docker run -p 1025:1025 -p 8025:8025 mailhog/mailhog');
     }
   }
 
   async sendContactFormEmails(contactData: ContactFormData): Promise<EmailSendResult> {
-    console.log('📧 Sending contact form emails via Zoho...');
+    console.log('📧 Sending contact form emails via MailHog (Development)...');
     console.log('Contact data:', { 
       name: contactData.name, 
       email: contactData.email, 
@@ -88,7 +75,7 @@ class ZohoEmailService implements EmailService {
       });
       
       results.adminSent = true;
-      console.log('✅ Admin notification email sent successfully');
+      console.log('✅ Admin notification email sent to MailHog');
     } catch (error) {
       results.adminError = error instanceof Error ? error.message : 'Unknown error';
       console.error('❌ Failed to send admin email:', error);
@@ -106,12 +93,13 @@ class ZohoEmailService implements EmailService {
       });
       
       results.clientSent = true;
-      console.log('✅ Client confirmation email sent successfully');
+      console.log('✅ Client confirmation email sent to MailHog');
     } catch (error) {
       results.clientError = error instanceof Error ? error.message : 'Unknown error';
       console.error('❌ Failed to send client email:', error);
     }
 
+    console.log('📧 Check MailHog at http://localhost:8025 to view sent emails');
     return results;
   }
 
@@ -156,14 +144,14 @@ class ZohoEmailService implements EmailService {
             </div>
             
             <div style="margin-top: 30px; padding: 20px; background-color: #fef3c7; border-radius: 6px; border: 1px solid #fbbf24;">
-              <p style="margin: 0; color: #92400e; font-weight: 600;">Action Required:</p>
-              <p style="margin: 8px 0 0 0; color: #78350f;">Please respond to this inquiry within 24 hours.</p>
+              <p style="margin: 0; color: #92400e; font-weight: 600;">Development Mode:</p>
+              <p style="margin: 8px 0 0 0; color: #78350f;">This email was sent via MailHog. Check http://localhost:8025</p>
             </div>
           </div>
         </div>
         
         <div style="background-color: #14532d; color: white; padding: 20px; text-align: center;">
-          <p style="margin: 0; font-size: 12px; opacity: 0.9;">This email was sent from the MWC Advocates contact form</p>
+          <p style="margin: 0; font-size: 12px; opacity: 0.9;">This email was sent from the MWC Advocates contact form (Development)</p>
           <p style="margin: 8px 0 0 0; font-size: 12px; opacity: 0.9;">Please respond to ${contactData.email} directly</p>
           <p style="margin: 16px 0 0 0; font-size: 11px; opacity: 0.7;">Providing excellence in legal solutions</p>
         </div>
@@ -171,7 +159,7 @@ class ZohoEmailService implements EmailService {
     `;
 
     const text = `
-MWC Advocates - New Contact Form Submission
+MWC Advocates - New Contact Form Submission (Development)
 
 Contact Details:
 Name: ${contactData.name}
@@ -183,6 +171,7 @@ Message:
 ${contactData.message}
 
 ---
+⚠️ Development Mode: This email was sent via MailHog
 This email was sent from the MWC Advocates contact form.
 Please respond to ${contactData.email} directly.
     `;
@@ -247,6 +236,11 @@ Please respond to ${contactData.email} directly.
               <p style="margin: 8px 0 0 0; color: #374151;"><strong>Hours:</strong> Monday - Friday: 8:00 AM - 6:00 PM</p>
             </div>
             
+            <div style="margin-top: 30px; padding: 20px; background-color: #fef3c7; border-radius: 6px; border: 1px solid #fbbf24;">
+              <p style="margin: 0; color: #92400e; font-weight: 600;">Development Mode:</p>
+              <p style="margin: 8px 0 0 0; color: #78350f;">This is a test email sent via MailHog. View at http://localhost:8025</p>
+            </div>
+            
             <p style="font-size: 16px; line-height: 1.8; color: #374151;">
               We look forward to serving you and building a lasting professional relationship.
             </p>
@@ -261,14 +255,14 @@ Please respond to ${contactData.email} directly.
         
         <div style="background-color: #14532d; color: white; padding: 20px; text-align: center;">
           <p style="margin: 0; font-size: 12px; opacity: 0.9;">© 2025 Masinde Wanyonyi & Company Advocates. All rights reserved.</p>
-          <p style="margin: 8px 0 0 0; font-size: 11px; opacity: 0.7;">This is an automated confirmation email. Please do not reply to this email.</p>
+          <p style="margin: 8px 0 0 0; font-size: 11px; opacity: 0.7;">This is an automated confirmation email (Development). Please do not reply.</p>
           <p style="margin: 8px 0 0 0; font-size: 11px; opacity: 0.7;">Commissioners for Oaths and Notary Public</p>
         </div>
       </div>
     `;
 
     const text = `
-MWC Advocates - Thank You for Contacting Us
+MWC Advocates - Thank You for Contacting Us (Development)
 
 Dear ${contactData.name},
 
@@ -279,14 +273,7 @@ What happens next?
 - A member of our legal team will contact you directly
 - We'll schedule a consultation if needed
 
-If you have any urgent legal matters or additional questions, please don't hesitate to call us directly.
-
-Contact Information:
-Email: hello@kristianhans.com
-Website: www.kristianhans.com
-
-Best regards,
-The MWC Advocates Team
+⚠️ Development Mode: This is a test email sent via MailHog
 
 ---
 © 2025 MWC Advocates. All rights reserved.
@@ -301,5 +288,5 @@ This is an automated confirmation email.
   }
 }
 
-export { ZohoEmailService };
-export default new ZohoEmailService();
+export { MailHogEmailService };
+export default new MailHogEmailService();

@@ -17,6 +17,7 @@ import testimonialsRoutes from './routes/testimonials.routes';
 import contactRoutes from './routes/contact.routes';
 import faqRoutes from './routes/faq.routes';
 import healthRoutes from './routes/health.routes';
+import wakeRoutes from './routes/wake.routes';
 
 // Load environment variables
 dotenv.config();
@@ -138,6 +139,7 @@ class App {
     });
 
     // API routes
+    this.app.use('/api/wake', wakeRoutes); // Lightweight wake-up endpoint
     this.app.use('/api/services', servicesRoutes);
     this.app.use('/api/testimonials', testimonialsRoutes);
     this.app.use('/api/contact', contactRoutes);

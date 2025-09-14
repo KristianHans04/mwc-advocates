@@ -42,13 +42,13 @@ const Footer = () => {
               <Scale className="w-8 h-8 text-green-400 mr-3" />
               <div>
                 <h3 className="text-xl font-bold">MWC Advocates</h3>
-                <p className="text-sm text-gray-400">Legal Excellence</p>
+                <p className="text-sm text-gray-400">Providing Excellence in Legal Solutions</p>
               </div>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
               MASINDE WANYONYI & COMPANY ADVOCATES<br />
-              Premier law firm providing expert legal services in Nairobi, Kenya.
-              We are committed to delivering practical solutions tailored to your specific needs.
+              Commissioners for Oaths and Notary Public<br />
+              Providing excellence in legal solutions. We are committed to delivering practical solutions tailored to your specific needs.
             </p>
             <div className="space-y-3">
               <motion.div 
@@ -78,7 +78,7 @@ const Footer = () => {
           {/* Quick Links */}
           <motion.div variants={itemVariants} className="lg:col-span-1">
             <h3 className="text-lg font-semibold mb-6 text-green-400">Quick Links</h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-3">
               <div className="space-y-3">
                 <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
                   <Link 
@@ -155,7 +155,7 @@ const Footer = () => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © {currentYear} Masinde Wanyonyi & Company Advocates. All rights reserved.
+              © {currentYear} Masinde Wanyonyi & Company Advocates, Commissioners for Oaths and Notary Public. All rights reserved.
             </div>
             <div className="text-gray-400 text-sm">
               <Link to="/privacy" className="hover:text-green-400 transition-colors duration-300">

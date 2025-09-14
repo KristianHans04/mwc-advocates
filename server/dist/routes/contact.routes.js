@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_validator_1 = require("express-validator");
 const unifiedData_service_1 = __importDefault(require("../services/unifiedData.service"));
-const email_service_zoho_1 = __importDefault(require("../services/email.service.zoho"));
+const emailService = process.env.NODE_ENV === 'development'
+    ? require('../services/email.service.mailhog').default
+    : require('../services/email.service.zoho').default;
 const router = express_1.default.Router();
 const dataService = unifiedData_service_1.default.getInstance();
 router.post('/', [
@@ -51,7 +53,7 @@ router.post('/', [
         };
         try {
             console.log('🔄 Initializing Zoho Mail service...');
-            emailResult = await email_service_zoho_1.default.sendContactFormEmails({
+            emailResult = await emailService.sendContactFormEmails({
                 name,
                 email,
                 phone,
