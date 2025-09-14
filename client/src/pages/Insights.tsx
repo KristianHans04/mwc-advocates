@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  BookOpen, Calendar, User, ChevronRight, Search, Filter,
-  FileText, Video, Mic, Award, Globe
+  BookOpen, User, Search, Filter,
+  FileText
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
@@ -22,15 +22,6 @@ interface Article {
   type: 'article' | 'publication' | 'media';
 }
 
-interface SpeakingEngagement {
-  id: string;
-  title: string;
-  event: string;
-  speaker: string;
-  date: string;
-  location: string;
-  type: 'conference' | 'webinar' | 'interview';
-}
 
 const Insights: React.FC = () => {
   useSEO({

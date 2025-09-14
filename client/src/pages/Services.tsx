@@ -8,13 +8,6 @@ import {
 import ServiceDetailModal from '../components/ServiceDetailModal';
 import useSEO from '../hooks/useSEO';
 
-// Import background images for services  
-import corporateLawBg from '../assets/img/Bg/corporateLaw.jpeg';
-import realEstateBg from '../assets/img/Bg/realEstateLaw.jpg';
-import taxLawBg from '../assets/img/Bg/taxLaw.jpg';
-import financeLawBg from '../assets/img/Bg/financeLaw.jpg';
-import disputeResolutionBg from '../assets/img/Bg/disputeResolution.jpeg';
-import corporateGovernanceBg from '../assets/img/Bg/corporateGovernance.jpeg';
 
 interface Service {
   id: string;
@@ -431,7 +424,7 @@ const Services: React.FC = () => {
               }
             }}
           >
-            {(activeTab === 'local' ? localServices : internationalServices).map((service, index) => {
+            {(activeTab === 'local' ? localServices : internationalServices).map((service, _index) => {
               const IconComponent = iconMap[service.icon] || Briefcase;
               return (
                 <motion.div
