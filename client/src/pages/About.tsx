@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Users, Award, CheckCircle, Clock, Heart, Scale, Globe } from 'lucide-react';
 import useSEO from '../hooks/useSEO';

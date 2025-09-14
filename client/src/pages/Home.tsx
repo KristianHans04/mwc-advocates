@@ -349,48 +349,23 @@ const Home: React.FC = () => {
                 return (
                   <motion.div
                     key={index}
-                    className="bg-black text-white p-6 rounded-lg group flex items-center justify-center text-center min-h-[160px] relative overflow-hidden hover-lift preserve-3d"
-                    initial={{ opacity: 0, rotateY: -15 }}
-                    whileInView={{ opacity: 1, rotateY: 0 }}
+                    className="bg-black text-white p-6 rounded-lg group flex items-center justify-center text-center min-h-[160px] relative overflow-hidden"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ 
-                      duration: 0.6, 
-                      delay: index * 0.1,
-                      rotateY: { duration: 0.8 }
-                    }}
-                    whileHover={{ 
-                      rotateY: 5,
-                      scale: 1.05,
-                      transition: { duration: 0.3 }
-                    }}
-                    animate={{
-                      rotateY: [0, 3, 0],
-                    }}
-                    style={{ transformStyle: 'preserve-3d' }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
                   >
-                    {/* Front side - always visible but animates */}
-                    <motion.div 
-                      className="transform transition-all duration-500 ease-out flex flex-col items-center justify-center space-y-3 z-10"
-                      animate={{
-                        rotateY: [0, -5, 0],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        repeatDelay: 2,
-                        ease: "easeInOut"
-                      }}
-                    >
-                      <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    {/* Default state - shows icon and title */}
+                    <div className="flex flex-col items-center justify-center space-y-3 group-hover:opacity-0 transition-opacity duration-300">
+                      <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
                         <IconComponent className="w-6 h-6 text-slate-800" />
                       </div>
-                      <h3 className="text-lg font-semibold group-hover:opacity-0 transition-opacity duration-300">{highlight.title}</h3>
-                    </motion.div>
+                      <h3 className="text-lg font-semibold">{highlight.title}</h3>
+                    </div>
 
-                    {/* Back side - shows on hover */}
-                    <div className="absolute inset-0 flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:rotateY-0" 
-                         style={{ transform: 'rotateY(180deg)' }}>
-                      <p className="text-sm text-gray-300 transform group-hover:rotate-y-0">
+                    {/* Hover state - shows description */}
+                    <div className="absolute inset-0 flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <p className="text-sm text-gray-300 text-center">
                         {highlight.description}
                       </p>
                     </div>
