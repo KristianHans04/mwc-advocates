@@ -136,7 +136,7 @@ class DatabaseService {
   /**
    * Get Google Sheets service
    */
-  public getGoogleSheetsService() {
+  public getGoogleSheetsService(): typeof googleSheetsService {
     return googleSheetsService;
   }
 }

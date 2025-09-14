@@ -6,11 +6,11 @@
 import { google } from 'googleapis';
 import { JWT } from 'google-auth-library';
 
-interface SheetRow {
+export interface SheetRow {
   [key: string]: any;
 }
 
-interface ContactSubmission {
+export interface ContactSubmission {
   id?: string;
   name: string;
   email: string;
@@ -188,6 +188,8 @@ class GoogleSheetsService {
       if (rowIndex >= rows.length) return false;
 
       const row = rows[rowIndex];
+      if (!row) return false;
+      
       row.active = 'false';
       row.deleted_at = new Date().toISOString();
 

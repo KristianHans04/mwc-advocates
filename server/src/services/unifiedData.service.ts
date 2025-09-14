@@ -79,17 +79,16 @@ class UnifiedDataService {
       // Try Supabase first
       if (!this.dbService.isUsingGoogleSheets()) {
         try {
-          const services = await this.prisma.services.findMany({
-            where: { active: true },
-            orderBy: { created_at: 'desc' }
+          const services = await this.prisma.service.findMany({
+            orderBy: { createdAt: 'desc' }
           });
 
-          return services.map(service => ({
+          return services.map((service: any) => ({
             id: service.id,
             title: service.title,
             description: service.description,
             icon: service.icon || undefined,
-            features: service.features ? JSON.parse(service.features as string) : []
+            features: service.features || []
           }));
         } catch (error) {
           console.log('⚠️ Supabase query failed, falling back to Google Sheets:', error);
@@ -119,18 +118,19 @@ class UnifiedDataService {
       // Try Supabase first
       if (!this.dbService.isUsingGoogleSheets()) {
         try {
-          const testimonials = await this.prisma.testimonials.findMany({
-            where: { active: true },
-            orderBy: { created_at: 'desc' }
+          const testimonials = await this.prisma.testimonial.findMany({
+            where: { isActive: true },
+            orderBy: { createdAt: 'desc' }
           });
 
-          return testimonials.map(testimonial => ({
+          return testimonials.map((testimonial: any) => ({
             id: testimonial.id,
-            client_name: testimonial.client_name,
+            client_name: testimonial.name,
             position: testimonial.position || undefined,
             company: testimonial.company || undefined,
             content: testimonial.content,
-            rating: testimonial.rating
+            rating: testimonial.rating,
+            initials: testimonial.initials
           }));
         } catch (error) {
           console.log('⚠️ Supabase query failed, falling back to Google Sheets:', error);
@@ -160,7 +160,7 @@ class UnifiedDataService {
       // Try Supabase first
       if (!this.dbService.isUsingGoogleSheets()) {
         try {
-          await this.prisma.contact_submissions.create({
+          await this.prisma.contactSubmission.create({
             data: {
               name: data.name,
               email: data.email,
@@ -203,19 +203,21 @@ class UnifiedDataService {
       // Try Supabase first
       if (!this.dbService.isUsingGoogleSheets()) {
         try {
-          const teamMembers = await this.prisma.team_members.findMany({
+          // Team members table doesn't exist in Prisma schema, return empty array
+          return [];
+          /* const teamMembers = await this.prisma.teamMember.findMany({
             where: { active: true },
             orderBy: { display_order: 'asc' }
           });
 
-          return teamMembers.map(member => ({
+          return teamMembers.map((member: any) => ({
             id: member.id,
             name: member.name,
             position: member.position,
             bio: member.bio || undefined,
             image_url: member.image_url || undefined,
             email: member.email || undefined
-          }));
+          })); */
         } catch (error) {
           console.log('⚠️ Supabase query failed, falling back to Google Sheets:', error);
         }
@@ -242,12 +244,12 @@ class UnifiedDataService {
       // Try Supabase first
       if (!this.dbService.isUsingGoogleSheets()) {
         try {
-          const faqs = await this.prisma.faqs.findMany({
-            where: { active: true },
-            orderBy: { display_order: 'asc' }
+          const faqs = await this.prisma.fAQ.findMany({
+            where: { isActive: true },
+            orderBy: { order: 'asc' }
           });
 
-          return faqs.map(faq => ({
+          return faqs.map((faq: any) => ({
             id: faq.id,
             question: faq.question,
             answer: faq.answer,
@@ -301,20 +303,20 @@ class UnifiedDataService {
       // Sync services
       const services = await googleSheetsService.getServices();
       for (const service of services) {
-        await this.prisma.services.upsert({
+        await this.prisma.service.upsert({
           where: { id: service.id },
           update: {
             title: service.title,
             description: service.description,
             icon: service.icon,
-            features: JSON.stringify(service.features)
+            features: service.features || []
           },
           create: {
             id: service.id,
             title: service.title,
             description: service.description,
             icon: service.icon,
-            features: JSON.stringify(service.features)
+            features: service.features || []
           }
         });
       }
@@ -322,22 +324,24 @@ class UnifiedDataService {
       // Sync testimonials
       const testimonials = await googleSheetsService.getTestimonials();
       for (const testimonial of testimonials) {
-        await this.prisma.testimonials.upsert({
+        await this.prisma.testimonial.upsert({
           where: { id: testimonial.id },
           update: {
-            client_name: testimonial.client_name,
+            name: testimonial.client_name,
             position: testimonial.position,
             company: testimonial.company,
             content: testimonial.content,
-            rating: testimonial.rating
+            rating: testimonial.rating,
+            initials: testimonial.client_name ? testimonial.client_name.split(' ').map((n: string) => n[0]).join('').toUpperCase() : 'NA'
           },
           create: {
             id: testimonial.id,
-            client_name: testimonial.client_name,
+            name: testimonial.client_name,
             position: testimonial.position,
             company: testimonial.company,
             content: testimonial.content,
-            rating: testimonial.rating
+            rating: testimonial.rating,
+            initials: testimonial.client_name ? testimonial.client_name.split(' ').map((n: string) => n[0]).join('').toUpperCase() : 'NA'
           }
         });
       }
