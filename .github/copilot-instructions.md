@@ -357,7 +357,95 @@ npx prisma migrate reset  # Will prompt for confirmation
 npx prisma generate
 ```
 
-## Frontend Architecture (Hotwire + Stimulus)
+## Frontend Architecture Patterns
+
+### React Component Architecture
+**Component Hierarchy**: Organized by scope and reusability:
+```typescript
+// client/src/components/
+├── layout/           # App-wide components (Header, Footer, Layout)
+├── ui/              # Reusable UI components (Button, Modal, Form)
+└── pages/           # Page-specific components (Contact, Services)
+
+// Example: Layout component structure
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
+    </div>
+  );
+};
+```
+
+### SEO & Meta Management
+**useSEO Hook**: Centralized meta tag management for all pages:
+```typescript
+// client/src/hooks/useSEO.ts
+const useSEO = ({ title, description, keywords }: SEOProps) => {
+  useEffect(() => {
+    document.title = title;
+    // Meta tag updates
+  }, [title, description, keywords]);
+};
+
+// Usage in every page component
+const Contact: React.FC = () => {
+  useSEO({
+    title: 'Contact Us - MWC Advocates',
+    description: 'Contact MASINDE WANYONYI & COMPANY ADVOCATES for professional legal consultation',
+    keywords: 'contact MWC Advocates, legal consultation Nairobi'
+  });
+  
+  return <ContactForm />;
+};
+```
+
+### Form Handling Pattern
+**React Hook Form + Zod**: Consistent form validation across the application:
+```typescript
+// Example from Contact.tsx
+interface ContactForm {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
+const contactSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  // ... other validations
+});
+
+const { register, handleSubmit, formState: { errors } } = useForm<ContactForm>({
+  resolver: zodResolver(contactSchema)
+});
+```
+
+### Animation & Motion Patterns
+**Framer Motion**: Consistent micro-interactions and page transitions:
+```typescript
+// Standard animation pattern used throughout
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+>
+  {content}
+</motion.div>
+
+// Stagger animations for lists
+<motion.div variants={staggerContainer}>
+  {items.map((item, index) => (
+    <motion.div key={item.id} variants={fadeInUp}>
+      {item.content}
+    </motion.div>
+  ))}
+</motion.div>
+```
 
 ## Testing Strategy & Patterns
 
@@ -479,69 +567,125 @@ server/src/
    });
    ```
 
-### Hotwire Integration
-**Turbo Configuration**:
-```ruby
-# config/importmap.rb
-pin "@hotwired/turbo-rails", to: "turbo.min.js"
-pin "@hotwired/stimulus", to: "stimulus.min.js"
+## Testing Strategy & Patterns
 
-# Auto-refresh with Turbo
-connect() {
-  document.addEventListener("turbo:before-visit", this.navigationHandler);
-  this.refreshInterval = setInterval(() => this.refreshData(), 30000);
-}
+### Testing Requirements
+**Every new feature MUST include comprehensive tests**. Follow the testing hierarchy for complete coverage:
+
+### Test Organization Structure
+```
+client/src/
+├── __tests__/           # Frontend tests
+│   ├── components/      # Component unit tests
+│   ├── pages/          # Page integration tests
+│   ├── services/       # API service tests
+│   └── utils/          # Utility function tests
+
+server/src/
+├── __tests__/          # Backend tests
+│   ├── routes/         # API endpoint tests
+│   ├── services/       # Business logic tests
+│   └── utils/          # Helper function tests
 ```
 
-### Real-time Features
-**Action Cable Setup**: Uses Solid Cable (PostgreSQL-backed)
-```yaml
-# config/cable.yml
-production:
-  adapter: solid_cable
-  polling_interval: 0.1.seconds
-```
+### Frontend Testing Patterns
+1. **Component Tests** (Required for all components):
+   ```typescript
+   // client/src/__tests__/components/Contact.test.tsx
+   describe('Contact Component', () => {
+     it('renders contact form with all fields', () => {
+       render(<Contact />);
+       expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+       expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+       expect(screen.getByLabelText(/message/i)).toBeInTheDocument();
+     });
+     
+     it('validates form submission', async () => {
+       render(<Contact />);
+       fireEvent.click(screen.getByText(/send message/i));
+       
+       await waitFor(() => {
+         expect(screen.getByText(/name is required/i)).toBeInTheDocument();
+       });
+     });
+   });
+   ```
 
-**WebSocket Patterns**:
-```javascript
-// Setup WebSocket with fallback to polling
-setupWebSocketConnection() {
-  // WebSocket code with Action Cable integration
-  // Falls back to HTTP polling if WebSocket unavailable
-}
-```
+2. **API Service Tests**:
+   ```typescript
+   // client/src/__tests__/services/api.test.ts
+   describe('ApiService', () => {
+     it('returns services data in correct format', async () => {
+       const services = await apiService.getServices();
+       
+       expect(services.success).toBe(true);
+       expect(Array.isArray(services.data)).toBe(true);
+       expect(services.data[0]).toHaveProperty('id');
+       expect(services.data[0]).toHaveProperty('title');
+     });
+   });
+   ```
 
-### Component Patterns (Phlex)
-**Phlex Component Architecture**: Ruby-based view components replacing ERB
-```ruby
-# app/components/components/base.rb
-class Components::Base < Phlex::HTML
-  # Base component with common patterns
-end
+### Backend Testing Patterns
+1. **API Endpoint Tests** (Required for all routes):
+   ```typescript
+   // server/src/__tests__/routes/services.test.ts
+   describe('Services API', () => {
+     describe('GET /api/services', () => {
+       it('returns success with services data', async () => {
+         const response = await request(app).get('/api/services');
+         
+         expect(response.status).toBe(200);
+         expect(response.body).toEqual({
+           success: true,
+           data: expect.arrayContaining([
+             expect.objectContaining({
+               id: expect.any(String),
+               title: expect.any(String),
+               description: expect.any(String)
+             })
+           ])
+         });
+       });
+       
+       it('handles errors gracefully', async () => {
+         // Mock data service failure
+         jest.spyOn(dataService, 'getServices').mockRejectedValue(new Error('File not found'));
+         
+         const response = await request(app).get('/api/services');
+         
+         expect(response.status).toBe(500);
+         expect(response.body).toEqual({
+           success: false,
+           error: expect.any(String)
+         });
+       });
+     });
+   });
+   ```
 
-# Feature components inherit from Base
-class Components::Projects::Dashboard < Components::Base
-  def view_template
-    div(class: "dashboard-container") do
-      render_header
-      render_content  
-    end
-  end
-end
-```
-
-**Stimulus Integration in Phlex**:
-```ruby
-# Components use data attributes for Stimulus
-button(
-  class: "btn btn-primary",
-  data: { 
-    action: "click->project-dashboard#handleAction",
-    controller: "project-dashboard",
-    project_id: @project.id
-  }
-) { "Action Button" }
-```
+2. **Service Layer Tests**:
+   ```typescript
+   // server/src/__tests__/services/dataService.test.ts
+   describe('DataService', () => {
+     it('loads JSON data correctly', async () => {
+       const services = await DataService.getServices();
+       
+       expect(Array.isArray(services)).toBe(true);
+       expect(services.length).toBeGreaterThan(0);
+       expect(services[0]).toHaveProperty('id');
+     });
+     
+     it('caches data for subsequent calls', async () => {
+       const spy = jest.spyOn(fs, 'readFile');
+       
+       await DataService.getServices();
+       await DataService.getServices();
+       
+       expect(spy).toHaveBeenCalledTimes(1); // Should only read file once
+     });
+   });
+   ```
 
 ## Notification & UI Patterns
 
@@ -942,80 +1086,113 @@ API:      https://mwc-advocates-api.onrender.com/api
 ## Testing Patterns
 
 ### Testing Requirements
-**Every new feature MUST include comprehensive RSpec tests**. Do not rely on quick scripts like `test_email.rb` for production code.
+### Testing Requirements
+**Every new feature MUST include comprehensive tests**. Follow the testing hierarchy for complete coverage:
 
 ### Test Coverage Standards
-1. **Model Specs** (Required for all models):
-   ```ruby
-   # spec/models/work_cabinet_spec.rb
-   RSpec.describe WorkCabinet, type: :model do
-     describe 'associations' do
-       it { should have_one(:cabinet).dependent(:destroy) }
-       it { should have_many(:records).through(:cabinet) }
-     end
+1. **Component Tests** (Required for all React components):
+   ```typescript
+   // client/src/__tests__/components/ContactForm.test.tsx
+   describe('ContactForm Component', () => {
+     it('renders all form fields correctly', () => {
+       render(<ContactForm />);
+       expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+       expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+       expect(screen.getByLabelText(/message/i)).toBeInTheDocument();
+     });
      
-     describe 'validations' do
-       it { should validate_presence_of(:name) }
-     end
-     
-     describe 'concerns' do
-       it_behaves_like 'Cabinetable'
-       it_behaves_like 'SoftDeletable'
-     end
-   end
+     it('validates required fields', async () => {
+       render(<ContactForm />);
+       fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+       
+       await waitFor(() => {
+         expect(screen.getByText(/name is required/i)).toBeInTheDocument();
+       });
+     });
+   });
    ```
 
-2. **Request Specs** (Required for all controllers):
-   ```ruby
-   # spec/requests/organizations/work_cabinets_spec.rb
-   RSpec.describe "Organizations::WorkCabinets", type: :request do
-     describe "GET /index" do
-       context "when user is authorized" do
-         it "returns successful response" do
-           get organization_work_cabinets_path(organization)
-           expect(response).to have_http_status(:success)
-         end
-       end
+2. **API Endpoint Tests** (Required for all routes):
+   ```typescript
+   // server/src/__tests__/routes/contact.test.ts
+   describe("Contact API", () => {
+     describe("POST /api/contact", () => {
+       it("creates contact submission successfully", async () => {
+         const contactData = {
+           name: 'John Doe',
+           email: 'john@example.com',
+           message: 'Test message'
+         };
+         
+         const response = await request(app)
+           .post('/api/contact')
+           .send(contactData);
+         
+         expect(response.status).toBe(200);
+         expect(response.body).toEqual({
+           success: true,
+           data: expect.objectContaining({
+             id: expect.any(String)
+           })
+         });
+       });
        
-       context "when user is unauthorized" do
-         it "redirects to signin" do
-           get organization_work_cabinets_path(organization)
-           expect(response).to redirect_to(users_signin_path)
-         end
-       end
-     end
-   end
+       it("validates input data", async () => {
+         const response = await request(app)
+           .post('/api/contact')
+           .send({ name: '' }); // Invalid data
+         
+         expect(response.status).toBe(400);
+         expect(response.body.success).toBe(false);
+       });
+     });
+   });
    ```
 
-3. **System Specs** (Required for UI features):
-   ```ruby
-   # spec/system/work_cabinets_spec.rb
-   RSpec.describe "WorkCabinets", type: :system do
-     before { driven_by(:selenium_chrome_headless) }
-     
-     scenario "User creates a new work cabinet" do
-       visit organization_work_cabinets_path(organization)
-       click_link "New Cabinet"
-       fill_in "Name", with: "Test Cabinet"
-       click_button "Create"
+3. **Service Layer Tests**:
+   ```typescript
+   // server/src/__tests__/services/emailService.test.ts
+   describe('EmailService', () => {
+     it('sends contact email successfully', async () => {
+       const contactData = {
+         name: 'John Doe',
+         email: 'john@example.com',
+         subject: 'Test Subject',
+         message: 'Test message'
+       };
        
-       expect(page).to have_content("Cabinet created successfully")
-       expect(page).to have_content("Test Cabinet")
-     end
-   end
+       const result = await emailService.sendContactEmail(contactData);
+       
+       expect(result.success).toBe(true);
+       expect(result.messageId).toBeDefined();
+     });
+   });
    ```
 
-4. **Component Specs** (For Phlex components):
-   ```ruby
-   # spec/components/navigation/navbar_spec.rb
-   RSpec.describe Components::Navigation::Navbar, type: :component do
-     it "renders navigation with user menu" do
-       render_inline(described_class.new(current_user: user))
+4. **Integration Tests** (For complete user workflows):
+   ```typescript
+   // client/src/__tests__/integration/contactFlow.test.tsx
+   describe('Contact Flow Integration', () => {
+     it('submits contact form end-to-end', async () => {
+       render(<Contact />);
        
-       expect(page).to have_css(".navbar")
-       expect(page).to have_content(user.name)
-     end
-   end
+       fireEvent.change(screen.getByLabelText(/name/i), {
+         target: { value: 'John Doe' }
+       });
+       fireEvent.change(screen.getByLabelText(/email/i), {
+         target: { value: 'john@example.com' }
+       });
+       fireEvent.change(screen.getByLabelText(/message/i), {
+         target: { value: 'Test message' }
+       });
+       
+       fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+       
+       await waitFor(() => {
+         expect(screen.getByText(/message sent successfully/i)).toBeInTheDocument();
+       });
+     });
+   });
    ```
 
 ### Factory Structure
