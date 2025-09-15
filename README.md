@@ -253,14 +253,6 @@ The application supports email notifications for contact form submissions:
 - **Validation**: Client and server-side form validation
 - **Performance**: Optimized builds and lazy loading
 
-## 📞 **Firm Contact Information**
-
-**MASINDE WANYONYI & COMPANY ADVOCATES**
-- **Address**: SUITE 58 Duplex Suites, Lower Hill Road, Upperhill
-- **Postal**: P.O. Box 46723-00100, Nairobi, Kenya
-- **Phone**: +254702073800 / +254708792078
-- **Email**: Masindewanyonyi.co@gmail.com
-
 ## 🤝 **Contributing**
 
 1. Create feature branch from `PERN`
@@ -281,5 +273,3 @@ For technical support or deployment issues:
 4. Review API endpoints in browser network tab
 
 ---
-
-**Built with ❤️ using modern web technologies for professional legal services in Kenya**
