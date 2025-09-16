@@ -18,6 +18,8 @@ const Home: React.FC = () => {
   // Carousel state
   const [activeCard, setActiveCard] = useState(3);
   const [isPaused, setIsPaused] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isTestimonialPaused, setIsTestimonialPaused] = useState(false);
 
   // SEO optimization
   useSEO({
@@ -226,7 +228,7 @@ const Home: React.FC = () => {
     },
   ];
 
-  // Auto-scroll effect
+  // Auto-scroll effect for highlights
   useEffect(() => {
     if (!isPaused) {
       const interval = setInterval(() => {
@@ -236,6 +238,17 @@ const Home: React.FC = () => {
       return () => clearInterval(interval);
     }
   }, [isPaused]);
+
+  // Auto-scroll effect for testimonials (mobile)
+  useEffect(() => {
+    if (!isTestimonialPaused && window.innerWidth < 768) {
+      const interval = setInterval(() => {
+        setActiveTestimonial(prev => (prev + 1) % testimonials.length);
+      }, 4000); // Change testimonial every 4 seconds on mobile
+
+      return () => clearInterval(interval);
+    }
+  }, [isTestimonialPaused, testimonials.length]);
 
   return (
     <div>
@@ -338,7 +351,7 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Content */}
-            <div className="order-2 lg:order-1">
+            <div className="order-1 lg:order-1">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                 Welcome to Masinde Wanyonyi & Company Advocates
               </h2>
@@ -367,7 +380,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Right Content - Highlights Carousel */}
-            <div className="relative h-80 md:h-96 order-1 lg:order-2 lg:pl-12">
+            <div className="relative h-80 md:h-96 order-2 lg:order-2 lg:pl-12 mt-8 lg:mt-0">
               <div 
                 className="relative w-full h-full flex items-center justify-center"
                 onMouseEnter={() => setIsPaused(true)}
@@ -380,13 +393,13 @@ const Home: React.FC = () => {
                     setIsPaused(false); // Reset pause to trigger smooth animation
                     setTimeout(() => setIsPaused(true), 100);
                   }}
-                  className="absolute -left-4 md:left-0 z-20 p-1 md:p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors"
+                  className="absolute left-2 md:left-0 z-20 p-1 md:p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-white" />
                 </button>
 
                 {/* Cards Container */}
-                <div className="relative w-full h-full overflow-visible" style={{ perspective: '1000px' }}>
+                <div className="relative w-full h-full overflow-hidden md:overflow-visible" style={{ perspective: '1000px' }}>
                   {/* Render all cards for smooth transitions */}
                   {highlights.map((highlight, index) => {
                     const IconComponent = highlight.icon;
@@ -400,10 +413,11 @@ const Home: React.FC = () => {
                     
                     // Calculate transform and styling based on position
                     const isActive = offset === 0;
-                    const isVisible = Math.abs(offset) <= 2;
+                    // On mobile, only show 3 cards (active + 1 on each side)
+                    const isVisible = window.innerWidth < 768 ? Math.abs(offset) <= 1 : Math.abs(offset) <= 2;
                     
-                    // Responsive spacing
-                    const spacing = window.innerWidth < 768 ? 90 : 120;
+                    // Responsive spacing - tighter on mobile
+                    const spacing = window.innerWidth < 768 ? 70 : 120;
                     
                     const cardStyle = {
                       position: 'absolute' as const,
@@ -457,7 +471,7 @@ const Home: React.FC = () => {
                     setIsPaused(false); // Reset pause to trigger smooth animation
                     setTimeout(() => setIsPaused(true), 100);
                   }}
-                  className="absolute -right-4 md:right-0 z-20 p-1 md:p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors"
+                  className="absolute right-2 md:right-0 z-20 p-1 md:p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors"
                 >
                   <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-white" />
                 </button>
@@ -562,7 +576,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonials Section with Infinite Scroll */}
+      {/* Testimonials Section */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -573,8 +587,93 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* Infinite Horizontal Scroll Container */}
-        <div className="relative">
+        {/* Mobile Carousel - Visible only on mobile */}
+        <div className="md:hidden relative px-4">
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsTestimonialPaused(true)}
+            onMouseLeave={() => setIsTestimonialPaused(false)}
+          >
+            {/* Previous Button */}
+            <button
+              onClick={() => {
+                setActiveTestimonial(activeTestimonial === 0 ? testimonials.length - 1 : activeTestimonial - 1);
+              }}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/90 shadow-lg rounded-full hover:bg-white transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5 text-gray-700" />
+            </button>
+
+            {/* Testimonial Cards Container */}
+            <div className="overflow-hidden">
+              <div className="relative h-64">
+                {testimonials.map((testimonial, index) => (
+                  <div
+                    key={testimonial.id}
+                    className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                      index === activeTestimonial 
+                        ? 'opacity-100 transform translate-x-0' 
+                        : index < activeTestimonial 
+                        ? 'opacity-0 transform -translate-x-full' 
+                        : 'opacity-0 transform translate-x-full'
+                    }`}
+                  >
+                    <div className="bg-white p-6 rounded-2xl shadow-lg h-full mx-8">
+                      <div className="flex items-center mb-4">
+                        <div className="w-10 h-10 bg-green-800 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                          {testimonial.initials}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-gray-900 text-sm">{testimonial.name}</p>
+                          <p className="text-gray-500 text-xs">
+                            {testimonial.position}
+                            {testimonial.company && `, ${testimonial.company}`}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex text-yellow-600 mb-3">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                          </svg>
+                        ))}
+                      </div>
+                      
+                      <p className="text-gray-600 italic text-sm">"{testimonial.content}"</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Next Button */}
+            <button
+              onClick={() => {
+                setActiveTestimonial((activeTestimonial + 1) % testimonials.length);
+              }}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/90 shadow-lg rounded-full hover:bg-white transition-colors"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-700" />
+            </button>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-1 mt-4">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveTestimonial(index)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    index === activeTestimonial ? 'bg-green-600 w-6' : 'bg-gray-300 w-1.5'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Infinite Scroll - Hidden on mobile */}
+        <div className="hidden md:block relative">
           <div className="flex animate-scroll">
             {/* First set of testimonials */}
             {testimonials.map((testimonial) => (
