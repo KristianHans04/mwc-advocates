@@ -159,7 +159,7 @@ const About: React.FC = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-screen pt-20 flex items-center justify-center text-white overflow-hidden">
+      <section className="relative h-screen pt-20 flex items-center justify-center text-white overflow-hidden bg-black">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
@@ -167,7 +167,7 @@ const About: React.FC = () => {
             alt="Professional legal consultation representing our firm's dedication to excellence" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black opacity-70"></div>
+          <div className="absolute inset-0"></div>
         </div>
 
         {/* Content */}

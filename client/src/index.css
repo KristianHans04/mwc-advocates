@@ -70,6 +70,15 @@
   animation-play-state: paused;
 }
 
+.animate-scroll-slow {
+  animation: scroll 30s linear infinite;
+  display: flex;
+}
+
+.animate-scroll-slow:hover {
+  animation-play-state: paused;
+}
+
 .fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }
