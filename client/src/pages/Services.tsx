@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import ServiceDetailModal from '../components/ServiceDetailModal';
 import useSEO from '../hooks/useSEO';
+import servicesBg from '../assets/servicesBg1.png';
 
 
 interface Service {
@@ -330,7 +331,7 @@ const Services: React.FC = () => {
       <section className="relative min-h-[60vh] pt-20 flex items-center justify-center text-white overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="/img/servicesBg1.png" 
+            src={servicesBg} 
             alt="Legal Services Background" 
             className="w-full h-full object-cover"
           />

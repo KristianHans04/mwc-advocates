@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Shield, Users, Award, CheckCircle, Clock, Heart, Scale, Globe } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import heroBg from '../assets/hero_bg.png';
+import dennisImg from '../assets/img/Advocates/dennis.jpeg';
+import jamesImg from '../assets/img/Advocates/james.jpeg';
+import sarahImg from '../assets/img/Advocates/sarah.jpeg';
 
 const About: React.FC = () => {
   // SEO optimization
@@ -87,7 +90,7 @@ const About: React.FC = () => {
         'The Evolution of Corporate Law in Kenya (2021)',
         'Banking Regulations and Compliance: A Practitioner\'s Guide (2020)'
       ],
-      image: '/img/Advocates/dennis.jpeg'
+      image: dennisImg
     },
     {
       name: 'Sarah Mwangi',
@@ -120,7 +123,7 @@ const About: React.FC = () => {
         'Data Protection Compliance in the Digital Age (2023)',
         'Employment Law Quarterly Review (Contributing Author)'
       ],
-      image: '/img/Advocates/sarah.jpeg'
+      image: sarahImg
     },
     {
       name: 'James Wanyonyi',
@@ -152,7 +155,7 @@ const About: React.FC = () => {
         'Property Rights and Land Registration in Kenya (2022)',
         'Estate Planning: A Comprehensive Guide for Kenyans (2021)'
       ],
-      image: '/img/Advocates/james.jpeg'
+      image: jamesImg
     }
   ];
 
@@ -191,10 +194,10 @@ const About: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Commissioners for Oaths & Notary Public
+              Our Story, Values & People
             </h2>
             <p className="text-lg md:text-xl mb-12 text-gray-200 max-w-3xl mx-auto leading-relaxed">
-              Providing excellence in legal solutions
+              Discover our journey, meet our experienced legal team, and learn what drives our commitment to exceptional legal service
             </p>
           </motion.div>
         </motion.div>

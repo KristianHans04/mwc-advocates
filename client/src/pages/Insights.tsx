@@ -8,6 +8,21 @@ import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
 import ArticleDetailModal from '../components/ArticleDetailModal';
 
+// Import background images
+import taxLawBg from '../assets/img/Bg/taxLaw.jpg';
+import corporateLawBg from '../assets/img/Bg/corporateLaw.jpeg';
+import realEstateLawBg from '../assets/img/Bg/realEstateLaw.jpg';
+import disputeResolutionBg from '../assets/img/Bg/disputeResolution.jpeg';
+import corporateGovernanceBg from '../assets/img/Bg/corporateGovernance.jpeg';
+import financeLawBg from '../assets/img/Bg/financeLaw.jpg';
+
+// Import placeholder images from randoms folder
+import gavelImg from '../assets/img/randoms/gavel.png';
+import gavel2Img from '../assets/img/randoms/gavel2.png';
+import gavel3Img from '../assets/img/randoms/gavel3.png';
+import justiceImg from '../assets/img/randoms/justice.png';
+import lawBooksImg from '../assets/img/randoms/law_books.png';
+
 interface Article {
   id: string;
   title: string;
@@ -58,7 +73,7 @@ const Insights: React.FC = () => {
           date: '2024-01-15',
           category: 'Tax Law',
           readTime: '8 min',
-          image: '/img/randoms/tax-reform.jpg',
+          image: lawBooksImg,
           tags: ['Tax', 'Legislation', 'Business'],
           type: 'article'
         },
@@ -70,7 +85,7 @@ const Insights: React.FC = () => {
           date: '2024-01-10',
           category: 'Corporate Law',
           readTime: '12 min',
-          image: '/img/randoms/ma-deals.jpg',
+          image: gavelImg,
           tags: ['M&A', 'EAC', 'Cross-border'],
           type: 'article'
         },
@@ -82,7 +97,7 @@ const Insights: React.FC = () => {
           date: '2024-01-05',
           category: 'Real Estate',
           readTime: '10 min',
-          image: '/img/randoms/property-investment.jpg',
+          image: gavel2Img,
           tags: ['Property', 'Foreign Investment', 'Real Estate'],
           type: 'article'
         },
@@ -94,7 +109,7 @@ const Insights: React.FC = () => {
           date: '2023-12-28',
           category: 'Dispute Resolution',
           readTime: '15 min',
-          image: '/img/randoms/arbitration.jpg',
+          image: justiceImg,
           tags: ['Arbitration', 'Dispute Resolution', 'Courts'],
           type: 'publication'
         },
@@ -106,7 +121,7 @@ const Insights: React.FC = () => {
           date: '2023-12-20',
           category: 'Corporate Governance',
           readTime: '7 min',
-          image: '/img/randoms/esg-compliance.jpg',
+          image: gavel3Img,
           tags: ['ESG', 'Compliance', 'NSE'],
           type: 'article'
         },
@@ -118,7 +133,7 @@ const Insights: React.FC = () => {
           date: '2023-12-15',
           category: 'Financial Law',
           readTime: '9 min',
-          image: '/img/randoms/crypto-law.jpg',
+          image: lawBooksImg,
           tags: ['Cryptocurrency', 'Digital Assets', 'Regulation'],
           type: 'publication'
         }
@@ -179,12 +194,12 @@ const Insights: React.FC = () => {
 
   // Map categories to their background images
   const categoryBackgrounds: { [key: string]: string } = {
-    'Tax Law': '/img/Bg/taxLaw.jpg',
-    'Corporate Law': '/img/Bg/corporateLaw.jpeg',
-    'Real Estate': '/img/Bg/realEstateLaw.jpg',
-    'Dispute Resolution': '/img/Bg/disputeResolution.jpeg',
-    'Corporate Governance': '/img/Bg/corporateGovernance.jpeg',
-    'Financial Law': '/img/Bg/financeLaw.jpg'
+    'Tax Law': taxLawBg,
+    'Corporate Law': corporateLawBg,
+    'Real Estate': realEstateLawBg,
+    'Dispute Resolution': disputeResolutionBg,
+    'Corporate Governance': corporateGovernanceBg,
+    'Financial Law': financeLawBg
   };
 
   const handleArticleClick = (article: Article) => {
@@ -407,7 +422,7 @@ const Insights: React.FC = () => {
                         <div className="h-48 relative overflow-hidden">
                           {/* Use category-specific background image */}
                           <img 
-                            src={categoryBackgrounds[article.category] || '/img/Bg/corporateLaw.jpeg'} 
+                            src={categoryBackgrounds[article.category] || corporateLawBg} 
                             alt={article.category}
                             className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
