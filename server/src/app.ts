@@ -49,9 +49,11 @@ class App {
     const allowedOrigins = [
       process.env.FRONTEND_URL || 'http://localhost:5173',
       'https://mwc-advocates-frontend.onrender.com',
+      'https://mwc-advocates-1.onrender.com', // Your new frontend service
+      'https://mwc-advocates-web.onrender.com', // Alternative name
       'http://localhost:5173',
       'http://localhost:3000',
-      'https://mwc-advocates.onrender.com', // Alternative domain pattern
+      'https://mwc-advocates.onrender.com',
       // Add common variations
       'https://mwc-advocates-frontend-*.onrender.com'
     ];
