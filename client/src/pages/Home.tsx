@@ -434,7 +434,7 @@ const Home: React.FC = () => {
                       opacity: isVisible ? (isActive ? 1 : 0.7 - Math.abs(offset) * 0.1) : 0,
                       filter: isActive ? 'none' : `blur(${Math.abs(offset)}px)`,
                       transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                      pointerEvents: isVisible ? 'auto' : 'none' as const,
+                      pointerEvents: isVisible ? 'auto' as const : 'none' as const,
                     };
                     
                     return (
