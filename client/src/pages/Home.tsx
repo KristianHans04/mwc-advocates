@@ -3,9 +3,10 @@
  * Landing page with hero section, services preview, and testimonials
  */
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle, Users, Scale, MapPin, ArrowRight, Building, Briefcase, Shield, Home as HomeIcon } from 'lucide-react';
+import { CheckCircle, Users, Scale, MapPin, ArrowRight, Building, Briefcase, Shield, Home as HomeIcon, Award, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
 
@@ -14,6 +15,9 @@ import logoWhite from '../assets/MWC_WHITE.png';
 import heroBg from '../assets/heroBg.jpg';
 
 const Home: React.FC = () => {
+  // Carousel state
+  const [activeCard, setActiveCard] = useState(3);
+  const [isPaused, setIsPaused] = useState(false);
 
   // SEO optimization
   useSEO({
@@ -193,25 +197,45 @@ const Home: React.FC = () => {
     {
       icon: CheckCircle,
       title: 'Experienced',
-      description: 'Skilled advocates with proven track records',
+      description: 'Skilled advocates with proven track records in complex legal matters',
     },
     {
       icon: Users,
       title: 'Client-Focused',
-      description: 'Your goals are our priority',
+      description: 'Your goals are our priority, with personalized legal strategies',
     },
     {
       icon: Scale,
       title: 'Ethical',
-      description: 'Committed to the highest standards',
+      description: 'Committed to the highest standards of professional integrity',
     },
     {
       icon: MapPin,
       title: 'Local Expertise',
-      description: 'Deep knowledge of Kenyan law',
+      description: 'Deep knowledge of Kenyan law and regional legal frameworks',
+    },
+    {
+      icon: Award,
+      title: 'Award-Winning',
+      description: 'Recognized for excellence in legal service delivery',
+    },
+    {
+      icon: Clock,
+      title: 'Responsive',
+      description: '24/7 availability for urgent legal matters and consultations',
     },
   ];
 
+  // Auto-scroll effect
+  useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setActiveCard(prev => (prev + 1) % 6); // 6 is the total number of highlights
+      }, 3000); // Auto-scroll every 3 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [isPaused]);
 
   return (
     <div>
@@ -310,26 +334,26 @@ const Home: React.FC = () => {
       </section>
 
       {/* Welcome Section */}
-      <section className="py-20 bg-white">
+      <section className="py-10 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Content */}
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-6">
                 Welcome to Masinde Wanyonyi & Company Advocates
               </h2>
-              <p className="text-lg font-semibold text-green-800 mb-4">
+              <p className="text-base md:text-lg font-semibold text-green-800 mb-4">
                 Commissioners for Oaths and Notary Public
               </p>
-              <div className="w-16 h-1 bg-green-500 mb-6"></div>
+              <div className="w-16 h-1 bg-green-500 mb-4 md:mb-6"></div>
 
-              <p className="text-lg text-gray-600 leading-relaxed mb-6">
+              <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-4 md:mb-6">
                 An established law firm providing excellence in legal solutions to individuals and businesses
                 throughout Kenya. Founded on principles of integrity, excellence, and client-centered service,
                 we combine legal expertise with a deep understanding of the Kenyan legal landscape.
               </p>
 
-              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-6 md:mb-8">
                 Our team of dedicated advocates is committed to providing excellence in legal solutions tailored to your
                 specific needs, ensuring you receive the highest quality legal representation.
               </p>
@@ -342,36 +366,115 @@ const Home: React.FC = () => {
               </Link>
             </div>
 
-            {/* Right Content - Highlights Cards */}
-            <div className="grid grid-cols-2 gap-4">
-              {highlights.map((highlight, index) => {
-                const IconComponent = highlight.icon;
-                return (
-                  <motion.div
-                    key={index}
-                    className="bg-black text-white p-6 rounded-lg group flex items-center justify-center text-center min-h-[160px] relative overflow-hidden"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                  >
-                    {/* Default state - shows icon and title */}
-                    <div className="flex flex-col items-center justify-center space-y-3 group-hover:opacity-0 transition-opacity duration-300">
-                      <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
-                        <IconComponent className="w-6 h-6 text-slate-800" />
-                      </div>
-                      <h3 className="text-lg font-semibold">{highlight.title}</h3>
-                    </div>
+            {/* Right Content - Highlights Carousel */}
+            <div className="relative h-80 md:h-96 order-1 lg:order-2 lg:pl-12">
+              <div 
+                className="relative w-full h-full flex items-center justify-center"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+              >
+                {/* Previous Button */}
+                <button
+                  onClick={() => {
+                    setActiveCard(activeCard === 0 ? highlights.length - 1 : activeCard - 1);
+                    setIsPaused(false); // Reset pause to trigger smooth animation
+                    setTimeout(() => setIsPaused(true), 100);
+                  }}
+                  className="absolute -left-4 md:left-0 z-20 p-1 md:p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                </button>
 
-                    {/* Hover state - shows description */}
-                    <div className="absolute inset-0 flex items-center justify-center px-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <p className="text-sm text-gray-300 text-center">
-                        {highlight.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
+                {/* Cards Container */}
+                <div className="relative w-full h-full overflow-visible" style={{ perspective: '1000px' }}>
+                  {/* Render all cards for smooth transitions */}
+                  {highlights.map((highlight, index) => {
+                    const IconComponent = highlight.icon;
+                    
+                    // Calculate position relative to active card
+                    let offset = index - activeCard;
+                    
+                    // Handle wrapping for smooth circular transitions
+                    if (offset > 3) offset = offset - highlights.length;
+                    if (offset < -3) offset = offset + highlights.length;
+                    
+                    // Calculate transform and styling based on position
+                    const isActive = offset === 0;
+                    const isVisible = Math.abs(offset) <= 2;
+                    
+                    // Responsive spacing
+                    const spacing = window.innerWidth < 768 ? 90 : 120;
+                    
+                    const cardStyle = {
+                      position: 'absolute' as const,
+                      left: '50%',
+                      top: '50%',
+                      transform: `
+                        translate(-50%, -50%)
+                        translateX(${offset * spacing}px)
+                        scale(${isActive ? 1 : 0.8 - Math.abs(offset) * 0.05})
+                        rotateY(${offset * -8}deg)
+                        translateZ(${isActive ? 0 : -Math.abs(offset) * 50}px)
+                      `,
+                      zIndex: isActive ? 10 : Math.max(1, 5 - Math.abs(offset)),
+                      opacity: isVisible ? (isActive ? 1 : 0.7 - Math.abs(offset) * 0.1) : 0,
+                      filter: isActive ? 'none' : `blur(${Math.abs(offset)}px)`,
+                      transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                      pointerEvents: isVisible ? 'auto' : 'none' as const,
+                    };
+                    
+                    return (
+                      <div
+                        key={index}
+                        style={cardStyle}
+                        onClick={() => {
+                          setActiveCard(index);
+                          setIsPaused(true);
+                        }}
+                        className="cursor-pointer"
+                      >
+                        <div className={`bg-black text-white p-4 md:p-6 rounded-xl flex items-center justify-center text-center w-44 md:w-52 h-64 md:h-72 relative overflow-hidden shadow-2xl ${isActive ? 'ring-2 ring-green-500' : ''}`}>
+                          {/* Always show content, no hover effect for better visibility */}
+                          <div className="flex flex-col items-center justify-center space-y-3 md:space-y-4">
+                            <div className="w-12 md:w-16 h-12 md:h-16 bg-green-500 rounded-lg flex items-center justify-center">
+                              <IconComponent className="w-6 md:w-8 h-6 md:h-8 text-slate-800" />
+                            </div>
+                            <h3 className="text-base md:text-lg font-bold">{highlight.title}</h3>
+                            <p className="text-xs text-gray-300 text-center leading-relaxed px-2">
+                              {highlight.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Next Button */}
+                <button
+                  onClick={() => {
+                    setActiveCard(activeCard === highlights.length - 1 ? 0 : activeCard + 1);
+                    setIsPaused(false); // Reset pause to trigger smooth animation
+                    setTimeout(() => setIsPaused(true), 100);
+                  }}
+                  className="absolute -right-4 md:right-0 z-20 p-1 md:p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                </button>
+              </div>
+
+              {/* Dots Indicator */}
+              <div className="flex justify-center gap-2 mt-4 md:mt-8">
+                {highlights.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveCard(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === activeCard ? 'bg-green-500 w-6 md:w-8' : 'bg-gray-400'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
