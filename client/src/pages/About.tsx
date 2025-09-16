@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Users, Award, CheckCircle, Clock, Heart, Scale, Globe } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
-import corporateLawBg from '../assets/img/Bg/corporateLaw.jpeg';
+import heroBg from '../assets/hero_bg.png';
 
 const About: React.FC = () => {
   // SEO optimization
@@ -163,11 +163,11 @@ const About: React.FC = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
-            src={corporateLawBg} 
+            src={heroBg} 
             alt="Professional legal consultation representing our firm's dedication to excellence" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-80"></div>
+          <div className="absolute inset-0 bg-black opacity-70"></div>
         </div>
 
         {/* Content */}
