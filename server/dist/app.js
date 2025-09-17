@@ -33,6 +33,8 @@ class App {
         const allowedOrigins = [
             process.env.FRONTEND_URL || 'http://localhost:5173',
             'https://mwc-advocates-frontend.onrender.com',
+            'https://mwc-advocates-1.onrender.com',
+            'https://mwc-advocates-web.onrender.com',
             'http://localhost:5173',
             'http://localhost:3000',
             'https://mwc-advocates.onrender.com',

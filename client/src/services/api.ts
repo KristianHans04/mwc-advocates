@@ -90,7 +90,6 @@ class ApiService {
    */
   async submitContactForm(data: ContactFormData): Promise<ApiResponse> {
     const maxRetries = 3;
-    let lastError: any;
     
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
@@ -98,8 +97,6 @@ class ApiService {
         const response: AxiosResponse<ApiResponse> = await this.api.post('/contact', data);
         return response.data;
       } catch (error: any) {
-        lastError = error;
-        
         // If it's a timeout or network error and not the last attempt, retry
         if (attempt < maxRetries && (error.code === 'ECONNABORTED' || error.code === 'ERR_NETWORK')) {
           console.log(`Attempt ${attempt} failed, retrying in ${attempt * 2} seconds...`);
@@ -111,10 +108,15 @@ class ApiService {
         if (error.response?.data) {
           throw error.response.data;
         }
+        
+        // If it's the last attempt, throw a helpful error
+        if (attempt === maxRetries) {
+          throw new Error('Server is starting up. Please try again in a moment.');
+        }
       }
     }
     
-    throw new Error('Server is starting up. Please try again in a moment.');
+    throw new Error('Failed to submit contact form');
   }
 
   async getContactSubmissions(): Promise<ContactSubmission[]> {
