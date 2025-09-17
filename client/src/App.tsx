@@ -6,6 +6,7 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import Layout from './components/layout/Layout';
+import ScrollToTop from './components/ScrollToTop';
 import apiService from './services/api';
 
 // Import pages
@@ -23,8 +24,17 @@ function App() {
       console.log(isHealthy ? '✅ Backend is ready' : '⏳ Backend is starting up...');
     });
   }, []);
+
+  // Enable browser scroll restoration
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'auto';
+    }
+  }, []);
+
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
