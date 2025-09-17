@@ -3,8 +3,10 @@
  * Sets up routing and global providers
  */
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import Layout from './components/layout/Layout';
+import apiService from './services/api';
 
 // Import pages
 import Home from './pages/Home';
@@ -15,6 +17,12 @@ import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 
 function App() {
+  // Wake up the backend server on app load
+  useEffect(() => {
+    apiService.healthCheck().then(isHealthy => {
+      console.log(isHealthy ? '✅ Backend is ready' : '⏳ Backend is starting up...');
+    });
+  }, []);
   return (
     <Router>
       <Layout>
