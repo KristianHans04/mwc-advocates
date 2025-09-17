@@ -20,7 +20,7 @@ class ApiService {
   constructor() {
     this.api = axios.create({
       baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
-      timeout: 10000,
+      timeout: 60000, // Increased to 60 seconds for cold starts
       headers: {
         'Content-Type': 'application/json',
       },
@@ -86,18 +86,35 @@ class ApiService {
   }
 
   /**
-   * Contact API
+   * Contact API with retry logic for cold starts
    */
   async submitContactForm(data: ContactFormData): Promise<ApiResponse> {
-    try {
-      const response: AxiosResponse<ApiResponse> = await this.api.post('/contact', data);
-      return response.data;
-    } catch (error: any) {
-      if (error.response?.data) {
-        throw error.response.data;
+    const maxRetries = 3;
+    let lastError: any;
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`Submitting contact form (attempt ${attempt}/${maxRetries})...`);
+        const response: AxiosResponse<ApiResponse> = await this.api.post('/contact', data);
+        return response.data;
+      } catch (error: any) {
+        lastError = error;
+        
+        // If it's a timeout or network error and not the last attempt, retry
+        if (attempt < maxRetries && (error.code === 'ECONNABORTED' || error.code === 'ERR_NETWORK')) {
+          console.log(`Attempt ${attempt} failed, retrying in ${attempt * 2} seconds...`);
+          await new Promise(resolve => setTimeout(resolve, attempt * 2000));
+          continue;
+        }
+        
+        // If it's a server error response, don't retry
+        if (error.response?.data) {
+          throw error.response.data;
+        }
       }
-      throw new Error('Failed to submit contact form');
     }
+    
+    throw new Error('Server is starting up. Please try again in a moment.');
   }
 
   async getContactSubmissions(): Promise<ContactSubmission[]> {
