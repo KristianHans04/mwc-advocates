@@ -1,4 +1,4 @@
-/**
+  /**
  * Layout component for MWC Advocates
  * Provides consistent structure with header and footer for all pages
  */
