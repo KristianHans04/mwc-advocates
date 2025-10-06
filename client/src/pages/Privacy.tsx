@@ -28,8 +28,7 @@ const Privacy: React.FC = () => {
       title: "2. Data Controller Information",
       content: `Masinde Wanyonyi & Company Advocates is the data controller responsible for your personal data.
 
-      Registered Office: Suite 58 Duplex Suites, Lower Hill Road, Upperhill, Nairobi, Kenya
-      P.O. Box 46723-00100, Nairobi
+      Registered Office: Duplex Suites, Suite 58, Lower Hill Road, Upperhill, Nairobi, Kenya
       Phone: +254 702 073 800 / +254 708 792 078
       Email: masindewanyonyi.co@gmail.com
       
@@ -214,7 +213,7 @@ const Privacy: React.FC = () => {
 
       Data Protection Officer
       Masinde Wanyonyi & Company Advocates
-      Suite 58 Duplex Suites, Lower Hill Road
+      Duplex Suites, Suite 58, Lower Hill Road
       Upperhill, Nairobi, Kenya
       
       Phone: +254 702 073 800 / +254 708 792 078

@@ -41,8 +41,8 @@ interface Article {
 const Insights: React.FC = () => {
   useSEO({
     title: 'Legal Insights & Publications | MWC Advocates',
-    description: 'Stay informed with our latest articles on Kenyan law, regional trade, tax reforms, cross-border investments, and international legal developments. Expert insights from MWC Advocates.',
-    keywords: 'legal insights Kenya, law articles, tax reforms Kenya, cross-border investments, legal publications, speaking engagements, MWC Advocates blog'
+    description: 'Stay informed with expert legal insights on Data Protection, Estate Planning, Conveyancing, Litigation, Banking Law, and Corporate Governance in Kenya. Professional analysis from MWC Advocates.',
+    keywords: 'legal insights Kenya, data protection articles, estate planning guides, conveyancing law, litigation strategies, banking law Kenya, corporate governance, legal publications, MWC Advocates blog, Kenyan law analysis'
   });
 
   const [articles, setArticles] = useState<Article[]>([]);
@@ -67,57 +67,57 @@ const Insights: React.FC = () => {
       const mockArticles: Article[] = [
         {
           id: '1',
-          title: 'Understanding Kenya\'s New Tax Reforms 2024',
-          excerpt: 'A comprehensive analysis of the latest tax legislation changes and their impact on businesses operating in Kenya.',
-          author: 'Jane Muthoni',
+          title: 'Data Protection Compliance in Kenya: Essential Guide for Businesses',
+          excerpt: 'A comprehensive analysis of the Data Protection Act 2019 and compliance requirements for modern businesses.',
+          author: 'Beatrice Mutahi',
           date: '2024-01-15',
-          category: 'Tax Law',
+          category: 'Data Protection',
           readTime: '8 min',
           image: lawBooksImg,
-          tags: ['Tax', 'Legislation', 'Business'],
+          tags: ['Data Protection', 'KDPA', 'Compliance'],
           type: 'article'
         },
         {
           id: '2',
-          title: 'Cross-Border M&A: Navigating East African Markets',
-          excerpt: 'Key considerations for mergers and acquisitions across East African Community member states.',
-          author: 'John Kamau',
+          title: 'Estate Planning in Kenya: Modern Approaches to Succession',
+          excerpt: 'Strategic guidance on comprehensive estate planning and succession matters under current Kenyan law.',
+          author: 'Masinde Dennis',
           date: '2024-01-10',
-          category: 'Corporate Law',
+          category: 'Estate Planning',
           readTime: '12 min',
           image: gavelImg,
-          tags: ['M&A', 'EAC', 'Cross-border'],
+          tags: ['Estate Planning', 'Succession', 'Wills'],
           type: 'article'
         },
         {
           id: '3',
-          title: 'Property Rights for Foreign Investors in Kenya',
-          excerpt: 'Legal framework and practical guidance for foreign nationals acquiring property in Kenya.',
-          author: 'Sarah Wanjiru',
+          title: 'Conveyancing in Kenya: A Complete Guide to Property Transactions',
+          excerpt: 'Comprehensive insights into property transactions, from acquisition to disposal, under Kenyan law.',
+          author: 'Vallary Nyala',
           date: '2024-01-05',
           category: 'Real Estate',
           readTime: '10 min',
           image: gavel2Img,
-          tags: ['Property', 'Foreign Investment', 'Real Estate'],
+          tags: ['Conveyancing', 'Property Law', 'Real Estate'],
           type: 'article'
         },
         {
           id: '4',
-          title: 'Arbitration in Kenya: Recent Developments',
-          excerpt: 'Analysis of recent court decisions and their impact on arbitration proceedings in Kenya.',
-          author: 'Michael Ochieng',
+          title: 'Litigation Strategy in Kenya: Modern Approaches to Dispute Resolution',
+          excerpt: 'Strategic insights into effective litigation and alternative dispute resolution in Kenyan courts.',
+          author: 'Wanyonyi Jacob',
           date: '2023-12-28',
           category: 'Dispute Resolution',
           readTime: '15 min',
           image: justiceImg,
-          tags: ['Arbitration', 'Dispute Resolution', 'Courts'],
+          tags: ['Litigation', 'Dispute Resolution', 'Courts'],
           type: 'publication'
         },
         {
           id: '5',
           title: 'ESG Compliance for Kenyan Companies',
           excerpt: 'Environmental, Social, and Governance requirements for companies listed on the Nairobi Securities Exchange.',
-          author: 'Grace Njeri',
+          author: 'Godwin Lemashon',
           date: '2023-12-20',
           category: 'Corporate Governance',
           readTime: '7 min',
@@ -127,14 +127,14 @@ const Insights: React.FC = () => {
         },
         {
           id: '6',
-          title: 'Digital Assets and Cryptocurrency Regulation',
-          excerpt: 'Understanding the evolving regulatory landscape for digital assets and cryptocurrencies in Kenya.',
-          author: 'Peter Mwangi',
+          title: 'Banking Law and Financial Compliance in Kenya',
+          excerpt: 'Understanding regulatory requirements and compliance frameworks for financial institutions in Kenya.',
+          author: 'Beatrice Mutahi',
           date: '2023-12-15',
           category: 'Financial Law',
           readTime: '9 min',
           image: lawBooksImg,
-          tags: ['Cryptocurrency', 'Digital Assets', 'Regulation'],
+          tags: ['Banking Law', 'Financial Compliance', 'Regulation'],
           type: 'publication'
         }
       ];
@@ -190,12 +190,12 @@ const Insights: React.FC = () => {
     return matchesSearch && matchesCategory && matchesType;
   });
 
-  const categories = ['all', 'Tax Law', 'Corporate Law', 'Real Estate', 'Dispute Resolution', 'Corporate Governance', 'Financial Law'];
+  const categories = ['all', 'Data Protection', 'Estate Planning', 'Real Estate', 'Dispute Resolution', 'Corporate Governance', 'Financial Law'];
 
   // Map categories to their background images
   const categoryBackgrounds: { [key: string]: string } = {
-    'Tax Law': taxLawBg,
-    'Corporate Law': corporateLawBg,
+    'Data Protection': taxLawBg,
+    'Estate Planning': corporateLawBg,
     'Real Estate': realEstateLawBg,
     'Dispute Resolution': disputeResolutionBg,
     'Corporate Governance': corporateGovernanceBg,
@@ -243,7 +243,7 @@ const Insights: React.FC = () => {
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Legal Insights & Resources</h1>
             <p className="text-xl text-green-100 max-w-3xl mx-auto">
-              Stay informed with expert analysis on Kenyan law, regional trade, and international legal developments
+              Stay informed with expert analysis on cutting-edge legal developments and strategic insights
             </p>
           </motion.div>
         </div>

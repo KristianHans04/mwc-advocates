@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Users, Award, CheckCircle, Clock, Heart, Scale, Globe } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import heroBg from '../assets/hero_bg.png';
-import dennisImg from '../assets/img/Advocates/dennis.jpeg';
-import jamesImg from '../assets/img/Advocates/james.jpeg';
-import sarahImg from '../assets/img/Advocates/sarah.jpeg';
+import { dataService, type TeamMember } from '../services/dataService';
 
 const About: React.FC = () => {
   // SEO optimization
@@ -23,6 +21,18 @@ const About: React.FC = () => {
   // Counter animation state
   const [counters, setCounters] = useState(stats.map(() => 0));
   const [hasAnimated, setHasAnimated] = useState(false);
+  
+  // Team data from JSON
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const [firmInfo, setFirmInfo] = useState<any>(null);
+
+  useEffect(() => {
+    // Load team and firm data from JSON
+    const teamData = dataService.getTeamMembers();
+    const firmData = dataService.getFirmInfo();
+    setTeam(teamData);
+    setFirmInfo(firmData);
+  }, []);
 
   const values = [
     {
@@ -32,8 +42,8 @@ const About: React.FC = () => {
     },
     {
       icon: Users,
-      title: 'Client-Focused',
-      description: 'Our clients are at the center of everything we do. We listen, understand, and tailor our services to meet their unique needs.'
+      title: 'Client-Centric Service',
+      description: 'We tailor our services to align with client needs and business realities, ensuring personalized solutions for every matter.'
     },
     {
       icon: Award,
@@ -52,112 +62,11 @@ const About: React.FC = () => {
     },
     {
       icon: Heart,
-      title: 'Compassion',
-      description: 'We understand that legal issues can be stressful, and we approach every case with empathy and understanding.'
+      title: 'Innovation',
+      description: 'We stay ahead of legal and regulatory developments to advise clients proactively, leveraging technology for efficiency.'
     }
   ];
 
-  const team = [
-    {
-      name: 'Dennis Masinde',
-      position: 'Managing Partner',
-      qualifications: [
-        'LLB (University of Nairobi)',
-        'Advocate of the High Court of Kenya',
-        'Commissioner for Oaths',
-        'Notary Public',
-        'Certified Arbitrator'
-      ],
-      areasOfExpertise: [
-        'Corporate Law',
-        'Commercial Litigation',
-        'Mergers & Acquisitions',
-        'Banking & Finance Law',
-        'International Trade Law'
-      ],
-      notableCases: [
-        'Successfully represented major banks in multi-million shilling recovery cases',
-        'Led the legal team in Kenya\'s largest corporate merger in 2022',
-        'Landmark constitutional case on commercial rights'
-      ],
-      memberships: [
-        'Law Society of Kenya (LSK)',
-        'East Africa Law Society',
-        'International Bar Association',
-        'Chartered Institute of Arbitrators (Kenya Branch)'
-      ],
-      publications: [
-        'The Evolution of Corporate Law in Kenya (2021)',
-        'Banking Regulations and Compliance: A Practitioner\'s Guide (2020)'
-      ],
-      image: dennisImg
-    },
-    {
-      name: 'Sarah Mwangi',
-      position: 'Senior Associate',
-      qualifications: [
-        'LLB (University of Nairobi)',
-        'LLM in Commercial Law (University of London)',
-        'Advocate of the High Court of Kenya',
-        'Certified Mediator'
-      ],
-      areasOfExpertise: [
-        'Commercial Litigation',
-        'Employment Law',
-        'Intellectual Property Law',
-        'Data Protection Law',
-        'Alternative Dispute Resolution'
-      ],
-      notableCases: [
-        'Successfully defended Fortune 500 company in employment dispute',
-        'Won landmark IP infringement case worth KES 50 million',
-        'Negotiated major collective bargaining agreements'
-      ],
-      memberships: [
-        'Law Society of Kenya (LSK)',
-        'Kenya Industrial Property Institute',
-        'International Association of Privacy Professionals',
-        'Women in Law Kenya'
-      ],
-      publications: [
-        'Data Protection Compliance in the Digital Age (2023)',
-        'Employment Law Quarterly Review (Contributing Author)'
-      ],
-      image: sarahImg
-    },
-    {
-      name: 'James Wanyonyi',
-      position: 'Associate',
-      qualifications: [
-        'LLB (Moi University)',
-        'Diploma in Tax Law (Kenya School of Law)',
-        'Advocate of the High Court of Kenya',
-        'Certified Conveyancer'
-      ],
-      areasOfExpertise: [
-        'Real Estate Law',
-        'Estate Planning',
-        'Tax Law',
-        'Conveyancing',
-        'Property Development Law'
-      ],
-      notableCases: [
-        'Handled property transactions worth over KES 2 million',
-        'Successfully resolved complex land succession disputes',
-        'Advised on major real estate development projects in Nairobi'
-      ],
-      memberships: [
-        'Law Society of Kenya (LSK)',
-        'Institute of Certified Public Accountants of Kenya (Associate)',
-        'Real Estate Society of Kenya'
-      ],
-      publications: [
-        'Property Rights and Land Registration in Kenya (2022)',
-        'Estate Planning: A Comprehensive Guide for Kenyans (2021)'
-      ],
-      image: jamesImg
-    }
-  ];
 
   return (
     <div className="min-h-screen">
@@ -215,29 +124,29 @@ const About: React.FC = () => {
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Our Story</h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Founded in 2018, <strong>Masinde Wanyonyi & Company Advocates</strong> emerged from a shared vision between 
-                Dennis Masinde and James Wanyonyi - two distinguished legal minds who recognized the need for a law firm that 
-                could bridge the gap between traditional legal practice and the evolving needs of modern Kenya. What began as a 
-                modest practice in Nairobi has flourished into one of Kenya's most respected mid-sized law firms.
+                <strong>Masinde Wanyonyi & Company Advocates</strong> is a full-service law firm established with 
+                a vision to provide cutting-edge legal services that combine technical expertise, innovation, and 
+                personalised client care. With three experienced Partners, two Senior Associates, and a robust support 
+                team, the Firm stands as a distinguished legal practice in Kenya, serving both local and international clientele.
               </p>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Our founders brought together complementary expertise: Dennis's extensive background in corporate law and 
-                international trade, and James's deep understanding of property law and local business dynamics. This unique 
-                combination positioned us to serve both local entrepreneurs and international investors seeking to navigate 
-                Kenya's dynamic legal landscape. From our strategic location in Nairobi's prestigious <em>Upperhill district</em>, 
-                we've handled landmark cases that have shaped commercial law practice in East Africa.
+                Our practice is built on the foundation of Excellence, Integrity, and Client-Centric Service. We do not merely 
+                provide legal services; we offer strategic legal solutions that safeguard our clients' interests, anticipate risks, 
+                and secure sustainable outcomes. Our core objective is to be the go-to law firm for individuals, corporations, 
+                institutions, and governments seeking reliable, innovative, and results-driven legal counsel in Kenya and the 
+                wider East African region.
               </p>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Today, our team has grown to include some of Kenya's brightest legal talents, including Sarah Mwangi, whose 
-                expertise in employment law and data protection has proven invaluable in the digital age. Together, we've 
-                built a reputation for combining rigorous legal analysis with practical, business-minded solutions. Our 
-                bilingual capabilities in English and Swahili, coupled with our understanding of both common law and local 
-                customary practices, make us uniquely equipped to serve Kenya's diverse client base.
+                The Firm offers a wide array of legal services with particular depth in Conveyancing & Real Estate, Estate Planning 
+                & Succession, Data Protection & Privacy Law, Risk & Compliance Advisory, Civil and Commercial Litigation, Criminal 
+                Litigation, Corporate & Commercial Law, Immigration Law, Family Law, and Banking & Finance Law. We are fully digitised, 
+                leveraging case management software, electronic filing systems, and access to leading legal databases.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed mb-12">
                 As Commissioners for Oaths and Notary Public, we carry the additional responsibility of serving as trusted 
-                intermediaries in legal authentication and verification. This dual role reinforces our commitment to integrity 
-                and positions us as not just legal advisors, but as pillars of trust in Kenya's legal system.
+                intermediaries in legal authentication and verification. From our strategic location at Duplex Suites, Suite 58, 
+                Lower Hill Road, Upperhill, Nairobi, we maintain a network of correspondent firms across Mombasa, Kisumu, 
+                Eldoret, and Nakuru, enabling seamless national coverage.
               </p>
           </motion.div>
 
@@ -304,10 +213,10 @@ const About: React.FC = () => {
             >
               <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
               <p className="text-lg leading-relaxed text-green-50">
-                To provide exceptional legal services that empower our clients to achieve their goals while upholding 
-                the highest standards of professional integrity. We strive to be more than legal advisors – we are 
-                strategic partners invested in our clients' success, combining deep legal expertise with practical 
-                business acumen to deliver solutions that create lasting value.
+                To consistently provide strategic, efficient, and innovative legal services with integrity, 
+                professionalism, and an unwavering commitment to client success. We strive to offer strategic 
+                legal solutions that safeguard our clients' interests, anticipate risks, and secure sustainable 
+                outcomes through our multi-disciplinary expertise and client-centric approach.
               </p>
             </motion.div>
             
@@ -320,53 +229,13 @@ const About: React.FC = () => {
             >
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-lg leading-relaxed text-gray-50">
-                To be East Africa's most trusted law firm for businesses and individuals seeking innovative legal 
-                solutions in an evolving global economy. We envision a future where legal services are accessible, 
-                transparent, and transformative – enabling our clients to navigate complex challenges with confidence 
-                and contributing to Kenya's growth as a regional hub for commerce and investment.
+                To be a premier law firm in Kenya and East Africa, delivering world-class legal solutions that 
+                empower our clients to thrive in an evolving legal and business environment. We envision being 
+                the go-to firm for individuals, corporations, institutions, and governments seeking reliable, 
+                innovative, and results-driven legal counsel.
               </p>
             </motion.div>
           </div>
-          
-          {/* Why Choose Us */}
-          <motion.div 
-            className="mt-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Why International Clients Choose Us</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Globe className="w-8 h-8 text-green-800" />
-                </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Global Perspective</h4>
-                <p className="text-gray-600">
-                  International experience combined with deep local knowledge, serving clients from over 15 countries
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-8 h-8 text-green-800" />
-                </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Proven Track Record</h4>
-                <p className="text-gray-600">
-                  Successfully handled complex cross-border transactions worth over KES 10 million
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-green-800" />
-                </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Multilingual Team</h4>
-                <p className="text-gray-600">
-                  Fluent in English, Swahili, and major international languages for seamless communication
-                </p>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
@@ -407,93 +276,75 @@ const About: React.FC = () => {
             </p>
           </div>
 
-          <div className="space-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-xl overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  {/* Profile Image and Basic Info */}
-                  <div className="lg:col-span-1 p-8 bg-gray-50">
-                    <img 
-                      src={member.image} 
-                      alt={member.name}
-                      className="w-full h-64 object-cover rounded-lg mb-6"
-                    />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{member.name}</h3>
-                    <p className="text-green-800 font-semibold text-lg mb-4">{member.position}</p>
-                    
-                    {/* Qualifications */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 mb-2">Qualifications:</h4>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        {member.qualifications.map((qual, i) => (
-                          <li key={i} className="flex items-start">
-                            <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                            {qual}
-                          </li>
-                        ))}
-                      </ul>
+              <motion.div 
+                key={member.id} 
+                className="bg-white rounded-xl shadow-xl overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div className="p-8">
+                  {/* Profile Image */}
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    className="w-full h-48 object-cover rounded-lg mb-6"
+                    onError={(e) => {
+                      // Fallback for missing images
+                      (e.target as HTMLImageElement).src = '/img/team/placeholder.jpg';
+                    }}
+                  />
+                  
+                  {/* Basic Info */}
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
+                  <p className="text-green-800 font-semibold mb-2">{member.title}</p>
+                  <p className="text-sm text-gray-600 mb-4">{member.specialization}</p>
+                  
+                  {/* Experience & Education */}
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Clock className="w-4 h-4 text-green-600 mr-2" />
+                      {member.experience}
+                    </div>
+                    <div className="flex items-start text-sm text-gray-600">
+                      <Award className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                      {member.education}
                     </div>
                   </div>
                   
-                  {/* Professional Details */}
-                  <div className="lg:col-span-2 p-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {/* Areas of Expertise */}
-                      <div>
-                        <h4 className="font-semibold text-gray-900 mb-3">Areas of Expertise:</h4>
-                        <ul className="text-sm text-gray-600 space-y-2">
-                          {member.areasOfExpertise.map((area, i) => (
-                            <li key={i} className="flex items-center">
-                              <Scale className="w-4 h-4 text-green-600 mr-2" />
-                              {area}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      {/* Memberships */}
-                      <div>
-                        <h4 className="font-semibold text-gray-900 mb-3">Professional Memberships:</h4>
-                        <ul className="text-sm text-gray-600 space-y-2">
-                          {member.memberships.map((membership, i) => (
-                            <li key={i} className="flex items-center">
-                              <Users className="w-4 h-4 text-green-600 mr-2" />
-                              {membership}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                    
-                    {/* Notable Cases */}
-                    <div className="mt-6">
-                      <h4 className="font-semibold text-gray-900 mb-3">Notable Cases & Achievements:</h4>
-                      <ul className="text-sm text-gray-600 space-y-2">
-                        {member.notableCases.map((case_, i) => (
-                          <li key={i} className="flex items-start">
-                            <Award className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                            {case_}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    {/* Publications */}
-                    {member.publications.length > 0 && (
-                      <div className="mt-6">
-                        <h4 className="font-semibold text-gray-900 mb-3">Publications:</h4>
-                        <ul className="text-sm text-gray-600 space-y-2">
-                          {member.publications.map((pub, i) => (
-                            <li key={i} className="italic">
-                              • {pub}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  {/* Bio */}
+                  <p className="text-gray-600 text-sm leading-relaxed mb-6">{member.bio}</p>
+                  
+                  {/* Contact Info */}
+                  <div className="space-y-2">
+                    <a 
+                      href={`mailto:${member.email}`}
+                      className="block text-sm text-green-800 hover:text-green-900 transition-colors"
+                    >
+                      {member.email}
+                    </a>
+                    <a 
+                      href={`tel:${member.phone}`}
+                      className="block text-sm text-gray-600 hover:text-gray-800 transition-colors"
+                    >
+                      {member.phone}
+                    </a>
+                    {member.linkedin && (
+                      <a 
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        LinkedIn Profile
+                      </a>
                     )}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

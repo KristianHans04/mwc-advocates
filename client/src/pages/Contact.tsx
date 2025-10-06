@@ -22,7 +22,7 @@ const Contact: React.FC = () => {
   // SEO optimization
   useSEO({
     title: 'Contact Us - MWC Advocates Legal Consultation',
-    description: 'Contact MASINDE WANYONYI & COMPANY ADVOCATES for professional legal consultation in Nairobi, Kenya. Phone: +254702073800. Email: masindewanyonyi.co@gmail.com. Office hours: Mon-Fri 8AM-6PM.',
+    description: 'Contact MASINDE WANYONYI & COMPANY ADVOCATES for professional legal consultation in Nairobi, Kenya. Phone: +254702073800, +254708792078. Email: masindewanyonyi.co@gmail.com. Duplex Suites, Suite 58, Upperhill.',
     keywords: 'contact MWC Advocates, legal consultation Nairobi, law firm contact Kenya, legal advice appointment, Masinde Wanyonyi contact'
   });
 
@@ -92,17 +92,17 @@ const Contact: React.FC = () => {
     {
       icon: MapPin,
       title: 'Office Address',
-      content: ['Lower Hill Road, Upperhill', 'Nairobi, Kenya', 'P.O. Box 12345-00100']
+      content: ['Duplex Suites, Suite 58', 'Lower Hill Road, Upperhill', 'Nairobi, Kenya']
     },
     {
       icon: Phone,
       title: 'Phone Numbers',
-      content: ['+254 700 123 456', '+254 020 123 4567', 'Emergency: +254 700 999 888']
+      content: ['+254 702 073 800', '+254 708 792 078']
     },
     {
       icon: Mail,
       title: 'Email Address',
-      content: ['Masindewanyonyi.co@gmail.com', 'info@mwcadvocates.com', 'consultation@mwcadvocates.com']
+      content: ['masindewanyonyi.co@gmail.com']
     },
     {
       icon: Clock,
@@ -115,11 +115,11 @@ const Contact: React.FC = () => {
     // General Questions
     {
       question: 'Do you offer free consultations?',
-      answer: 'Yes, we offer a free initial consultation for new clients to discuss your legal needs and determine how we can best assist you. This helps us understand your situation and provide you with clear guidance on the next steps.'
+      answer: 'Yes, we offer a free initial consultation for new clients to discuss your legal needs and determine how our strategic legal solutions can best assist you. This helps us understand your situation and provide clear guidance on the next steps.'
     },
     {
       question: 'How do you charge for your services?',
-      answer: 'Our fee structure varies depending on the type of service and complexity of the matter. We offer hourly rates, fixed fees, and retainer arrangements with transparent pricing discussed upfront. We believe in clear communication about costs from the beginning.'
+      answer: 'Our fees are primarily guided by the Advocates (Remuneration) Order. However, we remain flexible and pragmatic in structuring fee arrangements depending on the complexity, urgency, and value of the matter. We also provide retainer arrangements for corporate clients who require continuous advisory services.'
     },
     {
       question: 'How quickly can you respond to urgent matters?',
@@ -226,8 +226,8 @@ const Contact: React.FC = () => {
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
               <p className="text-lg text-gray-600 mb-8">
-                We're here to help you with all your legal needs. Contact us through any of the following methods,
-                and we'll respond promptly to discuss how we can assist you.
+                We're here to provide strategic legal solutions that safeguard your interests. Contact us through any 
+                of the following methods, and we'll respond promptly to discuss how we can assist you.
               </p>
 
               <div className="space-y-6">

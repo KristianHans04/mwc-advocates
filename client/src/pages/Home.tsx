@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Users, Scale, MapPin, ArrowRight, Building, Briefcase, Shield, Home as HomeIcon, Award, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
+import dataService from '../services/dataService';
 
 // Import assets
 import logoWhite from '../assets/MWC_WHITE.png';
@@ -21,180 +22,35 @@ const Home: React.FC = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [isTestimonialPaused, setIsTestimonialPaused] = useState(false);
 
+  // Load data from JSON files (only database content)
+  const servicesData = dataService.getFeaturedServices();
+  const testimonials = dataService.getActiveTestimonials();
+  const firmInfo = dataService.getFirmInfo();
+
   // SEO optimization
   useSEO({
     title: 'Home - Masinde Wanyonyi & Company Advocates',
     description: 'MASINDE WANYONYI & COMPANY ADVOCATES, Commissioners for Oaths and Notary Public - Providing excellence in legal solutions. Leading law firm in Nairobi, Kenya.',
-    keywords: 'law firm Nairobi, legal services Kenya, corporate law, commercial litigation, employment law, real estate law, intellectual property, MWC Advocates, Masinde Wanyonyi, Commissioners for Oaths, Notary Public'
+    keywords: 'law firm Nairobi, legal services Kenya, conveyancing real estate, estate planning succession, data protection privacy, civil commercial litigation, criminal litigation, corporate law, immigration law, family law, banking finance law, MWC Advocates, Masinde Wanyonyi, Commissioners for Oaths, Notary Public, Upperhill advocates'
   });
 
-  // Hardcoded services data
-  const services = [
-    {
-      id: '1',
-      icon: Building,
-      title: 'Corporate Law',
-      description: 'Comprehensive legal services for businesses, from formation to complex corporate transactions.'
-    },
-    {
-      id: '2',
-      icon: Briefcase,
-      title: 'Commercial Litigation',
-      description: 'Expert representation in commercial disputes and litigation matters with proven success.'
-    },
-    {
-      id: '3',
-      icon: Shield,
-      title: 'Intellectual Property',
-      description: 'Protection and enforcement of trademarks, copyrights, patents and trade secrets.'
-    },
-    {
-      id: '4',
-      icon: HomeIcon,
-      title: 'Real Estate Law',
-      description: 'Complete legal services for property transactions, developments and disputes.'
-    }
-  ];
+  // Icon mapping for services from database
+  const iconMap: Record<string, any> = {
+    'building': Building,
+    'briefcase': Briefcase,
+    'shield': Shield,
+    'home': HomeIcon,
+    'gavel': Briefcase,
+    'lightbulb': Shield
+  };
 
-  // Hardcoded testimonials with 15 entries for infinite scroll
-  const testimonials = [
-    {
-      id: '1',
-      name: 'James Mwangi',
-      position: 'CEO',
-      company: 'Tech Solutions Ltd',
-      content: 'Outstanding legal representation in our corporate restructuring. Their expertise saved us significant time and resources.',
-      initials: 'JM',
-      rating: 5
-    },
-    {
-      id: '2',
-      name: 'Sarah Njeri',
-      position: 'Managing Director',
-      company: 'Njeri Enterprises',
-      content: 'Professional, efficient, and highly knowledgeable. They handled our complex litigation with exceptional skill.',
-      initials: 'SN',
-      rating: 4
-    },
-    {
-      id: '3',
-      name: 'David Ochieng',
-      position: 'Property Developer',
-      company: '',
-      content: 'The best real estate lawyers in Nairobi. Their attention to detail in our transactions is unmatched.',
-      initials: 'DO',
-      rating: 5
-    },
-    {
-      id: '4',
-      name: 'Grace Wambui',
-      position: 'HR Director',
-      company: 'Manufacturing Kenya Ltd',
-      content: 'Excellent employment law advice. They helped us navigate complex labor disputes successfully.',
-      initials: 'GW',
-      rating: 4
-    },
-    {
-      id: '5',
-      name: 'Peter Kamau',
-      position: 'Founder',
-      company: 'Kamau Holdings',
-      content: 'Trusted advisors for over 5 years. Their commercial law expertise has been invaluable to our growth.',
-      initials: 'PK',
-      rating: 5
-    },
-    {
-      id: '6',
-      name: 'Mary Atieno',
-      position: 'CFO',
-      company: 'Finance Corp',
-      content: 'Exceptional service in our merger and acquisition deal. Highly recommend their corporate law team.',
-      initials: 'MA',
-      rating: 5
-    },
-    {
-      id: '7',
-      name: 'John Mutua',
-      position: 'Director',
-      company: 'Mutua & Associates',
-      content: 'Professional and responsive. They resolved our intellectual property dispute efficiently.',
-      initials: 'JM',
-      rating: 4
-    },
-    {
-      id: '8',
-      name: 'Elizabeth Nyambura',
-      position: 'CEO',
-      company: 'Retail Chain Kenya',
-      content: 'Outstanding legal counsel for our business expansion. Their strategic advice was invaluable.',
-      initials: 'EN',
-      rating: 5
-    },
-    {
-      id: '9',
-      name: 'Robert Kipchoge',
-      position: 'Managing Partner',
-      company: 'Investment Group',
-      content: 'Expert handling of our complex commercial contracts. Attention to detail is exceptional.',
-      initials: 'RK',
-      rating: 4
-    },
-    {
-      id: '10',
-      name: 'Alice Wanjiru',
-      position: 'Operations Director',
-      company: 'Logistics Kenya',
-      content: 'They successfully defended us in a major commercial dispute. Excellent litigation skills.',
-      initials: 'AW',
-      rating: 5
-    },
-    {
-      id: '11',
-      name: 'Samuel Otieno',
-      position: 'Chairman',
-      company: 'Otieno Group',
-      content: 'Comprehensive legal support for our family business. Trust them completely with our legal matters.',
-      initials: 'SO',
-      rating: 5
-    },
-    {
-      id: '12',
-      name: 'Catherine Muthoni',
-      position: 'Partner',
-      company: 'Consulting Firm',
-      content: 'Excellent data protection and compliance advice. They keep us ahead of regulatory changes.',
-      initials: 'CM',
-      rating: 4
-    },
-    {
-      id: '13',
-      name: 'Joseph Ngugi',
-      position: 'Executive Director',
-      company: 'NGO Kenya',
-      content: 'Professional handling of our non-profit legal requirements. Very knowledgeable team.',
-      initials: 'JN',
-      rating: 4
-    },
-    {
-      id: '14',
-      name: 'Ruth Chebet',
-      position: 'CEO',
-      company: 'Tech Startup',
-      content: 'Helped us navigate complex IP issues during our product launch. Highly recommended.',
-      initials: 'RC',
-      rating: 5
-    },
-    {
-      id: '15',
-      name: 'Michael Omondi',
-      position: 'Director',
-      company: 'Construction Ltd',
-      content: 'Expert advice on construction contracts and disputes. They protect our interests effectively.',
-      initials: 'MO',
-      rating: 4
-    }
-  ];
+  // Map services with icons (take first 4 for home page)
+  const services = servicesData.slice(0, 4).map(service => ({
+    ...service,
+    icon: iconMap[service.icon] || Building
+  }));
 
+  // Hardcoded highlights - these don't change often
   const highlights = [
     {
       icon: CheckCircle,
@@ -251,17 +107,23 @@ const Home: React.FC = () => {
   }, [isTestimonialPaused, testimonials.length]);
 
   return (
-    <div>
-      {/* Hero Section */}
+    <div className="bg-white">
+      {/* Hero Section - Enhanced with overlay for future image */}
       <section className="relative min-h-screen pt-20 flex items-center justify-center text-white overflow-hidden">
-        {/* Background Image */}
+        {/* Background Image with Gradient Overlay */}
         <div className="absolute inset-0">
           <img 
             src={heroBg} 
             alt="Legal Background representing professional law firm" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black opacity-70"></div>
+          {/* Gradient overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-green-900/60"></div>
+          
+          {/* Subtle pattern overlay */}
+          <div className="absolute inset-0 opacity-10" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          }}></div>
         </div>
 
         {/* Content */}
@@ -346,9 +208,20 @@ const Home: React.FC = () => {
         </motion.div>
       </section>
 
-      {/* Welcome Section */}
-      <section className="py-10 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Welcome Section - Enhanced with subtle background pattern */}
+      <section className="py-10 md:py-20 bg-gradient-to-br from-slate-50 via-white to-gray-50 relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-green-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+        </div>
+        
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232C5530' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`
+        }}></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Content */}
             <div className="order-1 lg:order-1">
@@ -361,14 +234,16 @@ const Home: React.FC = () => {
               <div className="w-16 h-1 bg-green-500 mb-4 md:mb-6"></div>
 
               <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-4 md:mb-6">
-                An established law firm providing excellence in legal solutions to individuals and businesses
-                throughout Kenya. Founded on principles of integrity, excellence, and client-centered service,
-                we combine legal expertise with a deep understanding of the Kenyan legal landscape.
+                A full-service law firm established with a vision to provide cutting-edge legal services that combine 
+                technical expertise, innovation, and personalised client care. With three experienced Partners, two 
+                Senior Associates, and a robust support team, we stand as a distinguished legal practice in Kenya, 
+                serving both local and international clientele.
               </p>
 
               <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-6 md:mb-8">
-                Our team of dedicated advocates is committed to providing excellence in legal solutions tailored to your
-                specific needs, ensuring you receive the highest quality legal representation.
+                We do not merely provide legal services; we offer strategic legal solutions that safeguard our clients' 
+                interests, anticipate risks, and secure sustainable outcomes. Our philosophy is guided by three pillars: 
+                Excellence, Integrity, and Client-Centric Service.
               </p>
 
               <Link 
@@ -379,7 +254,7 @@ const Home: React.FC = () => {
               </Link>
             </div>
 
-            {/* Right Content - Highlights Carousel */}
+            {/* Right Content - Highlights Carousel (MAINTAINED AS REQUESTED) */}
             <div className="relative h-80 md:h-96 order-2 lg:order-2 lg:pl-12 mt-8 lg:mt-0">
               <div 
                 className="relative w-full h-full flex items-center justify-center"
@@ -390,7 +265,7 @@ const Home: React.FC = () => {
                 <button
                   onClick={() => {
                     setActiveCard(activeCard === 0 ? highlights.length - 1 : activeCard - 1);
-                    setIsPaused(false); // Reset pause to trigger smooth animation
+                    setIsPaused(false);
                     setTimeout(() => setIsPaused(true), 100);
                   }}
                   className="absolute left-2 md:left-0 z-20 p-1 md:p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors"
@@ -400,23 +275,13 @@ const Home: React.FC = () => {
 
                 {/* Cards Container */}
                 <div className="relative w-full h-full overflow-hidden md:overflow-visible" style={{ perspective: '1000px' }}>
-                  {/* Render all cards for smooth transitions */}
                   {highlights.map((highlight, index) => {
                     const IconComponent = highlight.icon;
-                    
-                    // Calculate position relative to active card
                     let offset = index - activeCard;
-                    
-                    // Handle wrapping for smooth circular transitions
                     if (offset > 3) offset = offset - highlights.length;
                     if (offset < -3) offset = offset + highlights.length;
-                    
-                    // Calculate transform and styling based on position
                     const isActive = offset === 0;
-                    // On mobile, only show 3 cards (active + 1 on each side)
                     const isVisible = window.innerWidth < 768 ? Math.abs(offset) <= 1 : Math.abs(offset) <= 2;
-                    
-                    // Responsive spacing - tighter on mobile
                     const spacing = window.innerWidth < 768 ? 70 : 120;
                     
                     const cardStyle = {
@@ -448,7 +313,6 @@ const Home: React.FC = () => {
                         className="cursor-pointer"
                       >
                         <div className={`bg-black text-white p-4 md:p-6 rounded-xl flex items-center justify-center text-center w-44 md:w-52 h-64 md:h-72 relative overflow-hidden shadow-2xl ${isActive ? 'ring-2 ring-green-500' : ''}`}>
-                          {/* Always show content, no hover effect for better visibility */}
                           <div className="flex flex-col items-center justify-center space-y-3 md:space-y-4">
                             <div className="w-12 md:w-16 h-12 md:h-16 bg-green-500 rounded-lg flex items-center justify-center">
                               <IconComponent className="w-6 md:w-8 h-6 md:h-8 text-slate-800" />
@@ -468,7 +332,7 @@ const Home: React.FC = () => {
                 <button
                   onClick={() => {
                     setActiveCard(activeCard === highlights.length - 1 ? 0 : activeCard + 1);
-                    setIsPaused(false); // Reset pause to trigger smooth animation
+                    setIsPaused(false);
                     setTimeout(() => setIsPaused(true), 100);
                   }}
                   className="absolute right-2 md:right-0 z-20 p-1 md:p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-colors"
@@ -494,8 +358,115 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Preview */}
+      {/* Trust & Credibility Section - NEW WITH IMAGE PLACEHOLDERS */}
+      <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose MWC Advocates</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Trusted legal excellence with a proven track record in Kenya
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Image Placeholder 1 - Office/Team */}
+            <motion.div
+              className="group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3] bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200">
+                {/* Placeholder for office/team photo */}
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100">
+                  <div className="text-center p-6">
+                    <Building className="w-16 h-16 text-green-600 mx-auto mb-3" />
+                    <p className="text-sm font-semibold text-gray-600">Professional Office Space</p>
+                    <p className="text-xs text-gray-500 mt-2">Add photo of your Nairobi office</p>
+                  </div>
+                </div>
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-green-900/0 group-hover:bg-green-900/20 transition-all duration-300"></div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Prime Location</h3>
+              <p className="text-gray-600">
+                Conveniently located at Duplex Suites, Suite 58, Lower Hill Road, Upperhill, Nairobi - easily accessible for all our clients
+              </p>
+            </motion.div>
+
+            {/* Image Placeholder 2 - Team at Work */}
+            <motion.div
+              className="group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3] bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200">
+                {/* Placeholder for team at work photo */}
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
+                  <div className="text-center p-6">
+                    <Users className="w-16 h-16 text-blue-600 mx-auto mb-3" />
+                    <p className="text-sm font-semibold text-gray-600">Expert Legal Team</p>
+                    <p className="text-xs text-gray-500 mt-2">Add photo of advocates at work</p>
+                  </div>
+                </div>
+                <div className="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/20 transition-all duration-300"></div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Expert Legal Team</h3>
+              <p className="text-gray-600">
+                Three experienced Partners and two Senior Associates with multi-disciplinary expertise covering diverse practice areas
+              </p>
+            </motion.div>
+
+            {/* Image Placeholder 3 - Success/Documents */}
+            <motion.div
+              className="group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3] bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200">
+                {/* Placeholder for success/legal documents photo */}
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-amber-50 to-amber-100">
+                  <div className="text-center p-6">
+                    <Award className="w-16 h-16 text-amber-600 mx-auto mb-3" />
+                    <p className="text-sm font-semibold text-gray-600">Proven Track Record</p>
+                    <p className="text-xs text-gray-500 mt-2">Add photo of achievements/documents</p>
+                  </div>
+                </div>
+                <div className="absolute inset-0 bg-amber-900/0 group-hover:bg-amber-900/20 transition-all duration-300"></div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Innovative Solutions</h3>
+              <p className="text-gray-600">
+                Leveraging technology and modern practices to deliver cutting-edge legal services with efficiency and precision
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Preview - Enhanced with pattern background */}
       <section className="py-20 bg-gray-900 relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+        </div>
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             className="text-center mb-16"
@@ -741,55 +712,132 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Contact CTA Section */}
+      {/* Contact CTA Section - Enhanced with visual elements */}
       <section className="py-20 bg-gradient-to-r from-[var(--color-primary-green)] via-green-700 to-[var(--color-primary-green)] text-white relative overflow-hidden">
+        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-400 rounded-full blur-3xl"></div>
+        </div>
+        
+        {/* Pattern overlay */}
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center lg:text-left">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Side - Contact Info (from firm.json) */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Get in Touch Today</h2>
-              <p className="text-xl text-green-100 mb-8">
+              <p className="text-xl text-green-100 mb-8 leading-relaxed">
                 Ready to discuss your legal needs? Contact us for a consultation and let us help you navigate
                 your legal challenges.
               </p>
 
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center">
-                  <MapPin className="w-6 h-6 mr-3 text-green-200" />
-                  <div>
-                    <p className="font-semibold">SUITE 58 Duplex Suites</p>
-                    <p className="text-green-100">Lower Hill Road, Upperhill, Nairobi, Kenya</p>
+              <div className="space-y-6 mb-8">
+                <motion.div 
+                  className="flex items-start group"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="flex-shrink-0 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                    <MapPin className="w-6 h-6 text-green-200" />
                   </div>
-                </div>
+                  <div className="ml-4">
+                    <p className="font-semibold text-lg mb-1">{firmInfo.address.street}</p>
+                    <p className="text-green-100">{firmInfo.address.city}, {firmInfo.address.country}</p>
+                  </div>
+                </motion.div>
 
-                <div className="flex items-center">
-                  <svg className="w-6 h-6 mr-3 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                  </svg>
-                  <div>
-                    <p className="font-semibold">+254702073800 / +254708792078</p>
+                <motion.div 
+                  className="flex items-start group"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="flex-shrink-0 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                    <svg className="w-6 h-6 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
                   </div>
-                </div>
+                  <div className="ml-4">
+                    <p className="font-semibold text-lg mb-1">Call Us</p>
+                    <p className="text-green-100">{firmInfo.contact.phone}</p>
+                  </div>
+                </motion.div>
 
-                <div className="flex items-center">
-                  <svg className="w-6 h-6 mr-3 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                  </svg>
-                  <div>
-                    <p className="font-semibold">Masindewanyonyi.co@gmail.com</p>
+                <motion.div 
+                  className="flex items-start group"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="flex-shrink-0 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                    <svg className="w-6 h-6 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
                   </div>
-                </div>
+                  <div className="ml-4">
+                    <p className="font-semibold text-lg mb-1">Email Us</p>
+                    <p className="text-green-100">{firmInfo.contact.email}</p>
+                  </div>
+                </motion.div>
               </div>
 
-              <div className="text-center lg:text-left mt-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
                 <Link to="/contact">
-                  <Button variant="secondary" size="lg">
+                  <Button variant="secondary" size="lg" className="shadow-xl hover:shadow-2xl">
                     Contact Us Now
                   </Button>
                 </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Side - Office Hours (from firm.json) */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="hidden lg:block"
+            >
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+                {/* Office Hours */}
+                <h3 className="text-2xl font-bold mb-6 text-white">Office Hours</h3>
+                <div className="space-y-4 mb-8">
+                  {Object.entries(firmInfo.hours).map(([day, hours]) => (
+                    <div key={day} className="flex justify-between items-center border-b border-white/20 pb-3">
+                      <span className="text-green-100 capitalize">{day}</span>
+                      <span className="font-semibold">{hours}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Emergency Contact */}
+                <div className="bg-green-800/30 rounded-xl p-6 border border-green-600/30">
+                  <div className="flex items-center mb-3">
+                    <Clock className="w-5 h-5 text-yellow-300 mr-2" />
+                    <h4 className="font-bold text-white">Emergency Contact</h4>
+                  </div>
+                  <p className="text-green-100 text-sm mb-3">
+                    Available 24/7 for urgent legal matters
+                  </p>
+                  <p className="font-semibold text-white">{firmInfo.contact.phone.split('/')[0]}</p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

@@ -1,0 +1,106 @@
+{
+  "services": [
+    {
+      "id": "corporate-law",
+      "title": "Corporate Law",
+      "description": "Comprehensive corporate legal services including business formation, mergers & acquisitions, contract negotiation, and corporate governance.",
+      "icon": "building",
+      "features": [
+        "Business Formation & Incorporation",
+        "Mergers & Acquisitions",
+        "Contract Drafting & Review", 
+        "Corporate Governance",
+        "Securities Law Compliance",
+        "Joint Ventures & Partnerships"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "real-estate-law",
+      "title": "Real Estate Law", 
+      "description": "Expert guidance through all aspects of real estate transactions, from residential purchases to commercial developments.",
+      "icon": "home",
+      "features": [
+        "Residential Property Transactions",
+        "Commercial Real Estate",
+        "Property Development",
+        "Zoning & Land Use",
+        "Landlord-Tenant Disputes",
+        "Real Estate Litigation"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "employment-law",
+      "title": "Employment Law",
+      "description": "Protecting both employers and employees with comprehensive employment law services and workplace compliance.",
+      "icon": "users",
+      "features": [
+        "Employment Contracts",
+        "Workplace Discrimination",
+        "Wrongful Termination",
+        "Labor Relations",
+        "Workplace Safety Compliance",
+        "Executive Compensation"
+      ],
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "intellectual-property",
+      "title": "Intellectual Property",
+      "description": "Safeguard your innovations and creative works with our comprehensive intellectual property protection services.",
+      "icon": "lightbulb",
+      "features": [
+        "Patent Applications",
+        "Trademark Registration",
+        "Copyright Protection",
+        "Trade Secret Protection",
+        "IP Licensing",
+        "Infringement Defense"
+      ],
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "family-law",
+      "title": "Family Law",
+      "description": "Compassionate legal support for family matters including divorce, custody, adoption, and estate planning.",
+      "icon": "heart",
+      "features": [
+        "Divorce & Separation",
+        "Child Custody & Support",
+        "Adoption Services",
+        "Prenuptial Agreements",
+        "Domestic Violence Protection",
+        "Estate Planning"
+      ],
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "litigation",
+      "title": "Civil Litigation",
+      "description": "Experienced trial lawyers providing aggressive representation in civil disputes and commercial litigation.",
+      "icon": "gavel",
+      "features": [
+        "Commercial Litigation",
+        "Contract Disputes",
+        "Personal Injury Claims",
+        "Insurance Defense",
+        "Appellate Practice",
+        "Alternative Dispute Resolution"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    }
+  ]
+}
