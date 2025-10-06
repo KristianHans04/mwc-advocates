@@ -1,40 +1,63 @@
 {
   "firm": {
-    "name": "MWC Advocates",
-    "tagline": "Excellence in Legal Representation",
-    "description": "A premier law firm providing comprehensive legal services to businesses and individuals. With decades of combined experience, we deliver strategic legal solutions tailored to your unique needs.",
-    "founded": "2010",
+    "name": "Masinde Wanyonyi & Company Advocates",
+    "tagline": "Excellence, Integrity, and Client-Centric Service",
+    "description": "A full-service law firm established with a vision to provide cutting-edge legal services that combine technical expertise, innovation, and personalised client care. With three experienced Partners, two Senior Associates, and a robust support team, the Firm stands as a distinguished legal practice in Kenya, serving both local and international clientele.",
+    "founded": "2020",
     "address": {
-      "street": "123 Legal Plaza, Suite 500",
-      "city": "Downtown",
-      "state": "State",
-      "zip": "12345",
-      "country": "United States"
+      "street": "Duplex Suites, Suite 58, Lower Hill Road",
+      "city": "Upperhill, Nairobi",
+      "state": "Nairobi County",
+      "zip": "00100",
+      "country": "Kenya"
     },
     "contact": {
-      "phone": "+1 (555) 123-4500",
-      "email": "info@mwcadvocates.com",
-      "fax": "+1 (555) 123-4501"
+      "phone": "+254 702 073 800",
+      "phone2": "+254 708 792 078",
+      "email": "masindewanyonyi.co@gmail.com",
+      "fax": ""
     },
     "hours": {
-      "monday": "9:00 AM - 6:00 PM",
-      "tuesday": "9:00 AM - 6:00 PM", 
-      "wednesday": "9:00 AM - 6:00 PM",
-      "thursday": "9:00 AM - 6:00 PM",
-      "friday": "9:00 AM - 5:00 PM",
-      "saturday": "By Appointment",
+      "monday": "8:00 AM - 6:00 PM",
+      "tuesday": "8:00 AM - 6:00 PM",
+      "wednesday": "8:00 AM - 6:00 PM",
+      "thursday": "8:00 AM - 6:00 PM",
+      "friday": "8:00 AM - 6:00 PM",
+      "saturday": "9:00 AM - 1:00 PM",
       "sunday": "Closed"
     },
     "social": {
-      "linkedin": "https://linkedin.com/company/mwc-advocates",
+      "linkedin": "https://linkedin.com/company/masinde-wanyonyi-advocates",
       "twitter": "https://twitter.com/mwcadvocates",
       "facebook": "https://facebook.com/mwcadvocates"
     },
     "stats": {
-      "clients": "500+",
-      "cases": "1000+",
-      "experience": "15+",
-      "attorneys": "4"
-    }
+      "clients": "300+",
+      "cases": "500+",
+      "experience": "4+",
+      "attorneys": "5"
+    },
+    "vision": "To be a premier law firm in Kenya and East Africa, delivering world-class legal solutions that empower our clients to thrive in an evolving legal and business environment.",
+    "mission": "To consistently provide strategic, efficient, and innovative legal services with integrity, professionalism, and an unwavering commitment to client success.",
+    "attributes": [
+      "Professionalism: Upholding the highest standards of ethics and confidentiality",
+      "Client-Centric Approach: We tailor our services to align with client needs and business realities",
+      "Depth of Expertise: Multi-disciplinary team covering diverse practice areas",
+      "Efficiency: Leveraging technology and networks for timely service delivery",
+      "Innovation: Staying ahead of legal and regulatory developments to advise clients proactively"
+    ],
+    "networkLocations": [
+      "Mombasa",
+      "Kisumu", 
+      "Eldoret",
+      "Nakuru"
+    ],
+    "technology": [
+      "Case management software",
+      "Electronic filing systems",
+      "Kenya Law Reports access",
+      "Law Africa database",
+      "International legal repositories"
+    ]
   }
 }
