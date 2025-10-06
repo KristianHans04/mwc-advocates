@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Users, Award, CheckCircle, Clock, Heart, Scale, Globe } from 'lucide-react';
+import { Shield, Users, Award, CheckCircle, Clock, Heart } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import heroBg from '../assets/hero_bg.png';
 import { dataService, type TeamMember } from '../services/dataService';
@@ -24,14 +24,14 @@ const About: React.FC = () => {
   
   // Team data from JSON
   const [team, setTeam] = useState<TeamMember[]>([]);
-  const [firmInfo, setFirmInfo] = useState<any>(null);
 
   useEffect(() => {
     // Load team and firm data from JSON
     const teamData = dataService.getTeamMembers();
     const firmData = dataService.getFirmInfo();
     setTeam(teamData);
-    setFirmInfo(firmData);
+    // Firm info can be used if needed in future
+    console.log('Firm Info:', firmData);
   }, []);
 
   const values = [
