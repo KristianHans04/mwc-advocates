@@ -1,68 +1,136 @@
 {
   "services": [
     {
-      "id": "corporate-law",
-      "title": "Corporate Law",
-      "description": "Comprehensive corporate legal services including business formation, mergers & acquisitions, contract negotiation, and corporate governance.",
-      "icon": "building",
-      "features": [
-        "Business Formation & Incorporation",
-        "Mergers & Acquisitions",
-        "Contract Drafting & Review", 
-        "Corporate Governance",
-        "Securities Law Compliance",
-        "Joint Ventures & Partnerships"
-      ],
-      "featured": true,
-      "createdAt": "2024-01-01T00:00:00Z",
-      "updatedAt": "2024-01-01T00:00:00Z"
-    },
-    {
-      "id": "real-estate-law",
-      "title": "Real Estate Law", 
-      "description": "Expert guidance through all aspects of real estate transactions, from residential purchases to commercial developments.",
+      "id": "conveyancing-real-estate",
+      "title": "Conveyancing & Real Estate",
+      "description": "We advise on all aspects of property transactions including sales, purchases, leases, charges, mortgages, and sectional property conversions.",
       "icon": "home",
       "features": [
-        "Residential Property Transactions",
-        "Commercial Real Estate",
-        "Property Development",
-        "Zoning & Land Use",
-        "Landlord-Tenant Disputes",
-        "Real Estate Litigation"
+        "Property sales, purchases, and leases",
+        "Charges, mortgages, and sectional property conversions",
+        "Structuring real estate investments",
+        "Drafting agreements for large-scale developments",
+        "Managing due diligence",
+        "Advising on regulatory approvals"
       ],
       "featured": true,
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-01-01T00:00:00Z"
     },
     {
-      "id": "employment-law",
-      "title": "Employment Law",
-      "description": "Protecting both employers and employees with comprehensive employment law services and workplace compliance.",
-      "icon": "users",
+      "id": "estate-planning-succession",
+      "title": "Estate Planning & Succession",
+      "description": "Our estate planning practice encompasses drafting wills, establishing trusts, setting up family holding structures, and guiding families through succession planning.",
+      "icon": "heart",
       "features": [
-        "Employment Contracts",
-        "Workplace Discrimination",
-        "Wrongful Termination",
-        "Labor Relations",
-        "Workplace Safety Compliance",
-        "Executive Compensation"
+        "Drafting wills and establishing trusts",
+        "Setting up family holding structures",
+        "Succession planning guidance",
+        "Contentious succession matters representation",
+        "Protection of beneficiaries",
+        "Seamless administration of estates"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "data-protection-privacy",
+      "title": "Data Protection & Privacy Law",
+      "description": "We assist clients in structuring compliance frameworks, drafting privacy policies, conducting DPIAs, and liaising with the Data Protection Commissioner.",
+      "icon": "shield",
+      "features": [
+        "Compliance frameworks structuring",
+        "Privacy policies drafting",
+        "Data Protection Impact Assessments (DPIAs)",
+        "Liaison with Data Protection Commissioner",
+        "Risk mitigation and penalty avoidance",
+        "Stakeholder trust protection"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "risk-compliance-advisory",
+      "title": "Risk & Compliance Advisory",
+      "description": "We provide proactive advisory services on anti-money laundering, anti-bribery, corporate governance, regulatory compliance, and internal policies.",
+      "icon": "shield",
+      "features": [
+        "Anti-money laundering and anti-bribery advisory",
+        "Corporate governance guidance",
+        "Regulatory compliance services",
+        "Internal policies development",
+        "Compliance audits",
+        "Risk management frameworks design"
       ],
       "featured": false,
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-01-01T00:00:00Z"
     },
     {
-      "id": "intellectual-property",
-      "title": "Intellectual Property",
-      "description": "Safeguard your innovations and creative works with our comprehensive intellectual property protection services.",
-      "icon": "lightbulb",
+      "id": "civil-commercial-litigation",
+      "title": "Civil and Commercial Litigation",
+      "description": "Our litigation team handles disputes across the Kenyan court system, from Magistrates' Courts to the Court of Appeal.",
+      "icon": "gavel",
       "features": [
-        "Patent Applications",
-        "Trademark Registration",
-        "Copyright Protection",
-        "Trade Secret Protection",
-        "IP Licensing",
-        "Infringement Defense"
+        "Contractual disputes and tortious claims",
+        "Debt recovery and shareholder disputes",
+        "Intellectual property litigation",
+        "Judicial review proceedings",
+        "Aggressive advocacy with practical settlements",
+        "Optimal outcomes for clients"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "criminal-litigation",
+      "title": "Criminal Litigation",
+      "description": "We represent individuals and corporates in criminal proceedings, including white-collar crimes, fraud, money laundering, and road traffic offences.",
+      "icon": "scale",
+      "features": [
+        "White-collar crimes and fraud cases",
+        "Money laundering defense",
+        "Road traffic offences",
+        "Appeals and public inquests",
+        "Constitutional petitions from criminal matters",
+        "Robust defense and constitutional rights protection"
+      ],
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "corporate-commercial-law",
+      "title": "Corporate & Commercial Law",
+      "description": "We advise on company formation, mergers and acquisitions, joint ventures, restructuring, shareholder agreements, and regulatory compliance.",
+      "icon": "building",
+      "features": [
+        "Company formation and M&A",
+        "Joint ventures and restructuring",
+        "Shareholder agreements",
+        "Regulatory compliance",
+        "Commercial agreements drafting",
+        "Legal protection and commercial viability"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "updatedAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "immigration-law",
+      "title": "Immigration Law",
+      "description": "We assist individuals, expatriates, and corporations in securing work permits, residence permits, passes, and citizenship applications.",
+      "icon": "globe",
+      "features": [
+        "Work permits and residence permits",
+        "Passes and citizenship applications",
+        "Compliance for employers hiring foreign nationals",
+        "Disputes with Directorate of Immigration",
+        "Immigration advisory services",
+        "Comprehensive immigration solutions"
       ],
       "featured": false,
       "createdAt": "2024-01-01T00:00:00Z",
@@ -71,34 +139,34 @@
     {
       "id": "family-law",
       "title": "Family Law",
-      "description": "Compassionate legal support for family matters including divorce, custody, adoption, and estate planning.",
-      "icon": "heart",
+      "description": "Our Family Law practice provides compassionate yet firm representation in divorce, separation, custody, maintenance, adoption, and guardianship proceedings.",
+      "icon": "users",
       "features": [
-        "Divorce & Separation",
-        "Child Custody & Support",
-        "Adoption Services",
-        "Prenuptial Agreements",
-        "Domestic Violence Protection",
-        "Estate Planning"
+        "Divorce and separation proceedings",
+        "Custody and maintenance matters",
+        "Adoption and guardianship proceedings",
+        "Children's Court matters",
+        "Matrimonial property disputes",
+        "Compassionate yet firm representation"
       ],
       "featured": false,
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-01-01T00:00:00Z"
     },
     {
-      "id": "litigation",
-      "title": "Civil Litigation",
-      "description": "Experienced trial lawyers providing aggressive representation in civil disputes and commercial litigation.",
-      "icon": "gavel",
+      "id": "banking-finance-law",
+      "title": "Banking & Finance Law",
+      "description": "We advise banks, financial institutions, and borrowers on loan agreements, securities documentation, syndications, asset financing, guarantees, and debentures.",
+      "icon": "briefcase",
       "features": [
-        "Commercial Litigation",
-        "Contract Disputes",
-        "Personal Injury Claims",
-        "Insurance Defense",
-        "Appellate Practice",
-        "Alternative Dispute Resolution"
+        "Loan agreements and securities documentation",
+        "Syndications and asset financing",
+        "Guarantees and debentures",
+        "Debt recovery and security enforcement",
+        "Banking Act compliance",
+        "Prudential Guidelines and AML laws"
       ],
-      "featured": true,
+      "featured": false,
       "createdAt": "2024-01-01T00:00:00Z",
       "updatedAt": "2024-01-01T00:00:00Z"
     }
