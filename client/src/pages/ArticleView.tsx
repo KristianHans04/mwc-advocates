@@ -15,12 +15,7 @@ import disputeResolutionBg from '../assets/img/Bg/disputeResolution.jpeg';
 import corporateGovernanceBg from '../assets/img/Bg/corporateGovernance.jpeg';
 import financeLawBg from '../assets/img/Bg/financeLaw.jpg';
 
-// Import placeholder images from randoms folder
-import gavelImg from '../assets/img/randoms/gavel.png';
-import gavel2Img from '../assets/img/randoms/gavel2.png';
-import gavel3Img from '../assets/img/randoms/gavel3.png';
-import justiceImg from '../assets/img/randoms/justice.png';
-import lawBooksImg from '../assets/img/randoms/law_books.png';
+// Import category background images
 
 interface Article {
   id: string;
@@ -33,7 +28,7 @@ interface Article {
   readTime: string;
   image: string;
   tags: string[];
-  type: 'article' | 'publication' | 'media';
+  type: string; // Changed from literal union to accept JSON data
 }
 
 const ArticleView: React.FC = () => {
