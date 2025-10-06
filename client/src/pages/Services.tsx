@@ -8,309 +8,48 @@ import {
 import ServiceDetailModal from '../components/ServiceDetailModal';
 import useSEO from '../hooks/useSEO';
 import servicesBg from '../assets/servicesBg1.png';
-
-
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  detailedDescription?: string;
-  icon: string;
-  features: string[];
-  processSteps?: string[];
-  timeline?: string;
-  pricing?: string;
-  category: 'local' | 'international';
-}
+import { dataService, type Service } from '../services/dataService';
 
 const Services: React.FC = () => {
   // SEO optimization
   useSEO({
     title: 'Legal Services - Local & International Law Solutions | MWC Advocates',
-    description: 'Expert legal services in Kenya: Real Estate, Succession, Conveyancing, Litigation, Cross-border Investments, Tax, Corporate Governance, IP, and Arbitration. MWC Advocates - Your trusted legal partner.',
-    keywords: 'legal services Kenya, real estate law, succession planning, conveyancing, litigation Kenya, cross-border investments, tax law, corporate governance, intellectual property, arbitration, MWC Advocates'
+    description: 'Expert legal services in Kenya: Conveyancing & Real Estate, Estate Planning & Succession, Data Protection & Privacy Law, Civil & Commercial Litigation, Corporate Law, Immigration, Family Law, Banking & Finance. MWC Advocates - Your trusted legal partner.',
+    keywords: 'legal services Kenya, conveyancing real estate, estate planning succession, data protection privacy law, civil commercial litigation, criminal litigation, corporate commercial law, immigration law, family law, banking finance law, MWC Advocates, Masinde Wanyonyi advocates'
   });
 
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'local' | 'international'>('local');
 
   // Icon mapping
   const iconMap: Record<string, React.ComponentType<any>> = {
-    Home,
-    FileText,
-    Gavel,
-    Heart,
-    Globe,
-    Shield,
-    Building,
-    TrendingUp,
-    Award,
-    Briefcase,
-    Scale,
-    Users,
-    BookOpen,
-    MapPin
+    building: Building,
+    home: Home,
+    users: Users,
+    lightbulb: Briefcase, // Using Briefcase as fallback for lightbulb
+    heart: Heart,
+    gavel: Gavel,
+    shield: Shield,
+    globe: Globe,
+    scale: Scale,
+    award: Award,
+    bookopen: BookOpen,
+    mappin: MapPin,
+    filetext: FileText,
+    trendingup: TrendingUp
   };
 
   useEffect(() => {
-    // Enhanced services data with categories
-    const categorizedServices: Service[] = [
-      // Local Services
-      {
-        id: '1',
-        title: 'Real Estate Law',
-        description: 'Complete legal support for property transactions, from acquisition to disposal.',
-        detailedDescription: 'Our real estate practice covers all aspects of property law in Kenya, including land acquisition, development, leasing, and dispute resolution. We work with individuals, developers, and institutional investors to ensure smooth and legally compliant property transactions.',
-        icon: 'Home',
-        features: [
-          'Property purchase and sale agreements',
-          'Land title searches and due diligence',
-          'Property registration and transfer',
-          'Lease agreements and tenancy matters',
-          'Real estate development approvals',
-          'Property dispute resolution',
-          'Construction contracts',
-          'Mortgage and financing documentation'
-        ],
-        processSteps: [
-          'Initial consultation to understand your property needs',
-          'Comprehensive due diligence and title search',
-          'Draft and review of sale/purchase agreements',
-          'Facilitate payment and transfer process',
-          'Complete registration with relevant authorities'
-        ],
-        timeline: '2-6 weeks depending on complexity',
-        pricing: 'Based on property value and transaction complexity',
-        category: 'local'
-      },
-      {
-        id: '2',
-        title: 'Succession Planning',
-        description: 'Expert guidance in estate planning and inheritance matters under Kenyan law.',
-        detailedDescription: 'We provide comprehensive succession planning services to help you protect your assets and ensure your wishes are carried out. Our team handles both testate and intestate succession matters with sensitivity and professionalism.',
-        icon: 'Heart',
-        features: [
-          'Will drafting and review',
-          'Estate administration',
-          'Probate and letters of administration',
-          'Trust creation and management',
-          'Inheritance dispute resolution',
-          'Asset protection strategies',
-          'Family provision claims',
-          'Succession tax planning'
-        ],
-        processSteps: [
-          'Review of assets and family circumstances',
-          'Draft comprehensive will or trust documents',
-          'Ensure proper execution and witnessing',
-          'Safe custody of documents',
-          'Regular reviews and updates as needed'
-        ],
-        timeline: '1-2 weeks for will drafting, 3-6 months for probate',
-        pricing: 'Fixed fees for standard services, hourly rates for complex matters',
-        category: 'local'
-      },
-      {
-        id: '3',
-        title: 'Conveyancing',
-        description: 'Efficient and secure property transfer services across Kenya.',
-        detailedDescription: 'Our conveyancing team ensures smooth property transfers with meticulous attention to detail. We handle both residential and commercial conveyancing, protecting your interests throughout the transaction.',
-        icon: 'FileText',
-        features: [
-          'Sale and purchase transactions',
-          'Property searches and investigations',
-          'Stamp duty assessment and payment',
-          'Registration at lands registry',
-          'Subdivision and amalgamation',
-          'Change of user applications',
-          'Sectional property transfers',
-          'Off-plan purchases'
-        ],
-        timeline: '4-8 weeks typically',
-        pricing: 'Scale fees based on property value',
-        category: 'local'
-      },
-      {
-        id: '4',
-        title: 'Litigation & Dispute Resolution',
-        description: 'Strong representation in Kenyan courts and alternative dispute resolution forums.',
-        detailedDescription: 'Our litigation team has extensive experience in commercial, civil, and constitutional matters. We pursue the most effective dispute resolution strategy, whether through negotiation, mediation, arbitration, or court proceedings.',
-        icon: 'Gavel',
-        features: [
-          'Commercial litigation',
-          'Civil disputes',
-          'Constitutional petitions',
-          'Employment and labor disputes',
-          'Land and property disputes',
-          'Debt recovery',
-          'Judicial review proceedings',
-          'Appeals and reviews'
-        ],
-        processSteps: [
-          'Case evaluation and merit assessment',
-          'Pre-litigation negotiation attempts',
-          'Filing of court documents',
-          'Discovery and evidence gathering',
-          'Trial representation',
-          'Post-judgment enforcement'
-        ],
-        timeline: 'Varies by case complexity and court schedules',
-        pricing: 'Hourly rates or contingency fees depending on case type',
-        category: 'local'
-      },
-      // International Services
-      {
-        id: '5',
-        title: 'Cross-Border Investments',
-        description: 'Navigate international investment opportunities with expert legal guidance.',
-        detailedDescription: 'We assist both foreign investors entering Kenya and Kenyan businesses expanding internationally. Our team ensures compliance with local and international regulations while structuring investments for optimal returns.',
-        icon: 'Globe',
-        features: [
-          'Foreign investment structuring',
-          'Investment licensing and permits',
-          'Joint venture agreements',
-          'Cross-border M&A transactions',
-          'Bilateral investment treaty advice',
-          'Repatriation of profits',
-          'Exchange control compliance',
-          'Investment protection strategies'
-        ],
-        processSteps: [
-          'Investment structure planning',
-          'Regulatory compliance review',
-          'Documentation and agreements',
-          'Licensing and registration',
-          'Ongoing compliance support'
-        ],
-        timeline: '2-3 months for typical investment setup',
-        pricing: 'Project-based fees or retainer arrangements',
-        category: 'international'
-      },
-      {
-        id: '6',
-        title: 'International Tax Law',
-        description: 'Strategic tax planning for cross-border transactions and operations.',
-        detailedDescription: 'Our tax team provides comprehensive advice on Kenyan and international tax matters, helping clients optimize their tax position while ensuring full compliance with applicable laws.',
-        icon: 'TrendingUp',
-        features: [
-          'Double taxation agreements',
-          'Transfer pricing',
-          'International tax planning',
-          'Tax treaty interpretation',
-          'Withholding tax advice',
-          'VAT on cross-border supplies',
-          'Permanent establishment issues',
-          'Tax dispute resolution'
-        ],
-        timeline: 'Ongoing advisory services',
-        pricing: 'Hourly rates or annual retainer',
-        category: 'international'
-      },
-      {
-        id: '7',
-        title: 'Corporate Governance',
-        description: 'Ensure compliance with local and international corporate governance standards.',
-        detailedDescription: 'We help companies establish and maintain robust corporate governance frameworks that meet regulatory requirements and international best practices, enhancing investor confidence and operational efficiency.',
-        icon: 'Building',
-        features: [
-          'Board advisory services',
-          'Corporate governance audits',
-          'Policy development',
-          'Director training programs',
-          'Shareholder agreement drafting',
-          'Corporate secretarial services',
-          'Regulatory compliance',
-          'ESG advisory'
-        ],
-        processSteps: [
-          'Governance assessment and gap analysis',
-          'Policy and procedure development',
-          'Implementation support',
-          'Training and capacity building',
-          'Ongoing monitoring and updates'
-        ],
-        timeline: '3-6 months for full implementation',
-        pricing: 'Project fees or ongoing retainer',
-        category: 'international'
-      },
-      {
-        id: '8',
-        title: 'Intellectual Property',
-        description: 'Protect and monetize your intellectual property across borders.',
-        detailedDescription: 'Our IP team helps clients protect their innovations, brands, and creative works in Kenya and internationally. We handle registration, enforcement, and commercialization of all forms of intellectual property.',
-        icon: 'Shield',
-        features: [
-          'Trademark registration and protection',
-          'Patent filing and prosecution',
-          'Copyright registration',
-          'IP licensing agreements',
-          'Anti-counterfeiting actions',
-          'Domain name disputes',
-          'Trade secrets protection',
-          'IP portfolio management'
-        ],
-        timeline: '6-12 months for registrations',
-        pricing: 'Fixed fees for registrations, hourly for advisory',
-        category: 'international'
-      },
-      {
-        id: '9',
-        title: 'International Arbitration',
-        description: 'Expert representation in international commercial arbitration proceedings.',
-        detailedDescription: 'We represent clients in international arbitrations under various rules including ICC, LCIA, and ICSID. Our team has extensive experience in complex cross-border disputes across multiple sectors.',
-        icon: 'Scale',
-        features: [
-          'International commercial arbitration',
-          'Investment treaty arbitration',
-          'Arbitration agreement drafting',
-          'Arbitrator appointments',
-          'Enforcement of foreign awards',
-          'Setting aside applications',
-          'Emergency arbitrator proceedings',
-          'Multi-party arbitrations'
-        ],
-        processSteps: [
-          'Case assessment and strategy development',
-          'Arbitrator selection and challenge',
-          'Pleadings and evidence preparation',
-          'Hearing representation',
-          'Award enforcement or challenge'
-        ],
-        timeline: '12-24 months typically',
-        pricing: 'Hourly rates or success fees',
-        category: 'international'
-      },
-      {
-        id: '10',
-        title: 'Regulatory Compliance',
-        description: 'Navigate complex regulatory requirements for international operations.',
-        detailedDescription: 'We help businesses understand and comply with the regulatory landscape in Kenya and internationally, covering sectors including financial services, telecommunications, energy, and healthcare.',
-        icon: 'BookOpen',
-        features: [
-          'Regulatory licensing',
-          'Compliance audits',
-          'Anti-money laundering',
-          'Data protection and privacy',
-          'Competition law compliance',
-          'Sector-specific regulations',
-          'Regulatory investigations',
-          'Compliance training'
-        ],
-        timeline: 'Ongoing advisory and support',
-        pricing: 'Retainer or project-based fees',
-        category: 'international'
-      }
-    ];
-
-    setServices(categorizedServices);
+    // Load services from JSON data
+    const servicesData = dataService.getServices();
+    setServices(servicesData);
     setLoading(false);
   }, []);
 
-  const localServices = services.filter(s => s.category === 'local');
-  const internationalServices = services.filter(s => s.category === 'international');
+  // For simplicity, we'll use all services and hardcode the categorization in the UI
+  const allServices = services;
 
   const handleLearnMore = (service: Service) => {
     setSelectedService(service);
@@ -358,39 +97,8 @@ const Services: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Local expertise meets international standards. From property law to cross-border investments.
+            From conveyancing to corporate law, we offer strategic legal solutions that combine technical expertise with innovation.
           </motion.p>
-          
-          {/* Service Categories Toggle */}
-          <motion.div 
-            className="inline-flex bg-white/10 backdrop-blur-md rounded-full p-1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <button
-              onClick={() => setActiveTab('local')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all ${
-                activeTab === 'local' 
-                  ? 'bg-white text-green-800' 
-                  : 'text-white hover:bg-white/20'
-              }`}
-            >
-              <MapPin className="inline-block w-4 h-4 mr-2" />
-              Local Services
-            </button>
-            <button
-              onClick={() => setActiveTab('international')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all ${
-                activeTab === 'international' 
-                  ? 'bg-white text-green-800' 
-                  : 'text-white hover:bg-white/20'
-              }`}
-            >
-              <Globe className="inline-block w-4 h-4 mr-2" />
-              International Focus
-            </button>
-          </motion.div>
         </motion.div>
       </section>
 
@@ -400,18 +108,15 @@ const Services: React.FC = () => {
           {/* Section Header */}
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {activeTab === 'local' ? 'Local Legal Services' : 'International Legal Services'}
+              Our Legal Services
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {activeTab === 'local' 
-                ? 'Expert legal solutions tailored to Kenyan law and local business needs.'
-                : 'Navigate global markets with confidence through our international legal expertise.'}
+              Wide array of legal services with particular depth in specialized practice areas.
             </p>
           </div>
 
           {/* Services Grid */}
           <motion.div 
-            key={activeTab}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             initial="hidden"
             animate="visible"
@@ -425,7 +130,7 @@ const Services: React.FC = () => {
               }
             }}
           >
-            {(activeTab === 'local' ? localServices : internationalServices).map((service, _index) => {
+            {allServices.map((service, _index) => {
               const IconComponent = iconMap[service.icon] || Briefcase;
               return (
                 <motion.div
@@ -496,7 +201,7 @@ const Services: React.FC = () => {
               Why Choose MWC Advocates?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Bridging local expertise with international standards
+              Upholding the highest standards of ethics and confidentiality with innovative approach
             </p>
           </div>
 
@@ -511,9 +216,9 @@ const Services: React.FC = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <MapPin className="w-8 h-8 text-green-800" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Local Expertise</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Multi-Disciplinary Team</h3>
               <p className="text-gray-600 text-sm">
-                Deep understanding of Kenyan law and regulatory landscape
+                Three Partners and two Senior Associates covering diverse practice areas
               </p>
             </motion.div>
 
@@ -527,9 +232,9 @@ const Services: React.FC = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Globe className="w-8 h-8 text-green-800" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Global Reach</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">National Coverage</h3>
               <p className="text-gray-600 text-sm">
-                International partnerships and cross-border expertise
+                Network of correspondent firms across major Kenyan cities
               </p>
             </motion.div>
 
@@ -543,9 +248,9 @@ const Services: React.FC = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="w-8 h-8 text-green-800" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Proven Track Record</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Technology-Driven</h3>
               <p className="text-gray-600 text-sm">
-                Years of successful cases and satisfied clients
+                Fully digitized with case management software and electronic filing systems
               </p>
             </motion.div>
 

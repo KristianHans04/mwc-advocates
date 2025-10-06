@@ -1,0 +1,68 @@
+{
+  "faqs": [
+    {
+      "id": "faq-1",
+      "question": "What types of legal services do you offer?",
+      "answer": "We offer comprehensive legal services including corporate law, litigation and dispute resolution, property law, family law, employment law, and general legal consultancy.",
+      "category": "general",
+      "order": 1,
+      "isActive": true
+    },
+    {
+      "id": "faq-2",
+      "question": "How do I schedule a consultation?",
+      "answer": "You can schedule a consultation by calling us at +254702073800 or +254708792078, or by filling out our contact form on the website. We typically respond within 24 hours.",
+      "category": "consultation",
+      "order": 2,
+      "isActive": true
+    },
+    {
+      "id": "faq-3",
+      "question": "What are your consultation fees?",
+      "answer": "Our consultation fees vary depending on the complexity of the matter. We offer competitive rates and will provide a fee estimate during your initial consultation.",
+      "category": "fees",
+      "order": 3,
+      "isActive": true
+    },
+    {
+      "id": "faq-4",
+      "question": "Do you handle cases outside Nairobi?",
+      "answer": "Yes, we handle cases throughout Kenya. While our office is based in Nairobi, we represent clients in courts and tribunals across the country.",
+      "category": "location",
+      "order": 4,
+      "isActive": true
+    },
+    {
+      "id": "faq-5",
+      "question": "What should I bring to my first consultation?",
+      "answer": "Please bring any relevant documents related to your legal matter, including contracts, correspondence, court documents, and identification. Having these materials helps us better understand your situation.",
+      "category": "consultation",
+      "order": 5,
+      "isActive": true
+    },
+    {
+      "id": "faq-6",
+      "question": "How long do legal proceedings typically take?",
+      "answer": "The duration varies significantly depending on the type of case, complexity, and court schedules. During your consultation, we'll provide a realistic timeline based on your specific circumstances.",
+      "category": "general",
+      "order": 6,
+      "isActive": true
+    },
+    {
+      "id": "faq-7",
+      "question": "Do you offer payment plans?",
+      "answer": "Yes, we understand that legal services can be a significant investment. We offer flexible payment arrangements for qualified clients, which we can discuss during your consultation.",
+      "category": "fees",
+      "order": 7,
+      "isActive": true
+    },
+    {
+      "id": "faq-8",
+      "question": "Can you help with urgent legal matters?",
+      "answer": "Yes, we understand that some legal matters require immediate attention. We offer emergency consultations and can prioritize urgent cases. Please indicate the urgency when contacting us.",
+      "category": "general",
+      "order": 8,
+      "isActive": true
+    }
+  ]
+}

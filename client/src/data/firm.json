@@ -1,0 +1,40 @@
+{
+  "firm": {
+    "name": "MWC Advocates",
+    "tagline": "Excellence in Legal Representation",
+    "description": "A premier law firm providing comprehensive legal services to businesses and individuals. With decades of combined experience, we deliver strategic legal solutions tailored to your unique needs.",
+    "founded": "2010",
+    "address": {
+      "street": "123 Legal Plaza, Suite 500",
+      "city": "Downtown",
+      "state": "State",
+      "zip": "12345",
+      "country": "United States"
+    },
+    "contact": {
+      "phone": "+1 (555) 123-4500",
+      "email": "info@mwcadvocates.com",
+      "fax": "+1 (555) 123-4501"
+    },
+    "hours": {
+      "monday": "9:00 AM - 6:00 PM",
+      "tuesday": "9:00 AM - 6:00 PM", 
+      "wednesday": "9:00 AM - 6:00 PM",
+      "thursday": "9:00 AM - 6:00 PM",
+      "friday": "9:00 AM - 5:00 PM",
+      "saturday": "By Appointment",
+      "sunday": "Closed"
+    },
+    "social": {
+      "linkedin": "https://linkedin.com/company/mwc-advocates",
+      "twitter": "https://twitter.com/mwcadvocates",
+      "facebook": "https://facebook.com/mwcadvocates"
+    },
+    "stats": {
+      "clients": "500+",
+      "cases": "1000+",
+      "experience": "15+",
+      "attorneys": "4"
+    }
+  }
+}
