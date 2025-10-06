@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  BookOpen, User, Search, Filter,
+  BookOpen, Search, Filter, Clock,
   FileText
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
-import ArticleDetailModal from '../components/ArticleDetailModal';
+
+// Import articles data
+import articlesData from '../data/articles.json';
 
 // Import background images
 import taxLawBg from '../assets/img/Bg/taxLaw.jpg';
@@ -39,6 +42,8 @@ interface Article {
 
 
 const Insights: React.FC = () => {
+  const navigate = useNavigate();
+  
   useSEO({
     title: 'Legal Insights & Publications | MWC Advocates',
     description: 'Stay informed with expert legal insights on Data Protection, Estate Planning, Conveyancing, Litigation, Banking Law, and Corporate Governance in Kenya. Professional analysis from MWC Advocates.',
@@ -51,127 +56,17 @@ const Insights: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState<'articles' | 'publications'>('articles');
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Simulated loading with skeleton animation
+  // Load articles from JSON data
   useEffect(() => {
-    // Simulate API call delay
     const loadContent = async () => {
       setLoading(true);
       
-      // Simulate network delay (for demo purposes)
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Simulate brief loading for better UX
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Mock data - in production, this would come from your API
-      const mockArticles: Article[] = [
-        {
-          id: '1',
-          title: 'Data Protection Compliance in Kenya: Essential Guide for Businesses',
-          excerpt: 'A comprehensive analysis of the Data Protection Act 2019 and compliance requirements for modern businesses.',
-          author: 'Beatrice Mutahi',
-          date: '2024-01-15',
-          category: 'Data Protection',
-          readTime: '8 min',
-          image: lawBooksImg,
-          tags: ['Data Protection', 'KDPA', 'Compliance'],
-          type: 'article'
-        },
-        {
-          id: '2',
-          title: 'Estate Planning in Kenya: Modern Approaches to Succession',
-          excerpt: 'Strategic guidance on comprehensive estate planning and succession matters under current Kenyan law.',
-          author: 'Masinde Dennis',
-          date: '2024-01-10',
-          category: 'Estate Planning',
-          readTime: '12 min',
-          image: gavelImg,
-          tags: ['Estate Planning', 'Succession', 'Wills'],
-          type: 'article'
-        },
-        {
-          id: '3',
-          title: 'Conveyancing in Kenya: A Complete Guide to Property Transactions',
-          excerpt: 'Comprehensive insights into property transactions, from acquisition to disposal, under Kenyan law.',
-          author: 'Vallary Nyala',
-          date: '2024-01-05',
-          category: 'Real Estate',
-          readTime: '10 min',
-          image: gavel2Img,
-          tags: ['Conveyancing', 'Property Law', 'Real Estate'],
-          type: 'article'
-        },
-        {
-          id: '4',
-          title: 'Litigation Strategy in Kenya: Modern Approaches to Dispute Resolution',
-          excerpt: 'Strategic insights into effective litigation and alternative dispute resolution in Kenyan courts.',
-          author: 'Wanyonyi Jacob',
-          date: '2023-12-28',
-          category: 'Dispute Resolution',
-          readTime: '15 min',
-          image: justiceImg,
-          tags: ['Litigation', 'Dispute Resolution', 'Courts'],
-          type: 'publication'
-        },
-        {
-          id: '5',
-          title: 'ESG Compliance for Kenyan Companies',
-          excerpt: 'Environmental, Social, and Governance requirements for companies listed on the Nairobi Securities Exchange.',
-          author: 'Godwin Lemashon',
-          date: '2023-12-20',
-          category: 'Corporate Governance',
-          readTime: '7 min',
-          image: gavel3Img,
-          tags: ['ESG', 'Compliance', 'NSE'],
-          type: 'article'
-        },
-        {
-          id: '6',
-          title: 'Banking Law and Financial Compliance in Kenya',
-          excerpt: 'Understanding regulatory requirements and compliance frameworks for financial institutions in Kenya.',
-          author: 'Beatrice Mutahi',
-          date: '2023-12-15',
-          category: 'Financial Law',
-          readTime: '9 min',
-          image: lawBooksImg,
-          tags: ['Banking Law', 'Financial Compliance', 'Regulation'],
-          type: 'publication'
-        }
-      ];
-
-      // Speaking engagements temporarily disabled
-      // const mockEngagements: SpeakingEngagement[] = [
-      //   {
-      //     id: '1',
-      //     title: 'The Future of Legal Tech in Africa',
-      //     event: 'Africa Legal Innovation Summit 2024',
-      //     speaker: 'Jane Muthoni, Senior Partner',
-      //     date: '2024-02-15',
-      //     location: 'Nairobi, Kenya',
-      //     type: 'conference'
-      //   },
-      //   {
-      //     id: '2',
-      //     title: 'Cross-Border Trade Under AfCFTA',
-      //     event: 'EAC Business Forum Webinar',
-      //     speaker: 'John Kamau, Managing Partner',
-      //     date: '2024-01-20',
-      //     location: 'Virtual',
-      //     type: 'webinar'
-      //   },
-      //   {
-      //     id: '3',
-      //     title: 'Legal Perspectives on Kenya\'s Economic Growth',
-      //     event: 'Business Daily Interview',
-      //     speaker: 'Sarah Wanjiru, Partner',
-      //     date: '2024-01-08',
-      //     location: 'Nairobi, Kenya',
-      //     type: 'interview'
-      //   }
-      // ];
-
-      setArticles(mockArticles);
-      // setSpeakingEngagements(mockEngagements);
+      // Load articles from imported JSON data
+      setArticles(articlesData.articles);
       setLoading(false);
     };
 
@@ -190,26 +85,22 @@ const Insights: React.FC = () => {
     return matchesSearch && matchesCategory && matchesType;
   });
 
-  const categories = ['all', 'Data Protection', 'Estate Planning', 'Real Estate', 'Dispute Resolution', 'Corporate Governance', 'Financial Law'];
+  const categories = ['all', 'Data Protection', 'Employment Law', 'Real Estate', 'Estate Planning', 'Dispute Resolution', 'Corporate Law', 'Banking Law', 'Legal Insights'];
 
   // Map categories to their background images
   const categoryBackgrounds: { [key: string]: string } = {
     'Data Protection': taxLawBg,
-    'Estate Planning': corporateLawBg,
+    'Employment Law': corporateLawBg,
     'Real Estate': realEstateLawBg,
+    'Estate Planning': corporateGovernanceBg,
     'Dispute Resolution': disputeResolutionBg,
-    'Corporate Governance': corporateGovernanceBg,
-    'Financial Law': financeLawBg
+    'Corporate Law': corporateGovernanceBg,
+    'Banking Law': financeLawBg,
+    'Legal Insights': corporateLawBg
   };
 
   const handleArticleClick = (article: Article) => {
-    setSelectedArticle(article);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedArticle(null);
+    navigate(`/insights/${article.id}`);
   };
 
   // Loading skeleton component
@@ -443,12 +334,11 @@ const Insights: React.FC = () => {
                           <div className="flex items-center justify-between text-sm text-gray-500">
                             <div className="flex items-center space-x-4">
                               <span className="flex items-center">
-                                <User className="w-4 h-4 mr-1" />
-                                {article.author}
+                                <Clock className="w-4 h-4 mr-1" />
+                                {article.readTime}
                               </span>
-                              <span>{article.readTime}</span>
+                              <span>{new Date(article.date).toLocaleDateString()}</span>
                             </div>
-                            <span>{new Date(article.date).toLocaleDateString()}</span>
                           </div>
                           <div className="mt-4 flex flex-wrap gap-2">
                             {article.tags.map(tag => (
@@ -468,12 +358,6 @@ const Insights: React.FC = () => {
         </div>
       </section>
 
-      {/* Article Detail Modal */}
-      <ArticleDetailModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        article={selectedArticle}
-      />
 
       {/* Newsletter CTA */}
       <section className="py-16 bg-green-800 text-white">

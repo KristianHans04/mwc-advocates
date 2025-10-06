@@ -48,6 +48,17 @@ ehthumbs.db
 Thumbs.db
 
 # Prisma
+*.db
+prisma/dev.db
+
+# Python virtual environments
+temp_env/
+venv/
+env/
+ENV/
+*.pyc
+__pycache__/
+.Python
 .env
 prisma/.env
 

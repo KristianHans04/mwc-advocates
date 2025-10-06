@@ -14,6 +14,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import Insights from './pages/Insights';
+import ArticleView from './pages/ArticleView';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/insights" element={<Insights />} />
+          <Route path="/insights/:articleId" element={<ArticleView />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           
