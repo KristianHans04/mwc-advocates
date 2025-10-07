@@ -5,65 +5,49 @@
       "name": "Masinde Dennis",
       "title": "Partner",
       "specialization": "Head of Real Estate/Conveyancing, Corporate & Commercial Law, Data Protection, AML, and Estate Planning",
-      "experience": "10+ years",
-      "education": "LLB (University of Nairobi), Advocate of the High Court of Kenya",
       "bio": "Mr. Masinde brings expertise in property transactions, corporate structuring, commercial contracts, compliance, and wealth management. His practice combines sharp negotiation skills with a forward-looking approach, making him a trusted advisor to developers, investors, and corporates.",
       "image": "/img/team/masinde-dennis.jpg",
       "email": "masinde@mwcadvocates.com",
-      "phone": "+254 702 073 800",
-      "linkedin": "https://linkedin.com/in/masinde-dennis"
+      "linkedin": "https://www.linkedin.com/in/masinde-dennis-48552676/"
     },
     {
       "id": "wanyonyi-jacob",
       "name": "Wanyonyi Jacob",
       "title": "Partner",
       "specialization": "Head of Litigation (Civil, Commercial, Employment, Criminal)",
-      "experience": "12+ years",
-      "education": "LLB (Moi University), Advocate of the High Court of Kenya",
       "bio": "Mr. Wanyonyi is a dynamic litigator with extensive experience representing clients before all levels of courts. He specialises in complex litigation, employment disputes, and high-value commercial cases. His advocacy is marked by strategy, precision, and results.",
       "image": "/img/team/wanyonyi-jacob.jpg",
       "email": "wanyonyi@mwcadvocates.com",
-      "phone": "+254 708 792 078",
-      "linkedin": "https://linkedin.com/in/wanyonyi-jacob"
+      "linkedin": "https://www.linkedin.com/in/jacobwanyonyi/"
     },
     {
       "id": "beatrice-mutahi",
       "name": "Beatrice Mutahi",
       "title": "Partner",
       "specialization": "Head of Family Law, Risk & Compliance, Banking Law, and Immigration Law",
-      "experience": "11+ years",
-      "education": "LLB (University of Nairobi), LLM in Banking Law (University of London), Advocate of the High Court of Kenya",
       "bio": "Ms. Mutahi leads the Family Law and Compliance divisions, with particular strength in matrimonial disputes, risk audits, banking transactions, and immigration advisory. She is well-regarded for her meticulous handling of sensitive matters and ability to provide holistic legal solutions.",
       "image": "/img/team/beatrice-mutahi.jpg",
       "email": "beatrice@mwcadvocates.com",
-      "phone": "+254 702 073 800",
-      "linkedin": "https://linkedin.com/in/beatrice-mutahi"
+      "linkedin": "https://www.linkedin.com/in/beatrice-mutahi-114954188/"
     },
     {
       "id": "vallary-nyala",
       "name": "Vallary Nyala",
       "title": "Senior Associate",
       "specialization": "Conveyancing, Corporate Advisory, and Estate Planning",
-      "experience": "6+ years",
-      "education": "LLB (Kenyatta University), Advocate of the High Court of Kenya",
       "bio": "Specialises in Conveyancing, Corporate Advisory, and Estate Planning. Known for her attention to detail and pragmatic solutions.",
       "image": "/img/team/vallary-nyala.jpg",
       "email": "vallary@mwcadvocates.com",
-      "phone": "+254 708 792 078",
-      "linkedin": "https://linkedin.com/in/vallary-nyala"
+      "linkedin": "https://www.linkedin.com/in/akinyi-nyala-96568217b/"
     },
     {
       "id": "godwin-lemashon",
       "name": "Godwin Lemashon",
       "title": "Senior Associate",
       "specialization": "Litigation and Risk & Compliance",
-      "experience": "5+ years",
-      "education": "LLB (University of Nairobi), Advocate of the High Court of Kenya",
       "bio": "Specialises in Litigation and Risk & Compliance. Known for his strong research and courtroom advocacy.",
       "image": "/img/team/godwin-lemashon.jpg",
-      "email": "godwin@mwcadvocates.com",
-      "phone": "+254 702 073 800",
-      "linkedin": "https://linkedin.com/in/godwin-lemashon"
+      "email": "godwin@mwcadvocates.com"
     }
   ]
 }

@@ -139,11 +139,6 @@ const Footer = () => {
                 <p className="text-gray-300 text-sm ml-6">Saturday: 9:00 AM - 1:00 PM</p>
                 <p className="text-gray-300 text-sm ml-6">Sunday: Closed</p>
               </div>
-              <div>
-                <h4 className="font-medium text-white mb-2">Emergency Contact</h4>
-                <p className="text-gray-300 text-sm">Available 24/7 for urgent legal matters</p>
-                <p className="text-green-400 font-medium text-sm">+254 702 073 800</p>
-              </div>
             </div>
           </motion.div>
         </div>

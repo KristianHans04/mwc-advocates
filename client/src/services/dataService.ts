@@ -41,12 +41,9 @@ export interface TeamMember {
   name: string;
   title: string;
   specialization: string;
-  experience: string;
-  education: string;
   bio: string;
   image: string;
   email: string;
-  phone: string;
   linkedin?: string;
 }
 
