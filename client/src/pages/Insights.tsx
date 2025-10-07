@@ -137,7 +137,7 @@ const Insights: React.FC = () => {
       </section>
 
       {/* Navigation Tabs */}
-      <div className="bg-white border-b sticky top-0 z-10">
+      <div className="bg-white sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-8">
             <button
@@ -179,7 +179,7 @@ const Insights: React.FC = () => {
       </div>
 
       {/* Search and Filter Bar */}
-      <div className="bg-white py-4 border-b">
+      <div className="bg-white py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search */}

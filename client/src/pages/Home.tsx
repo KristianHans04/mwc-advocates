@@ -6,7 +6,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle, Users, Scale, MapPin, ArrowRight, Building, Briefcase, Shield, Home as HomeIcon, Award, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { CheckCircle, Users, Scale, MapPin, ArrowRight, Building, Briefcase, Shield, Home as HomeIcon, Award, Clock, ChevronLeft, ChevronRight, Heart, Gavel, Globe } from 'lucide-react';
 import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
 import dataService from '../services/dataService';
@@ -35,13 +36,16 @@ const Home: React.FC = () => {
   });
 
   // Icon mapping for services from database
-  const iconMap: Record<string, any> = {
-    'building': Building,
-    'briefcase': Briefcase,
-    'shield': Shield,
-    'home': HomeIcon,
-    'gavel': Briefcase,
-    'lightbulb': Shield
+  const iconMap: Record<string, LucideIcon> = {
+    building: Building,
+    briefcase: Briefcase,
+    shield: Shield,
+    home: HomeIcon,
+    heart: Heart,
+    gavel: Gavel,
+    scale: Scale,
+    globe: Globe,
+    users: Users
   };
 
   // Map services with icons (take first 4 for home page)
@@ -241,9 +245,10 @@ const Home: React.FC = () => {
               </p>
 
               <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-6 md:mb-8">
-                We do not merely provide legal services; we offer strategic legal solutions that safeguard our clients' 
-                interests, anticipate risks, and secure sustainable outcomes. Our philosophy is guided by three pillars: 
-                Excellence, Integrity, and Client-Centric Service.
+                Operating from Duplex Suites in Upper Hill, we blend our prime location with national reach, secure 
+                digital workflows, and responsive communication to keep matters moving. The result is strategic legal 
+                solutions that safeguard our clients' interests, anticipate risks, and secure sustainable outcomes—guided 
+                every step by Excellence, Integrity, and Client-Centric Service.
               </p>
 
               <Link 
@@ -358,102 +363,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust & Credibility Section - NEW WITH IMAGE PLACEHOLDERS */}
-      <section className="py-16 md:py-24 bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose MWC Advocates</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Trusted legal excellence with a proven track record in Kenya
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Image Placeholder 1 - Office/Team */}
-            <motion.div
-              className="group"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3] bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200">
-                {/* Placeholder for office/team photo */}
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100">
-                  <div className="text-center p-6">
-                    <Building className="w-16 h-16 text-green-600 mx-auto mb-3" />
-                    <p className="text-sm font-semibold text-gray-600">Professional Office Space</p>
-                    <p className="text-xs text-gray-500 mt-2">Add photo of your Nairobi office</p>
-                  </div>
-                </div>
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-green-900/0 group-hover:bg-green-900/20 transition-all duration-300"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Prime Location</h3>
-              <p className="text-gray-600">
-                Conveniently located at Duplex Suites, Suite 58, Lower Hill Road, Upperhill, Nairobi - easily accessible for all our clients
-              </p>
-            </motion.div>
-
-            {/* Image Placeholder 2 - Team at Work */}
-            <motion.div
-              className="group"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3] bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200">
-                {/* Placeholder for team at work photo */}
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
-                  <div className="text-center p-6">
-                    <Users className="w-16 h-16 text-blue-600 mx-auto mb-3" />
-                    <p className="text-sm font-semibold text-gray-600">Expert Legal Team</p>
-                    <p className="text-xs text-gray-500 mt-2">Add photo of advocates at work</p>
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/20 transition-all duration-300"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Expert Legal Team</h3>
-              <p className="text-gray-600">
-                Three experienced Partners and two Senior Associates with multi-disciplinary expertise covering diverse practice areas
-              </p>
-            </motion.div>
-
-            {/* Image Placeholder 3 - Success/Documents */}
-            <motion.div
-              className="group"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3] bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200">
-                {/* Placeholder for success/legal documents photo */}
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-amber-50 to-amber-100">
-                  <div className="text-center p-6">
-                    <Award className="w-16 h-16 text-amber-600 mx-auto mb-3" />
-                    <p className="text-sm font-semibold text-gray-600">Proven Track Record</p>
-                    <p className="text-xs text-gray-500 mt-2">Add photo of achievements/documents</p>
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-amber-900/0 group-hover:bg-amber-900/20 transition-all duration-300"></div>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Innovative Solutions</h3>
-              <p className="text-gray-600">
-                Leveraging technology and modern practices to deliver cutting-edge legal services with efficiency and precision
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Services Preview - Enhanced with pattern background */}
       <section className="py-20 bg-gray-900 relative overflow-hidden">
         {/* Decorative background elements */}
@@ -485,47 +394,76 @@ const Home: React.FC = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.4 }}
             variants={{
               hidden: {},
               visible: {
                 transition: {
-                  staggerChildren: 0.1
+                  staggerChildren: 0.12
                 }
               }
             }}
           >
-            {services.map((service) => {
+            {services.map((service, index) => {
               const IconComponent = service.icon;
+              const previewFeatures = Array.isArray(service.features)
+                ? service.features.slice(0, 2)
+                : [];
               return (
-                <motion.div
+                <motion.article
                   key={service.id}
-                  className="group bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-[#122133] via-[#0e1a29] to-[#0a1422] p-8 shadow-xl shadow-black/40 ring-1 ring-[#1f3b52]/60 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:ring-emerald-400/40"
                   variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 }
+                    hidden: { opacity: 0, x: 80, rotate: -2 },
+                    visible: (cardIndex: number) => ({
+                      opacity: 1,
+                      x: 0,
+                      rotate: 0,
+                      transition: {
+                        type: 'spring',
+                        stiffness: 140,
+                        damping: 18,
+                        delay: cardIndex * 0.08
+                      }
+                    })
                   }}
-                  whileHover={{ 
-                    y: -8,
-                    transition: { duration: 0.3 }
-                  }}
+                  custom={index}
                 >
-                  <motion.div 
-                    className="mb-4"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-700 to-green-900 rounded-lg flex items-center justify-center">
-                      <IconComponent className="w-6 h-6 text-white" />
+                  <div className="flex items-start">
+                    <div className="relative inline-flex rounded-2xl bg-[#15273a] p-2 shadow-inner shadow-black/40 ring-1 ring-[#24486a]/70">
+                      <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-500/30">
+                        <IconComponent className="h-5 w-5" />
+                      </div>
                     </div>
-                  </motion.div>
-                  <h3 className="text-lg font-semibold mb-3 text-gray-900 group-hover:text-green-800 transition-colors">
+                  </div>
+
+                  <h3 className="mt-6 text-xl font-semibold text-white transition-colors group-hover:text-emerald-200">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="mt-2 text-sm leading-relaxed text-slate-300 line-clamp-4">
                     {service.description}
                   </p>
-                </motion.div>
+                  {previewFeatures.length > 0 && (
+                    <ul className="mt-4 space-y-2 text-sm text-slate-300/80">
+                      {previewFeatures.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2">
+                          <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-400" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <div className="mt-auto pt-6">
+                    <Link
+                      to="/services"
+                      className="inline-flex items-center text-sm font-semibold text-emerald-200 transition-colors group-hover:text-emerald-100"
+                    >
+                      Explore this area
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </motion.article>
               );
             })}
           </motion.div>
@@ -538,7 +476,7 @@ const Home: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <Link to="/services">
-              <Button variant="accent" size="lg" className="inline-flex items-center">
+              <Button variant="primary" size="lg" className="inline-flex items-center">
                 View All Services
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
@@ -826,15 +764,17 @@ const Home: React.FC = () => {
                 </div>
 
                 {/* Emergency Contact */}
-                <div className="bg-green-800/30 rounded-xl p-6 border border-green-600/30">
-                  <div className="flex items-center mb-3">
-                    <Clock className="w-5 h-5 text-yellow-300 mr-2" />
-                    <h4 className="font-bold text-white">Emergency Contact</h4>
+                <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6">
+                  <div className="mb-3 flex items-center">
+                    <Clock className="mr-2 h-5 w-5 text-yellow-300" />
+                    <h4 className="text-white font-bold">Emergency Contact</h4>
                   </div>
-                  <p className="text-green-100 text-sm mb-3">
+                  <p className="mb-3 text-sm text-emerald-100">
                     Available 24/7 for urgent legal matters
                   </p>
-                  <p className="font-semibold text-white">{firmInfo.contact.phone.split('/')[0]}</p>
+                  <p className="font-semibold text-white">
+                    {firmInfo.contact.phone.split('/')[0]}
+                  </p>
                 </div>
               </div>
             </motion.div>
