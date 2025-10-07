@@ -97,7 +97,7 @@ const Services: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            From conveyancing to corporate law, we offer strategic legal solutions that combine technical expertise with innovation.
+            From our Upper Hill hub, a multi-disciplinary team pairs client-first counsel with nationwide reach and secure, technology-driven workflows—delivering precise legal outcomes across every practice area.
           </motion.p>
         </motion.div>
       </section>
@@ -139,9 +139,9 @@ const Services: React.FC = () => {
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
                   }}
-                  className="relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:-translate-y-2"
+                  className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 group hover:-translate-y-2 hover:shadow-2xl"
                 >
-                  <div className="p-8">
+                  <div className="flex h-full flex-col p-8">
                     {/* Icon with enhanced design */}
                     <div className="mb-6">
                       <div className="relative inline-block">
@@ -161,7 +161,7 @@ const Services: React.FC = () => {
                     </p>
                     
                     {/* Feature highlights */}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="mb-6 flex flex-wrap gap-2">
                       {service.features.slice(0, 2).map((feature, idx) => (
                         <span key={idx} className="text-xs px-3 py-1 bg-green-50 text-green-700 rounded-full">
                           {feature.split(' ').slice(0, 2).join(' ')}
@@ -173,103 +173,25 @@ const Services: React.FC = () => {
                         </span>
                       )}
                     </div>
-                    
+
                     {/* Enhanced CTA button */}
-                    <button
-                      onClick={() => handleLearnMore(service)}
-                      className="w-full py-3 px-6 bg-gradient-to-r from-green-700 to-green-800 hover:from-green-800 hover:to-green-900 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center group/btn shadow-lg hover:shadow-xl"
-                    >
-                      <span>Explore Service</span>
-                      <ChevronRight className="w-5 h-5 ml-2 group-hover/btn:translate-x-2 transition-transform" />
-                    </button>
+                    <div className="mt-auto pt-4">
+                      <button
+                        onClick={() => handleLearnMore(service)}
+                        className="flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-green-700 to-green-800 px-6 py-3 font-semibold text-white transition-all duration-300 group/btn shadow-lg hover:from-green-800 hover:to-green-900 hover:shadow-xl"
+                      >
+                        <span>Explore Service</span>
+                        <ChevronRight className="ml-2 w-5 h-5 transition-transform group-hover/btn:translate-x-2" />
+                      </button>
+                    </div>
                   </div>
-                  
+
                   {/* Decorative element */}
                   <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-green-50 to-transparent rounded-tl-full opacity-50"></div>
                 </motion.div>
               );
             })}
           </motion.div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose MWC Advocates?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Upholding the highest standards of ethics and confidentiality with innovative approach
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <motion.div 
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-8 h-8 text-green-800" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Multi-Disciplinary Team</h3>
-              <p className="text-gray-600 text-sm">
-                Three Partners and two Senior Associates covering diverse practice areas
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Globe className="w-8 h-8 text-green-800" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">National Coverage</h3>
-              <p className="text-gray-600 text-sm">
-                Network of correspondent firms across major Kenyan cities
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-green-800" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Technology-Driven</h3>
-              <p className="text-gray-600 text-sm">
-                Fully digitized with case management software and electronic filing systems
-              </p>
-            </motion.div>
-
-            <motion.div 
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-green-800" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Client-Focused</h3>
-              <p className="text-gray-600 text-sm">
-                Personalized solutions tailored to your needs
-              </p>
-            </motion.div>
-          </div>
         </div>
       </section>
 
