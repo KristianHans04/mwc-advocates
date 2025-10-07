@@ -9,7 +9,7 @@
       "initials": "JM",
       "rating": 5,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/James%20Mwangi.png",
       "createdAt": "2024-08-15T00:00:00Z",
       "updatedAt": "2024-08-15T00:00:00Z",
       "service": "Corporate Law"
@@ -23,7 +23,7 @@
       "initials": "SN",
       "rating": 4,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/Sarah%20Njeri.png",
       "createdAt": "2024-07-22T00:00:00Z",
       "updatedAt": "2024-07-22T00:00:00Z",
       "service": "Civil Litigation"
@@ -37,7 +37,7 @@
       "initials": "DO",
       "rating": 5,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/David%20Ochieng.png",
       "createdAt": "2024-06-10T00:00:00Z",
       "updatedAt": "2024-06-10T00:00:00Z",
       "service": "Real Estate Law"
@@ -51,7 +51,7 @@
       "initials": "GW",
       "rating": 4,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/Grace%20Wambui.png",
       "createdAt": "2024-05-18T00:00:00Z",
       "updatedAt": "2024-05-18T00:00:00Z",
       "service": "Employment Law"
@@ -65,7 +65,7 @@
       "initials": "PK",
       "rating": 5,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/Peter%20Kamau.png",
       "createdAt": "2024-04-25T00:00:00Z",
       "updatedAt": "2024-04-25T00:00:00Z",
       "service": "Corporate Law"
@@ -79,7 +79,7 @@
       "initials": "MA",
       "rating": 5,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/Mary%20Atieno.png",
       "createdAt": "2024-03-12T00:00:00Z",
       "updatedAt": "2024-03-12T00:00:00Z",
       "service": "Corporate Law"
@@ -93,7 +93,7 @@
       "initials": "JM",
       "rating": 4,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/John%20Mutua.png",
       "createdAt": "2024-02-20T00:00:00Z",
       "updatedAt": "2024-02-20T00:00:00Z",
       "service": "Intellectual Property"
@@ -107,7 +107,7 @@
       "initials": "EN",
       "rating": 5,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/Elizabeth%20Nyambura.png",
       "createdAt": "2024-01-15T00:00:00Z",
       "updatedAt": "2024-01-15T00:00:00Z",
       "service": "Corporate Law"
@@ -135,7 +135,7 @@
       "initials": "AW",
       "rating": 5,
       "isActive": true,
-      "image": "",
+      "image": "/img/randoms/img/Alice%20Wanjiru.png",
       "createdAt": "2023-11-05T00:00:00Z",
       "updatedAt": "2023-11-05T00:00:00Z",
       "service": "Civil Litigation"

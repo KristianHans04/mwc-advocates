@@ -28,10 +28,7 @@ const About: React.FC = () => {
   useEffect(() => {
     // Load team and firm data from JSON
     const teamData = dataService.getTeamMembers();
-    const firmData = dataService.getFirmInfo();
     setTeam(teamData);
-    // Firm info can be used if needed in future
-    console.log('Firm Info:', firmData);
   }, []);
 
   const values = [
@@ -75,7 +72,7 @@ const About: React.FC = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
-            src={heroBg} 
+            src={heroBg}
             alt="Professional legal consultation representing our firm's dedication to excellence" 
             className="w-full h-full object-cover"
           />

@@ -259,7 +259,7 @@ const Home: React.FC = () => {
               </Link>
             </div>
 
-            {/* Right Content - Highlights Carousel (MAINTAINED AS REQUESTED) */}
+            {/* Right Content - Highlights Carousel*/}
             <div className="relative h-80 md:h-96 order-2 lg:order-2 lg:pl-12 mt-8 lg:mt-0">
               <div 
                 className="relative w-full h-full flex items-center justify-center"
@@ -359,6 +359,95 @@ const Home: React.FC = () => {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust & Credibility Section */}
+      <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose MWC Advocates</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Trusted legal excellence with a proven track record in Kenya
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Prime Location */}
+            <motion.div
+              className="group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3]">
+                <img
+                  src="/img/randoms/img/Prime%20Location.png"
+                  alt="Prime location office exterior"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300"></div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Prime Location</h3>
+              <p className="text-gray-600">
+                Conveniently located at Duplex Suites, Suite 58, Lower Hill Road, Upperhill, Nairobi - easily accessible for all our clients
+              </p>
+            </motion.div>
+
+            {/* Expert Legal Team */}
+            <motion.div
+              className="group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3]">
+                <img
+                  src="/img/randoms/img/Expert%20Legal%20Team.png"
+                  alt="Expert legal team collaborating"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300"></div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Expert Legal Team</h3>
+              <p className="text-gray-600">
+                Three experienced Partners and two Senior Associates with multi-disciplinary expertise covering diverse practice areas
+              </p>
+            </motion.div>
+
+            {/* Success & Achievements */}
+            <motion.div
+              className="group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className="relative overflow-hidden rounded-2xl shadow-lg mb-4 aspect-[4/3]">
+                <img
+                  src="/img/randoms/img/Success_Achievements.png"
+                  alt="Successful legal outcomes illustration"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300"></div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Innovative Solutions</h3>
+              <p className="text-gray-600">
+                Leveraging technology and modern practices to deliver cutting-edge legal services with efficiency and precision
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -490,9 +579,18 @@ const Home: React.FC = () => {
                   >
                     <div className="bg-white p-6 rounded-2xl shadow-lg h-full mx-8">
                       <div className="flex items-center mb-4">
-                        <div className="w-10 h-10 bg-green-800 rounded-full flex items-center justify-center text-white font-bold mr-3">
-                          {testimonial.initials}
-                        </div>
+                        {testimonial.image?.trim() ? (
+                          <img
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            className="mr-3 h-12 w-12 rounded-full object-cover border border-green-100"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-green-800 text-white font-bold">
+                            {testimonial.initials}
+                          </div>
+                        )}
                         <div>
                           <p className="font-semibold text-gray-900 text-sm">{testimonial.name}</p>
                           <p className="text-gray-500 text-xs">
@@ -550,9 +648,18 @@ const Home: React.FC = () => {
               <div key={`${testimonial.id}-1`} className="flex-shrink-0 w-96 mx-4">
                 <div className="bg-white p-8 rounded-2xl shadow-lg h-full">
                   <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-[var(--color-primary-green)] rounded-full flex items-center justify-center text-white font-bold mr-4">
-                      {testimonial.initials}
-                    </div>
+                    {testimonial.image?.trim() ? (
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="mr-4 h-14 w-14 rounded-full object-cover border border-green-100"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary-green)] text-white font-bold">
+                        {testimonial.initials}
+                      </div>
+                    )}
                     <div>
                       <p className="font-semibold text-gray-900">{testimonial.name}</p>
                       <p className="text-gray-500 text-sm">
@@ -581,9 +688,18 @@ const Home: React.FC = () => {
               <div key={`${testimonial.id}-2`} className="flex-shrink-0 w-96 mx-4">
                 <div className="bg-white p-8 rounded-2xl shadow-lg h-full">
                   <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-[var(--color-primary-green)] rounded-full flex items-center justify-center text-white font-bold mr-4">
-                      {testimonial.initials}
-                    </div>
+                    {testimonial.image?.trim() ? (
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="mr-4 h-14 w-14 rounded-full object-cover border border-green-100"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary-green)] text-white font-bold">
+                        {testimonial.initials}
+                      </div>
+                    )}
                     <div>
                       <p className="font-semibold text-gray-900">{testimonial.name}</p>
                       <p className="text-gray-500 text-sm">
