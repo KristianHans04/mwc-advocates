@@ -370,11 +370,6 @@ const Home: React.FC = () => {
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-500 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
         </div>
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
@@ -390,61 +385,27 @@ const Home: React.FC = () => {
             </p>
           </motion.div>
 
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.12
-                }
-              }
-            }}
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
-            {services.map((service, index) => {
-              const IconComponent = service.icon;
+            {services.map((service) => {
               const previewFeatures = Array.isArray(service.features)
                 ? service.features.slice(0, 2)
                 : [];
               return (
-                <motion.article
+                <article
                   key={service.id}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-[#122133] via-[#0e1a29] to-[#0a1422] p-8 shadow-xl shadow-black/40 ring-1 ring-[#1f3b52]/60 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:ring-emerald-400/40"
-                  variants={{
-                    hidden: { opacity: 0, x: 80, rotate: -2 },
-                    visible: (cardIndex: number) => ({
-                      opacity: 1,
-                      x: 0,
-                      rotate: 0,
-                      transition: {
-                        type: 'spring',
-                        stiffness: 140,
-                        damping: 18,
-                        delay: cardIndex * 0.08
-                      }
-                    })
-                  }}
-                  custom={index}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-[#122133] via-[#0e1a29] to-[#0a1422] p-10 shadow-xl shadow-black/40 ring-1 ring-[#1f3b52]/60 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:ring-emerald-400/40"
                 >
-                  <div className="flex items-start">
-                    <div className="relative inline-flex rounded-2xl bg-[#15273a] p-2 shadow-inner shadow-black/40 ring-1 ring-[#24486a]/70">
-                      <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-500/30">
-                        <IconComponent className="h-5 w-5" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <h3 className="mt-6 text-xl font-semibold text-white transition-colors group-hover:text-emerald-200">
+                  <h3 className="text-2xl font-semibold text-white">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-300 line-clamp-4">
+
+                  <p className="mt-4 text-base leading-relaxed text-slate-200 line-clamp-4">
                     {service.description}
                   </p>
                   {previewFeatures.length > 0 && (
-                    <ul className="mt-4 space-y-2 text-sm text-slate-300/80">
+                    <ul className="mt-6 space-y-2 text-sm text-slate-200/80">
                       {previewFeatures.map((feature) => (
                         <li key={feature} className="flex items-start gap-2">
                           <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-400" />
@@ -463,10 +424,10 @@ const Home: React.FC = () => {
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                   </div>
-                </motion.article>
+                </article>
               );
             })}
-          </motion.div>
+          </div>
 
           <motion.div 
             className="text-center mt-12"
@@ -761,20 +722,6 @@ const Home: React.FC = () => {
                       <span className="font-semibold">{hours}</span>
                     </div>
                   ))}
-                </div>
-
-                {/* Emergency Contact */}
-                <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-6">
-                  <div className="mb-3 flex items-center">
-                    <Clock className="mr-2 h-5 w-5 text-yellow-300" />
-                    <h4 className="text-white font-bold">Emergency Contact</h4>
-                  </div>
-                  <p className="mb-3 text-sm text-emerald-100">
-                    Available 24/7 for urgent legal matters
-                  </p>
-                  <p className="font-semibold text-white">
-                    {firmInfo.contact.phone.split('/')[0]}
-                  </p>
                 </div>
               </div>
             </motion.div>

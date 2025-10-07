@@ -5,7 +5,6 @@ import {
   BookOpen, Search, Filter, Clock,
   FileText
 } from 'lucide-react';
-import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
 
 // Import articles data
@@ -354,26 +353,6 @@ const Insights: React.FC = () => {
         </div>
       </section>
 
-
-      {/* Newsletter CTA */}
-      <section className="py-16 bg-green-800 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay Informed</h2>
-          <p className="text-xl mb-8 text-green-100">
-            Subscribe to our newsletter for the latest legal insights and updates
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:ring-2 focus:ring-white"
-            />
-            <Button className="bg-white text-green-800 hover:bg-gray-100">
-              Subscribe
-            </Button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

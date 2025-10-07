@@ -303,21 +303,9 @@ const About: React.FC = () => {
                   <p className="text-green-800 font-semibold mb-2">{member.title}</p>
                   <p className="text-sm text-gray-600 mb-4">{member.specialization}</p>
                   
-                  {/* Experience & Education */}
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Clock className="w-4 h-4 text-green-600 mr-2" />
-                      {member.experience}
-                    </div>
-                    <div className="flex items-start text-sm text-gray-600">
-                      <Award className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
-                      {member.education}
-                    </div>
-                  </div>
-                  
                   {/* Bio */}
                   <p className="text-gray-600 text-sm leading-relaxed mb-6">{member.bio}</p>
-                  
+
                   {/* Contact Info */}
                   <div className="space-y-2">
                     <a 
@@ -325,12 +313,6 @@ const About: React.FC = () => {
                       className="block text-sm text-green-800 hover:text-green-900 transition-colors"
                     >
                       {member.email}
-                    </a>
-                    <a 
-                      href={`tel:${member.phone}`}
-                      className="block text-sm text-gray-600 hover:text-gray-800 transition-colors"
-                    >
-                      {member.phone}
                     </a>
                     {member.linkedin && (
                       <a 

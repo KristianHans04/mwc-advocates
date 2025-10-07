@@ -127,7 +127,7 @@ const ArticleView: React.FC = () => {
           <div className="absolute inset-0 bg-black opacity-60"></div>
         </div>
         
-        <div className="relative z-10 h-full flex items-center">
+        <div className="relative z-10 h-full flex items-center py-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <motion.button
               onClick={() => navigate('/insights')}
@@ -153,8 +153,8 @@ const ArticleView: React.FC = () => {
               </h1>
               
               {/* Article Meta */}
-              <div className="flex flex-wrap items-center text-gray-300 space-x-6">
-                <div className="flex items-center">
+              <div className="flex flex-wrap items-center text-gray-300 gap-x-6 gap-y-3 pb-4">
+                <div className="flex items-center text-sm md:text-base">
                   <Calendar className="w-4 h-4 mr-2" />
                   <span>{new Date(article.date).toLocaleDateString('en-US', { 
                     month: 'long', 
@@ -162,7 +162,7 @@ const ArticleView: React.FC = () => {
                     year: 'numeric' 
                   })}</span>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center text-sm md:text-base">
                   <Clock className="w-4 h-4 mr-2" />
                   <span>{article.readTime}</span>
                 </div>
