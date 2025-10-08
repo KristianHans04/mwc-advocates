@@ -1,114 +1,84 @@
 /**
  * Testimonials routes for MWC Advocates API
- * Handles client testimonials data management
- * Supports Google Sheets, Prisma, and JSON fallback
+ * Uses JSON-based data management for reliability
  */
 
 import express, { Request, Response } from 'express';
-import UnifiedDataService from '../services/unifiedData.service';
-import fs from 'fs';
-import path from 'path';
+import dataService from '../services/dataService';
 
 const router = express.Router();
-const dataService = UnifiedDataService.getInstance();
 
-/**
- * GET /api/testimonials
- * Get all active testimonials
- */
+// GET /api/testimonials - Get all testimonials
 router.get('/', async (req: Request, res: Response) => {
   try {
-    // Get testimonials with automatic fallback
-    const testimonials = await dataService.getTestimonials();
-    const status = await dataService.getDatabaseStatus();
+    console.log('🔍 Fetching testimonials from JSON...');
+    const testimonials = dataService.getTestimonials();
+    console.log(`✅ Found ${testimonials.length} testimonials`);
     
-    if (testimonials.length > 0) {
-      console.log(`✅ Loaded ${testimonials.length} testimonials from ${status.currentlyUsing}`);
-      return res.json({
-        success: true,
-        data: testimonials,
-        source: status.currentlyUsing,
-        count: testimonials.length
-      });
-    }
-
-    // If unified service returns empty, try JSON fallback
-    const dataPath = path.join(__dirname, '../../src/data/testimonials.json');
-    console.log('🔍 Falling back to testimonials JSON at:', dataPath);
-    
-    if (!fs.existsSync(dataPath)) {
-      console.error('❌ Testimonials file not found at:', dataPath);
-      return res.json({ success: true, data: [], source: 'none-available' });
-    }
-    
-    const fileContent = fs.readFileSync(dataPath, 'utf-8');
-    const data = JSON.parse(fileContent);
-    const jsonTestimonials = data.testimonials || [];
-    
-    console.log(`✅ Loaded ${jsonTestimonials.length} testimonials from JSON fallback`);
     return res.json({ 
       success: true, 
-      data: jsonTestimonials, 
+      data: testimonials,
       source: 'json',
-      count: jsonTestimonials.length
+      count: testimonials.length
     });
-  } catch (error: any) {
-    console.error('❌ Error loading testimonials:', error.message);
-    return res.json({ 
-      success: true, 
-      data: [], 
-      source: 'error',
-      error: error.message 
+  } catch (error) {
+    console.error('❌ Error fetching testimonials:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Error loading testimonials',
+      data: []
     });
   }
 });
 
-/**
- * GET /api/testimonials/:id
- * Get single testimonial by ID
- */
-router.get('/:id', async (req: Request, res: Response) => {
+// GET /api/testimonials/recent - Get recent testimonials
+router.get('/recent', async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const testimonials = dataService.getRecentTestimonials();
+    console.log(`✅ Found ${testimonials.length} recent testimonials`);
     
-    // Get all testimonials and find the one with matching ID
-    const testimonials = await dataService.getTestimonials();
-    const testimonial = testimonials.find(t => t.id === id);
-    const status = await dataService.getDatabaseStatus();
-    
-    if (testimonial) {
-      return res.json({
-        success: true,
-        data: testimonial,
-        source: status.currentlyUsing
-      });
-    }
-
-    // Fallback to JSON
-    const dataPath = path.join(__dirname, '../../src/data/testimonials.json');
-    if (fs.existsSync(dataPath)) {
-      const fileContent = fs.readFileSync(dataPath, 'utf-8');
-      const data = JSON.parse(fileContent);
-      const jsonTestimonial = data.testimonials?.find((t: any) => t.id === id);
-      
-      if (jsonTestimonial) {
-        return res.json({
-          success: true,
-          data: jsonTestimonial,
-          source: 'json'
-        });
-      }
-    }
-
-    return res.status(404).json({
-      success: false,
-      error: 'Testimonial not found',
+    return res.json({ 
+      success: true, 
+      data: testimonials,
+      source: 'json',
+      count: testimonials.length
     });
   } catch (error) {
-    console.error('Error fetching testimonial:', error);
-    return res.status(500).json({
-      success: false,
-      error: 'Failed to fetch testimonial',
+    console.error('❌ Error fetching recent testimonials:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Error loading recent testimonials',
+      data: []
+    });
+  }
+});
+
+// GET /api/testimonials/service/:service - Get testimonials by service
+router.get('/service/:service', async (req: Request, res: Response) => {
+  try {
+    const { service } = req.params;
+    
+    if (!service) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Service parameter is required' 
+      });
+    }
+    
+    const testimonials = dataService.getTestimonialsByService(service);
+    
+    return res.json({ 
+      success: true, 
+      data: testimonials,
+      source: 'json',
+      count: testimonials.length
+    });
+  } catch (error) {
+    console.error('❌ Error fetching testimonials by service:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Error loading testimonials by service',
+      data: []
     });
   }
 });
