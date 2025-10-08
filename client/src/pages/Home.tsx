@@ -6,8 +6,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import type { LucideIcon } from 'lucide-react';
-import { CheckCircle, Users, Scale, MapPin, ArrowRight, Building, Briefcase, Shield, Home as HomeIcon, Award, Clock, ChevronLeft, ChevronRight, Heart, Gavel, Globe } from 'lucide-react';
+import { CheckCircle, Users, Scale, MapPin, ArrowRight, Award, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import Button from '../components/ui/Button';
 import useSEO from '../hooks/useSEO';
 import dataService from '../services/dataService';
@@ -35,24 +34,15 @@ const Home: React.FC = () => {
     keywords: 'law firm Nairobi, legal services Kenya, conveyancing real estate, estate planning succession, data protection privacy, civil commercial litigation, criminal litigation, corporate law, immigration law, family law, banking finance law, MWC Advocates, Masinde Wanyonyi, Commissioners for Oaths, Notary Public, Upperhill advocates'
   });
 
-  // Icon mapping for services from database
-  const iconMap: Record<string, LucideIcon> = {
-    building: Building,
-    briefcase: Briefcase,
-    shield: Shield,
-    home: HomeIcon,
-    heart: Heart,
-    gavel: Gavel,
-    scale: Scale,
-    globe: Globe,
-    users: Users
-  };
-
   // Map services with icons (take first 4 for home page)
-  const services = servicesData.slice(0, 4).map(service => ({
-    ...service,
-    icon: iconMap[service.icon] || Building
-  }));
+  const services = servicesData.slice(0, 4);
+
+  const serviceImageMap: Record<string, string> = {
+    'conveyancing-real-estate': 'Conveyancing & Real Estate.png',
+    'estate-planning-succession': 'Estate Planning & Succession.png',
+    'data-protection-privacy': 'Data Protection & Privacy Law.png',
+    'civil-commercial-litigation': 'Civil and Commercial Litigation.png'
+  };
 
   // Hardcoded highlights - these don't change often
   const highlights = [
@@ -122,12 +112,7 @@ const Home: React.FC = () => {
             className="w-full h-full object-cover"
           />
           {/* Gradient overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-green-900/60"></div>
-          
-          {/* Subtle pattern overlay */}
-          <div className="absolute inset-0 opacity-10" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-          }}></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-black/85 via-black/70 to-black/60"></div>
         </div>
 
         {/* Content */}
@@ -481,37 +466,65 @@ const Home: React.FC = () => {
               const previewFeatures = Array.isArray(service.features)
                 ? service.features.slice(0, 2)
                 : [];
+              const serviceImageName = serviceImageMap[service.id];
+              const serviceImageSrc = serviceImageName
+                ? `/img/randoms/img/${encodeURI(serviceImageName)}`
+                : undefined;
               return (
                 <article
                   key={service.id}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-[#122133] via-[#0e1a29] to-[#0a1422] p-10 shadow-xl shadow-black/40 ring-1 ring-[#1f3b52]/60 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:ring-emerald-400/40"
+                  className="group relative min-h-[22rem]"
                 >
-                  <h3 className="text-2xl font-semibold text-white">
-                    {service.title}
-                  </h3>
+                  <div className="relative h-full w-full rounded-3xl [perspective:1200px]">
+                    <div className="relative h-full w-full rounded-3xl shadow-xl shadow-black/40 transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                      <div className="absolute inset-0 overflow-hidden rounded-3xl [backface-visibility:hidden]">
+                        {serviceImageSrc ? (
+                          <img
+                            src={serviceImageSrc}
+                            alt={service.title}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-gradient-to-br from-[#122133] via-[#0e1a29] to-[#0a1422]"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div className="absolute inset-0 flex flex-col justify-end p-8">
+                          <span className="text-xs uppercase tracking-[0.3rem] text-emerald-200/80">Practice Area</span>
+                          <h3 className="mt-3 text-2xl font-semibold text-white">{service.title}</h3>
+                        </div>
+                      </div>
 
-                  <p className="mt-4 text-base leading-relaxed text-slate-200 line-clamp-4">
-                    {service.description}
-                  </p>
-                  {previewFeatures.length > 0 && (
-                    <ul className="mt-6 space-y-2 text-sm text-slate-200/80">
-                      {previewFeatures.map((feature) => (
-                        <li key={feature} className="flex items-start gap-2">
-                          <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-400" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                      <div className="absolute inset-0 flex h-full w-full flex-col rounded-3xl bg-gradient-to-br from-[#122133] via-[#0e1a29] to-[#0a1422] px-8 py-10 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                        <h3 className="text-xl font-semibold text-white">
+                          {service.title}
+                        </h3>
 
-                  <div className="mt-auto pt-6">
-                    <Link
-                      to="/services"
-                      className="inline-flex items-center text-sm font-semibold text-emerald-200 transition-colors group-hover:text-emerald-100"
-                    >
-                      Explore this area
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </Link>
+                        <p className="mt-4 text-sm leading-relaxed text-slate-200 line-clamp-4">
+                          {service.description}
+                        </p>
+                        {previewFeatures.length > 0 && (
+                          <ul className="mt-6 space-y-2 text-sm text-slate-200/80">
+                            {previewFeatures.map((feature) => (
+                              <li key={feature} className="flex items-start gap-2">
+                                <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-400" />
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        <div className="mt-auto pt-6">
+                          <Link
+                            to="/services"
+                            className="inline-flex items-center text-sm font-semibold text-emerald-200 transition-colors group-hover:text-emerald-100"
+                          >
+                            Explore this area
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </article>
               );

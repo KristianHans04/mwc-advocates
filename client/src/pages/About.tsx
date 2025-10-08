@@ -31,6 +31,16 @@ const About: React.FC = () => {
     setTeam(teamData);
   }, []);
 
+  const teamImageMap: Record<string, string> = {
+    'masinde-dennis': '/img/randoms/img/Masinde%20Dennis.png',
+    'wanyonyi-jacob': '/img/randoms/img/Jacob%20Wanyonyi.png',
+    'beatrice-mutahi': '/img/randoms/img/Beatrice%20Mutahi.png',
+    'vallary-nyala': '/img/randoms/img/Vallary%20Nyala.png',
+    'godwin-lemashon': '/img/randoms/img/Godwin%20Lemashon.png'
+  };
+
+  const defaultTeamImage = '/img/randoms/img/Expert Legal Team.png';
+
   const values = [
     {
       icon: Shield,
@@ -286,12 +296,14 @@ const About: React.FC = () => {
                 <div className="p-8">
                   {/* Profile Image */}
                   <img 
-                    src={member.image} 
+                    src={teamImageMap[member.id] || member.image || defaultTeamImage} 
                     alt={member.name}
                     className="w-full h-48 object-cover rounded-lg mb-6"
                     onError={(e) => {
-                      // Fallback for missing images
-                      (e.target as HTMLImageElement).src = '/img/team/placeholder.jpg';
+                      const target = e.target as HTMLImageElement;
+                      if (target.src !== defaultTeamImage) {
+                        target.src = defaultTeamImage;
+                      }
                     }}
                   />
                   
