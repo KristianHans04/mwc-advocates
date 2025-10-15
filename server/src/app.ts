@@ -10,6 +10,7 @@ import morgan from 'morgan';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
+import path from 'path';
 
 // Import routes
 import servicesRoutes from './routes/services.routes';
@@ -148,13 +149,26 @@ class App {
     this.app.use('/api/faq', faqRoutes);
     this.app.use('/api/health', healthRoutes);
 
-    // 404 handler
-    this.app.use('*', (req: Request, res: Response) => {
-      res.status(404).json({
-        error: 'Route not found',
-        message: `Cannot ${req.method} ${req.originalUrl}`,
+    // Serve frontend static files in production
+    if (process.env.NODE_ENV === 'production') {
+      const clientDistPath = path.join(__dirname, '../../client/dist');
+      console.log(`📦 Serving static files from: ${clientDistPath}`);
+      
+      this.app.use(express.static(clientDistPath));
+      
+      // Handle client-side routing - send all non-API requests to index.html
+      this.app.get('*', (req: Request, res: Response) => {
+        res.sendFile(path.join(clientDistPath, 'index.html'));
       });
-    });
+    } else {
+      // 404 handler for development (API only)
+      this.app.use('*', (req: Request, res: Response) => {
+        res.status(404).json({
+          error: 'Route not found',
+          message: `Cannot ${req.method} ${req.originalUrl}`,
+        });
+      });
+    }
   }
 
   /**
