@@ -1,0 +1,62 @@
+# Node modules
+node_modules/
+**/node_modules/
+npm-debug.log
+
+# Build outputs
+**/dist/
+client/dist/
+server/dist/
+
+# Environment files (will be set via Northflank)
+.env
+.env.local
+.env.development
+.env.production
+**/.env
+**/.env.*
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Documentation
+*.md
+docs/
+UI/
+
+# Development files
+docker-compose.dev.yml
+temp_env/
+scripts/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+**/__tests__/
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Database
+*.db
+*.sqlite
+database/
+
+# Miscellaneous
+z.md
+build.sh
