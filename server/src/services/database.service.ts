@@ -41,7 +41,7 @@ class DatabaseService {
       .then(() => {
         console.log('✅ Prisma connected successfully to database');
       })
-      .catch(async (error) => {
+      .catch(async (error: any) => {
         console.error('❌ Prisma connection failed with error:', {
           message: error.message,
           code: error.code,
