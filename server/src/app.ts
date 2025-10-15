@@ -44,7 +44,23 @@ class App {
     });
 
     // Security middleware
-    this.app.use(helmet());
+    const frameSources = [
+      "'self'",
+      'https://www.google.com',
+      'https://maps.google.com',
+      'https://www.google.co.ke'
+    ];
+
+    this.app.use(helmet({
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'frame-src': frameSources,
+          'child-src': frameSources
+        }
+      },
+      crossOriginEmbedderPolicy: false
+    }));
     
     // CORS configuration for frontend
     const allowedOrigins = [
@@ -55,6 +71,7 @@ class App {
       'http://localhost:5173',
       'http://localhost:3000',
       'https://mwc-advocates.onrender.com',
+      'https://site--mwc-advocates--tkzbdsdh56l7.code.run/',
       // Add common variations
       'https://mwc-advocates-frontend-*.onrender.com'
     ];
