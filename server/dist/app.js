@@ -10,6 +10,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const compression_1 = __importDefault(require("compression"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const path_1 = __importDefault(require("path"));
 const services_routes_1 = __importDefault(require("./routes/services.routes"));
 const testimonials_routes_1 = __importDefault(require("./routes/testimonials.routes"));
 const contact_routes_1 = __importDefault(require("./routes/contact.routes"));
@@ -29,7 +30,22 @@ class App {
             console.log(`📡 ${req.method} ${req.path} from origin: ${req.headers.origin || 'NO ORIGIN'}`);
             next();
         });
-        this.app.use((0, helmet_1.default)());
+        const frameSources = [
+            "'self'",
+            'https://www.google.com',
+            'https://maps.google.com',
+            'https://www.google.co.ke'
+        ];
+        this.app.use((0, helmet_1.default)({
+            contentSecurityPolicy: {
+                useDefaults: true,
+                directives: {
+                    'frame-src': frameSources,
+                    'child-src': frameSources
+                }
+            },
+            crossOriginEmbedderPolicy: false
+        }));
         const allowedOrigins = [
             process.env.FRONTEND_URL || 'http://localhost:5173',
             'https://mwc-advocates-frontend.onrender.com',
@@ -38,6 +54,7 @@ class App {
             'http://localhost:5173',
             'http://localhost:3000',
             'https://mwc-advocates.onrender.com',
+            'https://site--mwc-advocates--tkzbdsdh56l7.code.run/',
             'https://mwc-advocates-frontend-*.onrender.com'
         ];
         console.log('🔒 CORS Configuration initialized');
@@ -100,12 +117,22 @@ class App {
         this.app.use('/api/contact', contact_routes_1.default);
         this.app.use('/api/faq', faq_routes_1.default);
         this.app.use('/api/health', health_routes_1.default);
-        this.app.use('*', (req, res) => {
-            res.status(404).json({
-                error: 'Route not found',
-                message: `Cannot ${req.method} ${req.originalUrl}`,
+        if (process.env.NODE_ENV === 'production') {
+            const clientDistPath = path_1.default.join(__dirname, '../../client/dist');
+            console.log(`📦 Serving static files from: ${clientDistPath}`);
+            this.app.use(express_1.default.static(clientDistPath));
+            this.app.get('*', (req, res) => {
+                res.sendFile(path_1.default.join(clientDistPath, 'index.html'));
             });
-        });
+        }
+        else {
+            this.app.use('*', (req, res) => {
+                res.status(404).json({
+                    error: 'Route not found',
+                    message: `Cannot ${req.method} ${req.originalUrl}`,
+                });
+            });
+        }
     }
     configureErrorHandling() {
         this.app.use((err, req, res, next) => {
