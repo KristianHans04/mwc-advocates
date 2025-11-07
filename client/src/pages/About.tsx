@@ -17,9 +17,6 @@ const About: React.FC = () => {
     { value: 98, suffix: '%', label: 'Success Rate' }
   ];
 
-  // Counter animation state
-  const [counters, setCounters] = useState(stats.map(() => 0));
-  const [hasAnimated, setHasAnimated] = useState(false);
   
   // Team data from JSON
   const [team, setTeam] = useState<TeamMember[]>([]);
@@ -146,31 +143,6 @@ const About: React.FC = () => {
           {/* Stats with Counter Animation */}
           <div 
             className="grid grid-cols-3 gap-6 mt-12 max-w-2xl mx-auto"
-            onViewportEnter={() => {
-              if (!hasAnimated) {
-                setHasAnimated(true);
-                // Animate counters
-                stats.forEach((stat, index) => {
-                  const duration = 2000; // 2 seconds
-                  const steps = 50;
-                  const increment = stat.value / steps;
-                  let current = 0;
-                  
-                  const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= stat.value) {
-                      current = stat.value;
-                      clearInterval(timer);
-                    }
-                    setCounters(prev => {
-                      const newCounters = [...prev];
-                      newCounters[index] = Math.floor(current);
-                      return newCounters;
-                    });
-                  }, duration / steps);
-                });
-              }
-            }}
           >
             {stats.map((stat, index) => (
               <div 
@@ -178,7 +150,7 @@ const About: React.FC = () => {
                 className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow"
               >
                 <div className="text-4xl font-bold text-green-800 mb-2">
-                  {counters[index]}{stat.suffix}
+                  {stat.value}{stat.suffix}
                 </div>
                 <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
               </div>
@@ -256,14 +228,10 @@ const About: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {team.map((member, index) => (
-              <motion.div 
+            {team.map((member) => (
+              <div 
                 key={member.id} 
                 className="bg-white rounded-xl shadow-xl overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <div className="p-8">
                   {/* Profile Image */}
@@ -313,7 +281,7 @@ const About: React.FC = () => {
                     )}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
