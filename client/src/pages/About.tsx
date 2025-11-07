@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Shield, Users, Award, CheckCircle, Clock, Heart } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import heroBg from '../assets/hero_bg.png';
@@ -32,11 +31,11 @@ const About: React.FC = () => {
   }, []);
 
   const teamImageMap: Record<string, string> = {
-    'masinde-dennis': '/img/randoms/img/Masinde%20Dennis.png',
-    'wanyonyi-jacob': '/img/randoms/img/Jacob%20Wanyonyi.png',
-    'beatrice-mutahi': '/img/randoms/img/Beatrice%20Mutahi.png',
-    'vallary-nyala': '/img/randoms/img/Vallary%20Nyala.png',
-    'godwin-lemashon': '/img/randoms/img/Godwin%20Lemashon.png'
+    'masinde-dennis': '/img/Dennis.jpeg',
+    'wanyonyi-jacob': '/img/Jacob.jpg',
+    'beatrice-mutahi': '/img/Beatrice.jpg',
+    'vallary-nyala': 'spinner',
+    'godwin-lemashon': 'spinner'
   };
 
   const defaultTeamImage = '/img/randoms/img/Expert Legal Team.png';
@@ -90,24 +89,15 @@ const About: React.FC = () => {
         </div>
 
         {/* Content */}
-        <motion.div 
+        <div 
           className="relative z-10 text-center w-full max-w-4xl mx-auto px-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
         >
-          <motion.h1 
+          <h1 
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 tracking-wide"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
           >
             About Our Firm
-          </motion.h1>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+          </h1>
+          <div
           >
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
               Our Story, Values & People
@@ -115,19 +105,15 @@ const About: React.FC = () => {
             <p className="text-lg md:text-xl mb-12 text-gray-200 max-w-3xl mx-auto leading-relaxed">
               Discover our journey, meet our experienced legal team, and learn what drives our commitment to exceptional legal service
             </p>
-          </motion.div>
+          </div>
         </motion.div>
       </section>
 
       {/* Our Story Section */}
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <div 
             className="text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Our Story</h2>
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
@@ -155,15 +141,11 @@ const About: React.FC = () => {
                 Lower Hill Road, Upperhill, Nairobi, we maintain a network of correspondent firms across Mombasa, Kisumu, 
                 Eldoret, and Nakuru, enabling seamless national coverage.
               </p>
-          </motion.div>
+          </div>
 
           {/* Stats with Counter Animation */}
-          <motion.div 
+          <div 
             className="grid grid-cols-3 gap-6 mt-12 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
             onViewportEnter={() => {
               if (!hasAnimated) {
                 setHasAnimated(true);
@@ -191,19 +173,17 @@ const About: React.FC = () => {
             }}
           >
             {stats.map((stat, index) => (
-              <motion.div 
+              <div 
                 key={index} 
                 className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="text-4xl font-bold text-green-800 mb-2">
                   {counters[index]}{stat.suffix}
                 </div>
                 <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -211,12 +191,8 @@ const About: React.FC = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <motion.div 
+            <div 
               className="bg-gradient-to-br from-green-800 to-green-900 text-white p-8 rounded-2xl shadow-xl"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
             >
               <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
               <p className="text-lg leading-relaxed text-green-50">
@@ -225,14 +201,10 @@ const About: React.FC = () => {
                 legal solutions that safeguard our clients' interests, anticipate risks, and secure sustainable 
                 outcomes through our multi-disciplinary expertise and client-centric approach.
               </p>
-            </motion.div>
+            </div>
             
-            <motion.div 
+            <div 
               className="bg-gradient-to-br from-gray-800 to-gray-900 text-white p-8 rounded-2xl shadow-xl"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
             >
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-lg leading-relaxed text-gray-50">
@@ -241,7 +213,7 @@ const About: React.FC = () => {
                 the go-to firm for individuals, corporations, institutions, and governments seeking reliable, 
                 innovative, and results-driven legal counsel.
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -295,17 +267,23 @@ const About: React.FC = () => {
               >
                 <div className="p-8">
                   {/* Profile Image */}
-                  <img 
-                    src={teamImageMap[member.id] || member.image || defaultTeamImage} 
-                    alt={member.name}
-                    className="w-full h-48 object-cover rounded-lg mb-6"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      if (target.src !== defaultTeamImage) {
-                        target.src = defaultTeamImage;
-                      }
-                    }}
-                  />
+                  {teamImageMap[member.id] === 'spinner' ? (
+                    <div className="w-full h-48 flex items-center justify-center rounded-lg mb-6">
+                      <div className="loader"></div>
+                    </div>
+                  ) : (
+                    <img 
+                      src={teamImageMap[member.id] || member.image || defaultTeamImage} 
+                      alt={member.name}
+                      className="w-full h-48 object-cover rounded-lg mb-6"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target.src !== defaultTeamImage) {
+                          target.src = defaultTeamImage;
+                        }
+                      }}
+                    />
+                  )}
                   
                   {/* Basic Info */}
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
