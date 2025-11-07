@@ -103,7 +103,7 @@ const About: React.FC = () => {
               Discover our journey, meet our experienced legal team, and learn what drives our commitment to exceptional legal service
             </p>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Our Story Section */}
