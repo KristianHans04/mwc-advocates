@@ -261,12 +261,22 @@ const Contact: React.FC = () => {
                       src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3988.792284935182!2d36.817746074965626!3d-1.299425998688231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMcKwMTcnNTcuOSJTIDM2wrA0OScxMy4yIkU!5e0!3m2!1sen!2ske!4v1764278361993!5m2!1sen!2ske"
                       width="100%" 
                       height="300" 
+                      style="border:0;" 
+                      allowfullscreen="" 
+                      loading="lazy" 
+                      referrerpolicy="no-referrer-when-downgrade" 
+                      title="MWC Advocates Office Location - Duplex Suites, Upperhill, Nairobi">
+                    </iframe>
+                    {/* <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3988.792284935182!2d36.817746074965626!3d-1.299425998688231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMcKwMTcnNTcuOSJTIDM2wrA0OScxMy4yIkU!5e0!3m2!1sen!2ske!4v1764278361993!5m2!1sen!2ske"
+                      width="100%" 
+                      height="300" 
                       style={{border: 0}} 
                       allowFullScreen 
                       loading="lazy" 
                       referrerPolicy="no-referrer-when-downgrade"
                       title="MWC Advocates Office Location - Duplex Suites, Upperhill, Nairobi"
-                    />
+                    /> */}
                   </div>
                 </div>
 
