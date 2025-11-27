@@ -258,14 +258,14 @@ const Contact: React.FC = () => {
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">Find Our Office</h3>
                   <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
                     <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.796976670383!2d36.81591487482824!3d-1.2964515356370057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10e7167b504d%3A0xbc3617f79a4c9522!2sLower%20Hill%20Rd%2C%20Nairobi!5e0!3m2!1sen!2ske!4v1755111409756!5m2!1sen!2ske"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.796976670383!2d36.81591487482824!3d-1.2964515356370057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d398669a95%3A0x42d4d78e99a59c9f!2sDuplex%20Suites!5e0!3m2!1sen!2ske!4v1701360000000!5m2!1sen!2ske"
                       width="100%" 
                       height="300" 
                       style={{border: 0}} 
                       allowFullScreen 
                       loading="lazy" 
                       referrerPolicy="no-referrer-when-downgrade"
-                      title="MWC Advocates Office Location - Lower Hill Road, Upperhill, Nairobi"
+                      title="MWC Advocates Office Location - Duplex Suites, Upperhill, Nairobi"
                     />
                   </div>
                 </div>
