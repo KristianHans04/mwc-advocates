@@ -5,7 +5,6 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
 COPY server/package.json server/package-lock.json* ./server/
 COPY client/package.json client/package-lock.json* ./client/
 
@@ -18,11 +17,11 @@ RUN npm ci --legacy-peer-deps
 FROM base AS builder
 WORKDIR /app
 
-COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/server/node_modules ./server/node_modules
 COPY --from=deps /app/client/node_modules ./client/node_modules
 
-COPY . .
+COPY server ./server
+COPY client ./client
 
 WORKDIR /app/server
 RUN npm run build
