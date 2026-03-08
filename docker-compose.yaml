@@ -10,8 +10,8 @@ services:
       PORT: "80"
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
-      FRONTEND_URL: https://${SERVICE_FQDN_WEB}
-      WEBSITE_URL: https://${SERVICE_FQDN_WEB}
+      FRONTEND_URL: ${COOLIFY_URL:-https://${SERVICE_FQDN_WEB}}
+      WEBSITE_URL: ${COOLIFY_URL:-https://${SERVICE_FQDN_WEB}}
 
       EMAIL_FROM: ${EMAIL_FROM:-noreply@mwc-advocates.com}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@mwc-advocates.com}
@@ -29,7 +29,7 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mwc-advocates-web.rule=Host(`${SERVICE_FQDN_WEB}`)"
+      - "traefik.http.routers.mwc-advocates-web.rule=Host(`${SERVICE_FQDN_WEB}`) || Host(`${COOLIFY_FQDN}`)"
       - "traefik.http.routers.mwc-advocates-web.entrypoints=https"
       - "traefik.http.routers.mwc-advocates-web.tls=true"
       - "traefik.http.routers.mwc-advocates-web.tls.certresolver=letsencrypt"
@@ -37,7 +37,7 @@ services:
 
       - "traefik.http.middlewares.mwc-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.mwc-https-redirect.redirectscheme.permanent=true"
-      - "traefik.http.routers.mwc-advocates-web-http.rule=Host(`${SERVICE_FQDN_WEB}`)"
+      - "traefik.http.routers.mwc-advocates-web-http.rule=Host(`${SERVICE_FQDN_WEB}`) || Host(`${COOLIFY_FQDN}`)"
       - "traefik.http.routers.mwc-advocates-web-http.entrypoints=http"
       - "traefik.http.routers.mwc-advocates-web-http.middlewares=mwc-https-redirect"
 
