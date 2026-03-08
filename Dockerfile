@@ -5,6 +5,9 @@ WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
 
+# Copy root package.json first (required by server's local file: dependency resolution)
+COPY package.json ./
+
 # Install dependencies (separate layer for better cache reuse)
 COPY server/package.json server/package-lock.json* ./server/
 COPY client/package.json client/package-lock.json* ./client/
@@ -20,16 +23,16 @@ WORKDIR /app
 COPY server ./server
 COPY client ./client
 
-# Build server (limit Node memory to avoid OOM kills in constrained environments)
+# Build server
 WORKDIR /app/server
-RUN NODE_OPTIONS="--max-old-space-size=512" npm run build
+RUN npm run build
 
-# Generate Prisma client (runs once here; also called at container start via `start` script)
+# Generate Prisma client
 RUN npx prisma generate
 
 # Build client
 WORKDIR /app/client
-RUN NODE_OPTIONS="--max-old-space-size=512" npm run build
+RUN npm run build
 
 # ─── Stage 2: Runner ───────────────────────────────────────────────────────────
 FROM node:20-alpine AS runner
