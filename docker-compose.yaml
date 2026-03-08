@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    environment:
+      PORT: "80"
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+      FRONTEND_URL: ${APP_URL:-https://mwc-advocates.example.com}
+      WEBSITE_URL: ${APP_URL:-https://mwc-advocates.example.com}
+
+      EMAIL_FROM: ${EMAIL_FROM:-noreply@mwc-advocates.com}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@mwc-advocates.com}
+
+      ZOHO_SMTP_HOST: ${ZOHO_SMTP_HOST:-smtp.zoho.com}
+      ZOHO_SMTP_PORT: ${ZOHO_SMTP_PORT:-587}
+      ZOHO_SMTP_USER: ${ZOHO_SMTP_USER}
+      ZOHO_SMTP_PASS: ${ZOHO_SMTP_PASS}
+
+      GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID}
+      GOOGLE_SERVICE_ACCOUNT_EMAIL: ${GOOGLE_SERVICE_ACCOUNT_EMAIL}
+      GOOGLE_PRIVATE_KEY: ${GOOGLE_PRIVATE_KEY}
+
+      JWT_SECRET: ${JWT_SECRET}
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mwc-advocates-web.rule=Host(`${APP_DOMAIN:-mwc-advocates.example.com}`)"
+      - "traefik.http.routers.mwc-advocates-web.entrypoints=https"
+      - "traefik.http.routers.mwc-advocates-web.tls=true"
+      - "traefik.http.routers.mwc-advocates-web.tls.certresolver=letsencrypt"
+      - "traefik.http.services.mwc-advocates-web.loadbalancer.server.port=80"
+
+      - "traefik.http.routers.mwc-advocates-web-http.rule=Host(`${APP_DOMAIN:-mwc-advocates.example.com}`)"
+      - "traefik.http.routers.mwc-advocates-web-http.entrypoints=http"
+      - "traefik.http.routers.mwc-advocates-web-http.service=mwc-advocates-web"
+
+    networks:
+      - coolify
+
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  coolify:
+    external: true
+    name: coolify
