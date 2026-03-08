@@ -10,8 +10,8 @@ services:
       PORT: "80"
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
-      FRONTEND_URL: ${APP_URL:-https://mwc-advocates.example.com}
-      WEBSITE_URL: ${APP_URL:-https://mwc-advocates.example.com}
+      FRONTEND_URL: https://${SERVICE_FQDN_WEB}
+      WEBSITE_URL: https://${SERVICE_FQDN_WEB}
 
       EMAIL_FROM: ${EMAIL_FROM:-noreply@mwc-advocates.com}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@mwc-advocates.com}
@@ -29,13 +29,13 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mwc-advocates-web.rule=Host(`${APP_DOMAIN:-mwc-advocates.example.com}`)"
+      - "traefik.http.routers.mwc-advocates-web.rule=Host(`${SERVICE_FQDN_WEB}`)"
       - "traefik.http.routers.mwc-advocates-web.entrypoints=https"
       - "traefik.http.routers.mwc-advocates-web.tls=true"
       - "traefik.http.routers.mwc-advocates-web.tls.certresolver=letsencrypt"
       - "traefik.http.services.mwc-advocates-web.loadbalancer.server.port=80"
 
-      - "traefik.http.routers.mwc-advocates-web-http.rule=Host(`${APP_DOMAIN:-mwc-advocates.example.com}`)"
+      - "traefik.http.routers.mwc-advocates-web-http.rule=Host(`${SERVICE_FQDN_WEB}`)"
       - "traefik.http.routers.mwc-advocates-web-http.entrypoints=http"
       - "traefik.http.routers.mwc-advocates-web-http.service=mwc-advocates-web"
 
