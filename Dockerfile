@@ -37,4 +37,4 @@ ENV NODE_ENV=production
 EXPOSE 80
 
 WORKDIR /app/server
-CMD ["node", "dist/server.js"]
+CMD ["sh", "-c", "npm start 2>&1"]
