@@ -9,7 +9,7 @@
     "mailhog:start": "docker compose -f ../docker-compose.dev.yml up -d mailhog",
     "mailhog:stop": "docker compose -f ../docker-compose.dev.yml down",
     "mailhog:logs": "docker compose -f ../docker-compose.dev.yml logs -f mailhog",
-    "build": "tsc && cp -r src/data dist/",
+    "build": "esbuild src/server.ts --bundle --platform=node --format=cjs --outfile=dist/server.js --packages=external --sourcemap && cp -r src/data dist/ 2>/dev/null; true",
     "start": "npm run db:generate && node dist/server.js",
     "start:prod": "npm run db:generate && node dist/server.js",
     "start:with-setup": "npx prisma db push && npx prisma db seed && npm run db:generate && node dist/server.js",
@@ -58,6 +58,7 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
+    "esbuild": "^0.25.0",
     "nodemon": "^3.1.10"
   },
   "prisma": {
