@@ -1,14 +1,13 @@
-# ─── Stage 1: Builder ──────────────────────────────────────────────────────────
-FROM node:20-alpine AS builder
+FROM node:20-alpine
 
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
 
-# Copy root package.json first (required by server's local file: dependency resolution)
+# Copy root package.json (workspace root)
 COPY package.json ./
 
-# Install dependencies (separate layer for better cache reuse)
+# Install dependencies
 COPY server/package.json server/package-lock.json* ./server/
 COPY client/package.json client/package-lock.json* ./client/
 
@@ -33,24 +32,6 @@ RUN npx prisma generate
 # Build client
 WORKDIR /app/client
 RUN npm run build
-
-# ─── Stage 2: Runner ───────────────────────────────────────────────────────────
-FROM node:20-alpine AS runner
-
-WORKDIR /app
-
-RUN apk add --no-cache libc6-compat
-
-# Copy server production artifacts and dependencies
-COPY --from=builder /app/server/package.json ./server/package.json
-COPY --from=builder /app/server/package-lock.json* ./server/
-COPY --from=builder /app/server/dist ./server/dist
-COPY --from=builder /app/server/node_modules ./server/node_modules
-COPY --from=builder /app/server/prisma ./server/prisma
-
-# Copy built client to path expected by server: path.join(__dirname, '../../client/dist')
-# __dirname = /app/server/dist, so ../../client/dist = /app/client/dist
-COPY --from=builder /app/client/dist ./client/dist
 
 ENV NODE_ENV=production
 EXPOSE 80
