@@ -10,8 +10,8 @@ services:
       PORT: "80"
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
-      FRONTEND_URL: ${COOLIFY_URL:-https://${SERVICE_FQDN_WEB}}
-      WEBSITE_URL: ${COOLIFY_URL:-https://${SERVICE_FQDN_WEB}}
+      FRONTEND_URL: ${SERVICE_URL_WEB}
+      WEBSITE_URL: ${SERVICE_URL_WEB}
 
       EMAIL_FROM: ${EMAIL_FROM:-noreply@mwc-advocates.com}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@mwc-advocates.com}
