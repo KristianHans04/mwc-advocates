@@ -61,7 +61,25 @@ Do NOT use these — they do not work:
 
 The Docker **healthcheck is intentionally absent**. If the healthcheck marks the container unhealthy, Coolify stops routing Traefik traffic to it, causing 404.
 
+### .dockerignore
+
+The `.dockerignore` file prevents unnecessary files from being sent to the Docker daemon during build. This speeds up context upload and prevents secrets from being embedded in the image:
+
+```
+node_modules/         — never copy, always reinstall inside container
+client/node_modules/  — same
+.git/ .github/        — build history not needed
+*.log                 — noise
+.env .env.*           — secrets must never enter the image layer
+dist/                 — rebuilt fresh inside container
+temp_docs/ uploads/   — not part of the deployed app
+```
+
+> [!IMPORTANT]
+> `.env.coolify` is covered by the `.env.*` gitignore and dockerignore patterns — it is never committed to Git and never copied into the Docker image. Environment variables are injected at runtime by Coolify's container runtime, not baked into the image.
+
 ### server/.env.coolify
+
 
 Reference file for Coolify's Environment Variables panel. Always keep `SERVICE_FQDN_WEB` and `SERVICE_URL_WEB` set to plain string values — never template strings:
 
