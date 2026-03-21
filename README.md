@@ -237,13 +237,32 @@ The application supports email notifications for contact form submissions:
 2. **Environment Variables**: Configure SMTP settings in `.env`
 3. **Fallback**: Contact forms work without email (saved to database)
 
-## � **Security Features**
+## 🔐 **Security Features**
 
 - **Rate Limiting**: Prevents abuse of API endpoints
 - **Input Validation**: Server-side validation with express-validator
 - **CORS Configuration**: Properly configured for frontend domain
 - **Helmet**: Security headers for Express.js
 - **Environment Variables**: Sensitive data stored securely
+
+### **Security Best Practices**
+
+⚠️ **IMPORTANT**: Follow these practices to keep your application secure:
+
+1. **Never commit secrets to git**:
+   - Use `.env.example` as a template (with placeholder values)
+   - Keep actual `.env` files in `.gitignore`
+   - If credentials are ever exposed, rotate them immediately
+
+2. **Use App-Specific Passwords**:
+   - For Zoho Mail, generate an app-specific password instead of using your main password
+   - Enable 2FA on all service accounts
+
+3. **Generate secure secrets**:
+   ```bash
+   # Generate secure JWT secret
+   openssl rand -base64 32
+   ```
 
 ## 🧪 **Testing & Quality**
 

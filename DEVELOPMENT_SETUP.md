@@ -25,19 +25,21 @@ cd ..
 
 ### 2. Set Up Environment Variables
 
-The application now uses separate environment files for development and production:
+The application uses separate environment files for development and production:
 - `.env.development` - Local development settings (uses MailHog for emails)
 - `.env` - Production settings (uses Zoho for emails)
 
-```bash
-# Copy the development environment template
-cd server
-cp .env.development .env
+**⚠️ IMPORTANT: Never commit `.env` files with real credentials to git.**
 
-# The development file is already configured to:
-# - Use MailHog for email (no real emails sent)
+```bash
+# Copy the example environment template
+cd server
+cp .env.example .env
+
+# Edit with your local settings:
+# - Use MailHog for email (no real emails sent in development)
 # - Use local PostgreSQL database
-# - Disable Zoho email service
+# - Keep Zoho credentials commented out for local development
 ```
 
 ### 3. Database Setup
@@ -229,13 +231,14 @@ npx prisma db seed
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 
-## Important Notes
+## Important Security Notes
 
-1. **Never commit .env files** - They contain sensitive data
-2. **Use .env.development for local work** - Keeps production credentials safe
+1. **Never commit .env files with credentials** - They contain sensitive data
+2. **Use environment templates (.env.example)** - Copy and fill in your own values
 3. **MailHog catches all emails in development** - No accidental emails to real users
-4. **The app works without database** - Falls back to JSON files if DB fails
-5. **CORS is configured for localhost** - Frontend and backend can communicate locally
+4. **Rotate credentials immediately if exposed** - Change passwords in the service provider
+5. **The app works without database** - Falls back to JSON files if DB fails
+6. **CORS is configured for localhost** - Frontend and backend can communicate locally
 
 ## Next Steps
 
