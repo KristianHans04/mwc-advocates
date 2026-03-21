@@ -29,16 +29,84 @@ Single Docker container serving both the Express API and the React frontend (sta
 
 Key decisions driven by the 1 GB RAM constraint:
 
-- `esbuild` instead of `tsc` — uses a fraction of the memory
-- Single-stage build — avoids BuildKit's multi-stage pipe crashes
-- `NODE_ENV=development` inline on both `npm ci` commands — Coolify passes `NODE_ENV=production` as a build ARG which causes `npm ci` to skip devDependencies (Vite, esbuild), breaking the build
+**Memory Management:**
+
+- **Use absolute paths with `cd` commands** instead of `WORKDIR` — Coolify injects ARG declarations at the top of the Dockerfile which can shift line numbers and cause context issues
+- **Set `NODE_OPTIONS="--max-old-space-size=XXXX"` for memory-intensive builds**:
+  - `npm ci` for client: 1536MB minimum
+  - Vite build (simple React apps): 1536-2048MB
+  - Vite build (with Three.js/heavy dependencies): 2560MB (2.5GB)
+  - With 8GB swap, these limits are safe and prevent OOM-kill
+- **Clear `NODE_OPTIONS=""` after build** to avoid constraining runtime
+
+**Dependencies:**
+
+- `NODE_ENV=development` inline on `npm ci` commands — Coolify passes `NODE_ENV=production` as a build ARG which causes `npm ci` to skip devDependencies (Vite, esbuild, TypeScript), breaking the build
 
 ```dockerfile
-RUN NODE_ENV=development npm ci --legacy-peer-deps  # server
-RUN NODE_ENV=development npm ci --legacy-peer-deps  # client
+# Install server dependencies
+COPY server/package*.json /app/server/
+RUN cd /app/server && NODE_ENV=development npm ci --legacy-peer-deps
+
+# Install client dependencies with memory limit
+COPY client/package*.json /app/client/
+RUN cd /app/client && NODE_OPTIONS="--max-old-space-size=1536" NODE_ENV=development npm ci --legacy-peer-deps
+
+# Build Vite client (allocate 2.5GB for heavy apps with Three.js, etc.)
+RUN cd /app/client && NODE_OPTIONS="--max-old-space-size=2560" npm run build
+
+# Clear NODE_OPTIONS for runtime
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=""
 ```
 
-- Prisma must include the Alpine binary target:
+**Example Structure:**
+
+```dockerfile
+FROM node:20-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache libc6-compat
+
+# Install server dependencies
+COPY server/package*.json /app/server/
+RUN cd /app/server && NODE_ENV=development npm ci --legacy-peer-deps
+
+# Install client dependencies
+COPY client/package*.json /app/client/
+RUN cd /app/client && NODE_OPTIONS="--max-old-space-size=1536" NODE_ENV=development npm ci --legacy-peer-deps
+
+# Copy source code
+COPY server /app/server
+COPY client /app/client
+
+# Build Vite client
+RUN cd /app/client && NODE_OPTIONS="--max-old-space-size=2560" npm run build
+
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=""
+EXPOSE 80
+
+WORKDIR /app/server
+CMD ["node", "src/index.js"]
+```
+
+**Static File Path:**
+
+Ensure server code uses correct relative paths. From `/app/server/src/app.js`:
+
+```javascript
+// CORRECT: Goes up 2 levels from /app/server/src to /app, then into client/dist
+const clientDist = path.resolve(__dirname, '../../client/dist');
+
+// WRONG: Goes up 3 levels, exits container
+const clientDist = path.resolve(__dirname, '../../../client/dist');
+```
+
+**Prisma (if used):**
+
+Prisma must include the Alpine binary target:
 
 ```prisma
 generator client {
@@ -110,6 +178,22 @@ Similarly, do not set `FRONTEND_URL` or `WEBSITE_URL` as `https://${SERVICE_FQDN
 
 ---
 
+## Build Performance
+
+**Expected Build Times:**
+- Simple React app: 5-10 minutes
+- React app with heavy dependencies (Three.js, etc.): 15-20 minutes
+- The build uses swap memory (slower), but **runtime is fast** — swap only affects build, not user experience
+
+**Runtime Performance:**
+- Memory usage: ~100-200MB (well within 843MB available RAM)
+- No swap usage during normal operation
+- Users experience no performance degradation
+
+The slow build is a one-time cost per deployment. Your application serves pre-built static files and handles API requests, which is lightweight.
+
+---
+
 ## Updating the Domain
 
 When Coolify assigns a new domain (e.g. switching from sslip.io to a custom domain):
@@ -126,3 +210,21 @@ Let's Encrypt HTTP-01 challenge requires inbound port 80 TCP open on the Azure N
 Azure Portal → VM → Networking → Inbound port rules → `AllowWebTraffic` (ports 80, 443, TCP)
 
 The cert is auto-managed by Traefik. After first deploy, it may take 1-2 minutes to issue. A "not secure" warning on a browser that previously loaded the site with the old self-signed cert is a browser cache issue — clear site data for the domain to resolve it.
+
+---
+
+## Troubleshooting
+
+**Build fails with OOM errors:**
+- Verify swap is active: SSH into VM, run `free -h` (should show 8GB swap)
+- Increase `NODE_OPTIONS` memory limit in Dockerfile
+- Check that Coolify isn't injecting `NODE_ENV=production` as a build ARG
+
+**Static files not found (ENOENT errors):**
+- Check static file path in server code uses correct relative path
+- From `/app/server/src/app.js`: use `../../client/dist`, not `../../../client/dist`
+
+**Deployment succeeds but site shows 404:**
+- Verify Traefik labels in docker-compose.yaml
+- Check `SERVICE_FQDN_WEB` is set correctly in Coolify
+- Ensure domain DNS is pointing to Azure VM IP
