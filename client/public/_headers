@@ -1,0 +1,19 @@
+# Custom headers for Cloudflare Pages
+
+/robots.txt
+  Cache-Control: public, max-age=86400
+  X-Robots-Tag: noindex
+
+/llms.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
+  X-Robots-Tag: noindex
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+  Content-Type: application/xml; charset=utf-8
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Language: en

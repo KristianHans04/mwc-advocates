@@ -1,0 +1,92 @@
+# Masinde Wanyonyi & Company Advocates
+
+> Commissioners for Oaths and Notary Public. A full-service law firm in Nairobi, Kenya providing cutting-edge legal services with technical expertise, innovation, and personalised client care.
+
+Website: https://mwc-advocates.kristianhans.com
+Also available at: https://mwcadvocates.kristianhans.com
+Email: masindewanyonyi.co@gmail.com
+Phone: +254 702 073 800 / +254 708 792 078
+Address: Duplex Suites, Suite 58, Lower Hill Road, Upperhill, Nairobi, Kenya
+Built by: Kristian Hans Onjala (https://kristianhans.com)
+
+---
+
+## About the Firm
+
+Masinde Wanyonyi & Company Advocates is a full-service law firm established in 2020 with a vision to provide cutting-edge legal services that combine technical expertise, innovation, and personalised client care. With three experienced Partners, two Senior Associates, and a robust support team, the firm stands as a distinguished legal practice in Kenya, serving both local and international clientele.
+
+The firm's tagline is "Excellence, Integrity, and Client-Centric Service." They maintain the highest ethical standards in all dealings, ensuring transparency and honesty in every client relationship. Services are tailored to align with client needs and business realities, ensuring personalized solutions for every matter.
+
+---
+
+## Pages on This Website
+
+- [Home](https://mwc-advocates.kristianhans.com/): Landing page with firm overview, practice area highlights, client testimonials, and office location.
+- [About](https://mwc-advocates.kristianhans.com/about): Firm history, core values (integrity, client-centric service, excellence, reliability, responsiveness, proactive approach), and team profiles with professional biographies.
+- [Services](https://mwc-advocates.kristianhans.com/services): Complete list of legal services offered across ten practice areas with detailed descriptions.
+- [Insights](https://mwc-advocates.kristianhans.com/insights): Legal articles, analysis, and thought leadership on Kenyan and international law topics.
+- [Contact](https://mwc-advocates.kristianhans.com/contact): Contact form, office address, phone numbers, email, and business hours.
+- [Privacy](https://mwc-advocates.kristianhans.com/privacy): Privacy policy.
+
+---
+
+## Legal Team
+
+### Partners
+- **Masinde Dennis** — Partner
+- **Wanyonyi Jacob** — Partner
+- **Beatrice Mutahi** — Partner
+
+### Senior Associates
+- **Vallary Nyala** — Senior Associate
+- **Godwin Lemashon** — Senior Associate
+
+---
+
+## Practice Areas
+
+1. **Conveyancing & Real Estate** — Property transactions, land law, conveyancing, due diligence, and real estate advisory.
+2. **Estate Planning & Succession** — Wills, trusts, estate administration, succession planning, and probate matters.
+3. **Data Protection & Privacy Law** — Compliance with the Kenya Data Protection Act, privacy audits, data breach response, and regulatory advisory.
+4. **Risk & Compliance Advisory** — Regulatory compliance frameworks, risk assessment, corporate governance, and compliance training.
+5. **Civil and Commercial Litigation** — Dispute resolution, commercial disputes, contract enforcement, and civil claims.
+6. **Criminal Litigation** — Criminal defense, prosecution support, bail applications, and criminal appeals.
+7. **Corporate & Commercial Law** — Company formation, mergers and acquisitions, joint ventures, shareholder agreements, and commercial contracts.
+8. **Immigration Law** — Work permits, residency applications, visa advisory, and immigration compliance.
+9. **Family Law** — Matrimonial disputes, child custody, adoption, maintenance, and family mediation.
+10. **Banking & Finance Law** — Banking regulation, loan documentation, financial advisory, securities law, and fintech compliance.
+
+---
+
+## Office Information
+
+- **Address**: Duplex Suites, Suite 58, Lower Hill Road, Upperhill, Nairobi, Nairobi County 00100, Kenya
+- **Phone**: +254 702 073 800 / +254 708 792 078
+- **Email**: masindewanyonyi.co@gmail.com
+- **Business Hours**: Monday-Friday 8:00 AM - 6:00 PM, Saturday 9:00 AM - 1:00 PM, Sunday Closed
+
+---
+
+## Core Values
+
+- **Integrity**: Maintaining the highest ethical standards in all dealings, ensuring transparency and honesty.
+- **Client-Centric Service**: Tailoring services to align with client needs and business realities.
+- **Excellence**: Striving for excellence in every case, continuously improving knowledge and skills.
+- **Reliability**: Providing consistent and dependable legal support.
+- **Responsiveness**: Valuing client time and working efficiently to resolve legal matters promptly.
+- **Proactive Approach**: Staying ahead of legal and regulatory developments, leveraging technology for efficiency.
+
+---
+
+## Technical Stack
+
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS v4, React Router
+- **Backend**: Node.js, Express.js, TypeScript, PostgreSQL, Prisma
+- **Email**: Resend for contact form notifications, Google Sheets CRM integration
+- **Hosting**: Cloudflare Pages (frontend)
+
+---
+
+## Key Search Terms
+
+MWC Advocates, Masinde Wanyonyi & Company Advocates, law firm Nairobi, lawyers Kenya, conveyancing Nairobi, real estate lawyer Kenya, data protection lawyer Kenya, corporate lawyer Nairobi, immigration lawyer Kenya, family law Nairobi, Commissioners for Oaths, Notary Public Kenya, Kristian Hans Onjala
