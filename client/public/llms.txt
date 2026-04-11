@@ -25,6 +25,7 @@ The firm's tagline is "Excellence, Integrity, and Client-Centric Service." They 
 - [About](https://mwc-advocates.kristianhans.com/about): Firm history, core values (integrity, client-centric service, excellence, reliability, responsiveness, proactive approach), and team profiles with professional biographies.
 - [Services](https://mwc-advocates.kristianhans.com/services): Complete list of legal services offered across ten practice areas with detailed descriptions.
 - [Insights](https://mwc-advocates.kristianhans.com/insights): Legal articles, analysis, and thought leadership on Kenyan and international law topics.
+- [Insight Article](https://mwc-advocates.kristianhans.com/insights/:slug): Individual legal article or analysis with full content, author attribution, publish date, practice area tag, and related articles.
 - [Contact](https://mwc-advocates.kristianhans.com/contact): Contact form, office address, phone numbers, email, and business hours.
 - [Privacy](https://mwc-advocates.kristianhans.com/privacy): Privacy policy.
 
