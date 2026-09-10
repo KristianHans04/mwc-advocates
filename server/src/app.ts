@@ -97,10 +97,16 @@ class App {
           return callback(null, true);
         }
         
-        // For Render deployments, check if origin matches pattern
-        if (origin.includes('mwc-advocates') && origin.includes('onrender.com')) {
-          console.log(`✅ CORS allowed (Render pattern): ${origin}`);
-          return callback(null, true);
+        // For Render deployments, validate hostname strictly (avoid substring bypass
+        // such as evil.com/?x=mwc-advocates&y=onrender.com).
+        try {
+          const hostname = new URL(origin).hostname.toLowerCase();
+          if (hostname.endsWith('.onrender.com') && hostname.startsWith('mwc-advocates')) {
+            console.log(`✅ CORS allowed (Render pattern): ${origin}`);
+            return callback(null, true);
+          }
+        } catch {
+          // Invalid origin URL falls through to block below.
         }
         
         console.log(`❌ CORS BLOCKED: ${origin}`);
