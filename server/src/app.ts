@@ -172,20 +172,27 @@ class App {
     this.app.use('/api/faq', faqRoutes);
     this.app.use('/api/health', healthRoutes);
 
+    const staticLimiter = rateLimit({
+      windowMs: 15 * 60 * 1000,
+      max: 500,
+      standardHeaders: true,
+      legacyHeaders: false,
+    });
+
     // Serve frontend static files in production
     if (process.env.NODE_ENV === 'production') {
       const clientDistPath = path.join(__dirname, '../../client/dist');
       console.log(`📦 Serving static files from: ${clientDistPath}`);
-      
-      this.app.use(express.static(clientDistPath));
-      
+
+      this.app.use(staticLimiter, express.static(clientDistPath));
+
       // Handle client-side routing - send all non-API requests to index.html
-      this.app.get('*', (req: Request, res: Response) => {
+      this.app.get('*', staticLimiter, (req: Request, res: Response) => {
         res.sendFile(path.join(clientDistPath, 'index.html'));
       });
     } else {
       // 404 handler for development (API only)
-      this.app.use('*', (req: Request, res: Response) => {
+      this.app.use('*', staticLimiter, (req: Request, res: Response) => {
         res.status(404).json({
           error: 'Route not found',
           message: `Cannot ${req.method} ${req.originalUrl}`,
