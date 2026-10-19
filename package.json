@@ -48,7 +48,7 @@
   "homepage": "https://github.com/KristianHans04/mwc-advocates#readme",
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "prisma": "^7.10.0",
+    "prisma": "^7.10.1",
     "supabase": "^2.116.0"
   },
   "engines": {
